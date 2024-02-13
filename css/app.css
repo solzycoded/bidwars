@@ -1,16 +1,20 @@
 header {
     height: inherit;
+    background-color: blue;
 }
 
 nav {
     height: 80px;
+    background-color: gray;
 }
 
 section {
     height: 100px;
     margin-bottom: 2px;
+    background-color: black;
 }
 
 footer {
     height: 250px;
+    background-color: green;
 }
