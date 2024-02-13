@@ -1,0 +1,16 @@
+header {
+    height: inherit;
+}
+
+nav {
+    height: 80px;
+}
+
+section {
+    height: 100px;
+    margin-bottom: 2px;
+}
+
+footer {
+    height: 250px;
+}
