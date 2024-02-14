@@ -2,15 +2,29 @@ header {
     height: inherit;
 }
 
-nav {
-    height: 80px;
+#main-home {
+    margin-top: 50px !important;
 }
 
-section {
-    height: 100px;
-    margin-bottom: 2px;
+.live-auction-item-name {
+    font-size: 19px !important;
 }
 
+.live-auction-text {
+    font-size: 25px !important;
+}
+
+.live-auction-section {
+    margin-top: 50px !important;
+}
+
+
+.limit-text {
+    width: 120px !important; 
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+/* 
 footer {
-    height: 250px;
-}
+} */
