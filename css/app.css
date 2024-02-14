@@ -5,6 +5,19 @@ header {
 #main-home {
     margin-top: 50px !important;
 }
+
+.live-auction-item-name {
+    font-size: 19px !important;
+}
+
+.live-auction-text {
+    font-size: 25px !important;
+}
+
+.live-auction-categories {
+    margin-top: 50px !important;
+}
+
 /* 
 footer {
 } */
