@@ -1,5 +1,5 @@
 header {
-    height: inherit;
+    /* height: inherit; */
 }
 
 nav {
@@ -7,10 +7,9 @@ nav {
 }
 
 section {
-    height: 100px;
     margin-bottom: 2px;
 }
 
 footer {
-    height: 250px;
+    /* height: 250px; */
 }
