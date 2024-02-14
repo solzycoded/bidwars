@@ -14,10 +14,17 @@ header {
     font-size: 25px !important;
 }
 
-.live-auction-categories {
+.live-auction-section {
     margin-top: 50px !important;
 }
 
+
+.limit-text {
+    width: 120px !important; 
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
 /* 
 footer {
 } */
