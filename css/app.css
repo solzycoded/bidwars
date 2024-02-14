@@ -1,15 +1,10 @@
 header {
-    /* height: inherit; */
+    height: inherit;
 }
 
-nav {
-    /* height: 80px; */
+#main-home {
+    margin-top: 50px !important;
 }
-
-section {
-    margin-bottom: 2px;
-}
-
+/* 
 footer {
-    /* height: 250px; */
-}
+} */
