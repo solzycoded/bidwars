@@ -2,8 +2,9 @@ header {
     height: inherit;
 }
 
-#main-home {
+#main-section {
     margin-top: 50px !important;
+    margin-bottom: 60px;
 }
 
 .live-auction-item-name {
@@ -20,7 +21,7 @@ header {
 
 
 .limit-text {
-    width: 120px !important; 
+    width: 200px !important; 
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
