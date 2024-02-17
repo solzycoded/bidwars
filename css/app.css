@@ -2,7 +2,7 @@ header {
     height: inherit;
 }
 
-#main-home {
+#main-section {
     margin-top: 50px !important;
 }
 
@@ -24,6 +24,11 @@ header {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
+}
+
+.h-200 {
+    max-height: 290px;
+    overflow-y: auto;
 }
 /* 
 footer {
