@@ -20,7 +20,7 @@ header {
 
 
 .limit-text {
-    width: 120px !important; 
+    width: 200px !important; 
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
