@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BidWars</title>
+
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="bg-dark">
+    <!-- nav -->
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bolder" href="#">Bidwars</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sell an Item</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <div class="input-group">
+              <div>
+                <select class="form-select rounded-0" aria-label="Category Filter">
+                  <option selected disabled>Category</option>
+                  <option value="1">Antiques</option>
+                  <option value="2">Vintage Cars</option>
+                  <option value="3">Electronics</option>
+                </select>
+              </div>
+              <div>
+                <input class="form-control me-2 rounded-0" type="search" placeholder="Find something" aria-label="Search">
+              </div>
+              <div>
+                <button class="btn btn-outline-danger rounded-0" type="submit">Search</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- carousel (upcoming auctions) -->
+    <section>
+      <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="10000">
+            <div>
+              <img src="imgs/vintage-car.jpg" class="d-block w-100" alt="auction item image" style="max-height: 500px;">
+            </div>
+            <div class="carousel-caption d-none d-md-block text-white">
+              <h4 class="text-decoration-underline">Upcoming Auctions</h4>
+              <br>
+              <h5>1982 Cortina</h5>
+              <p>Auction Date: 12th Feb, 2024</p>
+              <p>In <b class="text-danger">48:24:34</b></p>
+              <div>
+                <button type="button" class="btn btn-dark text-white fw-bolder" style="font-size: 20px;">Remind me</button>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item" data-bs-interval="2000">
+            <div>
+              <img src="imgs/vintage-car.jpg" class="d-block w-100" alt="auction item image" style="max-height: 500px;">
+            </div>
+            <div class="carousel-caption d-none d-md-block text-white">
+              <h4 class="text-decoration-underline">Upcoming Auctions</h4>
+              <br>
+              <h5>2002 Mercedez Benz Something</h5>
+              <p>Auction Date: 12th Feb, 2024</p>
+              <p>In <b class="text-danger">48:24:34</b></p>
+              <div>
+                <button type="button" class="btn btn-dark text-white fw-bolder" style="font-size: 20px;">Remind me</button>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div>
+              <img src="imgs/vintage-car.jpg" class="d-block w-100" alt="auction item image" style="max-height: 500px;">
+            </div>
+            <div class="carousel-caption d-none d-md-block text-white">
+              <h4 class="text-decoration-underline">Upcoming Auctions</h4>
+              <br>
+              <h5>1960 Cortina Royale</h5>
+              <p>Auction Date: 12th Feb, 2024</p>
+              <p>In <b class="text-danger">48:24:34</b></p>
+              <div>
+                <button type="button" class="btn btn-dark text-white fw-bolder" style="font-size: 20px;">Remind me</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+  </header>
+
+  <footer class="bg-dark text-white text-center p-3">This is my footer</footer>
+</body>
+</html>
