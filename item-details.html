@@ -62,7 +62,7 @@
                 <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="item image"></div>
             </div>
             <div class="p-3 fs-5">
-                <h5 class="fw-bolder fs-4">1982 Ford Cortina</h5>
+                <h5 class="fw-bolder fs-4 item-name">1982 Ford Cortina</h5>
                 <p class=""><a href="/vintage-cars" class="link-offset-3">Vintage Cars</a></p>
                 <p>Item was acquired <small class="fw-lighter">10 days ago</small></p>
                 <div>
@@ -71,7 +71,7 @@
                 </div>
                 <div>
                     <p class="fw-bold m-0">Sellers Price</p>
-                    <p class="fs-6">$12,000</p>
+                    <p class="fs-6 item-price">$12,000</p>
                 </div>
 
                 <div class="mt-4 fs-6">
@@ -80,7 +80,7 @@
                 </div>
 
                 <div>
-                    <div class="d-inline"><button role="button" class="btn btn-dark fs-4" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
+                    <div class="d-inline"><button role="button" class="btn btn-dark fs-4 place-bid" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
                     <div class="d-inline p-0"><small class="text-secondary fw-bold fs-6">430 bids placed</small></div>
                 </div>
             </div>
@@ -93,51 +93,12 @@
                     <div class="card">
                         <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
                         <div class="card-body">
-                            <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
+                            <h5 class="card-title limit-text fw-bolder p-0 item-name">1982 Cortina</h5>
                             <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
-                            <p class="card-text fw-bold">$3000</p>
+                            <p class="card-text fw-bold item-price">$3000</p>
                             <p class="card-text text-danger text-end">4 bids placed</p>
                             <div class="d-inline"><a href="/item-details?id=1" class="btn btn-outline-dark fw-bold">Preview</a></div>
-                            <div class="d-inline float-end"><button role="button" class="btn btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-3 mb-3">
-                    <div class="card">
-                        <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
-                        <div class="card-body">
-                            <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
-                            <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
-                            <p class="card-text fw-bold">$3000</p>
-                            <p class="card-text text-danger text-end">4 bids placed</p>
-                            <div class="d-inline"><a href="/item-details?id=1" class="btn btn-outline-dark fw-bold">Preview</a></div>
-                            <div class="d-inline float-end"><button role="button" class="btn btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-3 mb-3">
-                    <div class="card">
-                        <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
-                        <div class="card-body">
-                            <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
-                            <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
-                            <p class="card-text fw-bold">$3000</p>
-                            <p class="card-text text-danger text-end">4 bids placed</p>
-                            <div class="d-inline"><a href="/item-details?id=1" class="btn btn-outline-dark fw-bold">Preview</a></div>
-                            <div class="d-inline float-end"><button role="button" class="btn btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-3 mb-3">
-                    <div class="card">
-                        <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
-                        <div class="card-body">
-                            <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
-                            <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
-                            <p class="card-text fw-bold">$3000</p>
-                            <p class="card-text text-danger text-end">4 bids placed</p>
-                            <div class="d-inline"><a href="/item-details?id=1" class="btn btn-outline-dark fw-bold">Preview</a></div>
-                            <div class="d-inline float-end"><button role="button" class="btn btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
+                            <div class="d-inline float-end"><button role="button" class="btn btn-dark fw-bold place-bid" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
                         </div>
                     </div>
                 </div>
@@ -150,17 +111,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="bid-offerLabel">Place Bid for Item X</h1>
+                    <h1 class="modal-title fs-5 fw-lighter" id="bid-offerLabel">Place Bid for <span id="bid-offer-title" class="fw-bold">Item X</span></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div>
-                        <p>Selling price is <b class="text-danger">$1000</b></p>
+                        <p>Selling price is <b class="text-danger" id="bid-offer-price">$1000</b></p>
                         <div class="form-group">
                             <label for="bid-offer" class="mb-2 fw-bold">What's your offer?</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="offer-sign">£</span>
-                                <input type="text" class="form-control" placeholder="Enter offer for item" aria-label="offer" aria-describedby="offer-sign">
+                                <input type="number" class="form-control" placeholder="Enter offer for item" aria-label="offer" aria-describedby="offer-sign" min="1">
                             </div>
                         </div>
                     </div>
@@ -181,5 +142,6 @@
 
     <!-- scripts -->
     <script src="./js/bootstrap.js"></script>
+    <script src="./js/app.js"></script>
 </body>
 </html>
