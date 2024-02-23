@@ -1,0 +1,11 @@
+.sell-an-item-category-item {
+    cursor: pointer;
+}
+
+.sell-an-item-category-item:hover div:nth-child(2) > p {
+    color: red !important;
+}
+
+.sell-an-item-category-item.selected-category:hover div:nth-child(2) > p{
+    color: white;
+}
