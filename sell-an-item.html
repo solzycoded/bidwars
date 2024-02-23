@@ -65,7 +65,7 @@
                     <p class="m-0 text-secondary"><small>select a category that your item would belong to</small></p>
                 </div>
                 <div class="row">
-                  <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item selected-category">
+                  <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item" onclick="onCategorySelected(this)">
                     <div class="position-relative">
                       <div>
                         <img src="imgs/vintage-car.jpg" alt="category image" class="img-fluid">
@@ -75,7 +75,27 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-sm-12 col-md-4 mb-3">
+                  <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item" onclick="onCategorySelected(this)">
+                    <div class="position-relative">
+                      <div>
+                        <img src="imgs/vintage-car.jpg" alt="category image" class="img-fluid">
+                      </div>
+                      <div class="position-absolute top-50 start-50 translate-middle">
+                        <p class="text-white fw-bold live-auction-text">Furniture</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item" onclick="onCategorySelected(this)">
+                    <div class="position-relative">
+                      <div>
+                        <img src="imgs/vintage-car.jpg" alt="category image" class="img-fluid">
+                      </div>
+                      <div class="position-absolute top-50 start-50 translate-middle">
+                        <p class="text-white fw-bold live-auction-text">Electronics</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item" onclick="onCategorySelected(this)">
                     <div class="position-relative">
                       <div>
                         <img src="imgs/vintage-car.jpg" alt="category image" class="img-fluid">
@@ -85,33 +105,13 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-sm-12 col-md-4 mb-3">
-                    <div class="position-relative">
-                      <div>
-                        <img src="imgs/vintage-car.jpg" alt="category image" class="img-fluid">
-                      </div>
-                      <div class="position-absolute top-50 start-50 translate-middle">
-                        <p class="text-white fw-bold live-auction-text">Furnitures</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-sm-12 col-md-6 mb-3">
+                  <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item" onclick="onCategorySelected(this)">
                     <div class="position-relative">
                       <div>
                         <img src="imgs/vintage-car.jpg" alt="category image" class="img-fluid">
                       </div>
                       <div class="position-absolute top-50 start-50 translate-middle">
                         <p class="text-white fw-bold live-auction-text">Art</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-sm-12 col-md-6 mb-3">
-                    <div class="position-relative">
-                      <div>
-                        <img src="imgs/vintage-car.jpg" alt="category image" class="img-fluid">
-                      </div>
-                      <div class="position-absolute top-50 start-50 translate-middle">
-                        <p class="text-white fw-bold live-auction-text">Electronics</p>
                       </div>
                     </div>
                   </div>
@@ -299,6 +299,7 @@
 
     <footer class="bg-dark text-white text-center p-3 mt-5">This is my footer</footer>
 
+    <script src="./js/app.js"></script>
     <script src="./js/sell-an-item-category.js"></script>
 </body>
 </html>
