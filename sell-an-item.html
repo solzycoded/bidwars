@@ -126,7 +126,7 @@
         </section>
 
         <section id="input-item-name">
-            <div class="container-fluid">
+            <div class="container-fluid p-0">
                 <div class="text-start mb-4">
                     <h5>Name of Item</h5>
                     <p class="m-0 text-secondary"><small>your item needs a descriptive name. Kindly give your item a descriptive name, e.g. A blue vintage 1982 Cortina.</small></p>
@@ -146,7 +146,7 @@
         </section>
 
         <section id="image-upload">
-            <div class="container-fluid">
+            <div class="container-fluid p-0">
                 <div class="text-start mb-4">
                     <h5>Images of Item (<span class="fw-lighter">0</span>/3)</h5>
                     <p class="m-0 text-secondary"><small>It’s important that your item has an appropraite visual representation. Kindly provide the most recent image(s) of your item.</small></p>
@@ -155,31 +155,55 @@
                     <div class="col-12 col-sm-12 col-md-4 mb-3">
                         <div class="position-relative">
                             <div>
-                                <img src="imgs/vintage-car.jpg" alt="uploaded item image" class="img-fluid rounded">
+                                <img src="imgs/bidwars-logo.png" alt="uploaded item image" class="img-fluid rounded item-image">
                             </div>
-                            <button class="rounded position-absolute top-0 start-0 end-0 bottom-0 bg-dark opacity-75 text-white">
-                                <p class="fw-bold fs-5 m-0">Upload Image</p>
-                            </button>
+                            <div class="rounded-bottom position-absolute start-0 end-0 bottom-0 bg-dark opacity-75">
+                              <label class="btn bg-dark" style="display: flex;align-items: center;justify-content: center;" for="item-image-selector-one">
+
+                                <input class="item-image-selector" id="item-image-selector-one" name="image_selector" type="file" style="display:none;" accept="image/jpeg, image/png, image/jpg" onchange="onImageSelected(this)">
+
+                                <div class="text-white text-center fw-bold">
+                                  Choose From Library
+                                </div>
+
+                              </label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 mb-3">
                         <div class="position-relative">
                             <div>
-                                <img src="imgs/vintage-car.jpg" alt="uploaded item image" class="img-fluid rounded">
+                                <img src="imgs/bidwars-logo.png" alt="uploaded item image" class="img-fluid rounded item-image">
                             </div>
-                            <button class="rounded position-absolute top-0 start-0 end-0 bottom-0 bg-dark opacity-75 text-white">
-                                <p class="fw-bold fs-5 m-0">Upload Image</p>
-                            </button>
+                            <div class="rounded-bottom position-absolute start-0 end-0 bottom-0 bg-dark opacity-75">
+                              <label class="btn bg-dark" style="display: flex;align-items: center;justify-content: center;" for="item-image-selector-two">
+
+                                <input class="item-image-selector" id="item-image-selector-two" name="image_selector" type="file" style="display:none;" accept="image/jpeg, image/png, image/jpg" onchange="onImageSelected(this)">
+
+                                <div class="text-white text-center fw-bold">
+                                  Choose From Library
+                                </div>
+
+                              </label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 mb-3">
                         <div class="position-relative">
                             <div>
-                                <img src="imgs/vintage-car.jpg" alt="uploaded item image" class="img-fluid rounded">
+                                <img src="imgs/bidwars-logo.png" alt="uploaded item image" class="img-fluid rounded item-image">
                             </div>
-                            <button class="rounded position-absolute top-0 start-0 end-0 bottom-0 bg-dark opacity-75 text-white">
-                                <p class="fw-bold fs-5 m-0">Upload Image</p>
-                            </button>
+                            <div class="rounded-bottom position-absolute start-0 end-0 bottom-0 bg-dark opacity-75">
+                              <label class="btn bg-dark" style="display: flex;align-items: center;justify-content: center;" for="item-image-selector-three">
+
+                                <input class="item-image-selector" id="item-image-selector-three" name="image_selector" type="file" style="display:none;" accept="image/jpeg, image/png, image/jpg" onchange="onImageSelected(this)">
+
+                                <div class="text-white text-center fw-bold">
+                                  Choose From Library
+                                </div>
+
+                              </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -300,6 +324,7 @@
     <footer class="bg-dark text-white text-center p-3 mt-5">This is my footer</footer>
 
     <script src="./js/app.js"></script>
-    <script src="./js/sell-an-item-category.js"></script>
+    <script src="./js/sell-an-item/category.js"></script>
+    <script src="./js/sell-an-item/image.js"></script>
 </body>
 </html>
