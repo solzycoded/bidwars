@@ -31,6 +31,10 @@ header {
     max-height: 290px;
     overflow-y: auto;
 }
+
+.live-auction-category-item-name {
+    z-index: 9;
+}
 /* 
 footer {
 } */
