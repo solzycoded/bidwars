@@ -32,7 +32,7 @@
             </ul>
             <form role="search">
               <div class="input-group w-100">
-                <div class="position-relative">
+                <div class="position-relative search-container">
                   <div class="input-group mb-1">
                     <div>
                       <select class="form-select rounded-start rounded-0" aria-label="Category Filter">
@@ -42,12 +42,12 @@
                         <option value="3">Electronics</option>
                       </select>
                     </div>
-                    <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search">
+                    <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()">
                   </div>
 
-                  <div class="position-absolute top-75 w-100 search-results-dropdown">
+                  <div class="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
                     <div class="mb-2 d-flex justify-content-start">
-                      <button class="btn btn-dark rounded-pill ps-2 pe-2 p-0 search-filter-item"><small>something</small></button>
+                      <!-- <button class="btn btn-dark rounded-pill ps-2 pe-2 p-0 search-filter-item"><small>something</small></button> -->
                     </div>
                     <div class="list-group">
                       <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
@@ -340,5 +340,6 @@
     <script src="./js/app.js"></script>
     <script src="./js/sell-an-item/category.js"></script>
     <script src="./js/sell-an-item/image.js"></script>
+    <script src="./js/search.js"></script>
 </body>
 </html>

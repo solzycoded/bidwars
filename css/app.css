@@ -32,7 +32,7 @@ header {
     overflow-y: auto;
     max-height: 300px;
     display: none;
-    transition: display 1s ease-in;
+    transition: display 2s ease-out;
 }
 
 .search-results-dropdown.active {
