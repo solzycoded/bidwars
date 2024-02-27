@@ -1,22 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const getByClassNames = (name) => {
-        return document.getElementsByClassName(name);
-    }
-
-    const getElementById = (name) => {
-        return document.getElementById(name);
-    }
-
-    const createOnClickEvent = (targetName, fn) => {
-        targetList = getByClassNames(targetName);
-
-        for (const target of targetList) {
-            target.addEventListener("click", fn);
-        }
-    }
-
     const appendItemDetailsToOffer = (e) => {
-        const index            = Array.from(getByClassNames("place-bid")).indexOf(e.target);
+        const index            = getTagIndex("place-bid", e.target);
 
         // we might use "index" to get the "item id" instead and use the id, to retrieve the item's details from the DB
         // selected item name
@@ -57,3 +41,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // }
 });
+
+const getTagIndex = (tagName, target) => {
+    const index = Array.from(getByClassNames(tagName)).indexOf(target);
+
+    return index;
+}
+
+const getByClassNames = (name) => {
+    return document.getElementsByClassName(name);
+}
+
+const getElementById = (name) => {
+    return document.getElementById(name);
+}
+
+const createOnClickEvent = (targetName, fn) => {
+    let targetList = getByClassNames(targetName);
+
+    for (const target of targetList) {
+        target.addEventListener("click", fn);
+    }
+}
+
+const performActionOnClassNames = (targetName, fn) => {
+    let targetList = getByClassNames(targetName);
+
+    for (const target of targetList) {
+        fn(target);
+    }
+}

@@ -26,6 +26,11 @@ header {
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
 }
+
+.h-200 {
+    max-height: 290px;
+    overflow-y: auto;
+}
 /* 
 footer {
 } */
