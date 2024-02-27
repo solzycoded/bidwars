@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidWars | Item name</title>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/item-details.css">
+</head>
+<body>
+    <header class="bg-dark">
+        <!-- nav -->
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+            <a class="navbar-brand fw-bolder" href="#">Bidwars</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sell an Item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <div class="input-group">
+                        <div>
+                            <select class="form-select rounded-0" aria-label="Category Filter">
+                                <option selected disabled>Category</option>
+                                <option value="1">Antiques</option>
+                                <option value="2">Vintage Cars</option>
+                                <option value="3">Electronics</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input class="form-control me-2 rounded-0" type="search" placeholder="Find something" aria-label="Search">
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-danger rounded-0" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-section">
+        <section class="shadow bg-body rounded">
+            <div class="d-flex justify-content-start">
+                <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="item image"></div>
+                <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="item image"></div>
+                <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="item image"></div>
+            </div>
+            <div class="p-3 fs-5">
+                <h5 class="fw-bolder fs-4 item-name">1982 Ford Cortina</h5>
+                <p class=""><a href="/vintage-cars" class="link-offset-3">Vintage Cars</a></p>
+                <p>Item was acquired <small class="fw-lighter">10 days ago</small></p>
+                <div>
+                    <p class="fw-bold m-0">Condition of Item</p>
+                    <p class="fs-6">Looks new</p>
+                </div>
+                <div>
+                    <p class="fw-bold m-0">Sellers Price</p>
+                    <p class="fs-6 item-price">$12,000</p>
+                </div>
+
+                <div class="mt-4 fs-6">
+                    <p class="m-0">Item is currently live in <a href="/room/101" class="link-offset-2">Room 101</a></p>
+                    <p>Auction ends in <small class="text-danger">1:20:34</small></p>
+                </div>
+
+                <div>
+                    <div class="d-inline"><button role="button" class="btn btn-dark fs-4 place-bid" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
+                    <div class="d-inline p-0"><small class="text-secondary fw-bold fs-6">430 bids placed</small></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-5 container-fluid other-items">
+            <h5>Other Items in Vintage Cars</h5>
+            <div class="row">
+                <div class="col-12 col-md-3 mb-3">
+                    <div class="card">
+                        <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
+                        <div class="card-body">
+                            <h5 class="card-title limit-text fw-bolder p-0 item-name">1982 Cortina</h5>
+                            <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
+                            <p class="card-text fw-bold item-price">$3000</p>
+                            <p class="card-text text-danger text-end">4 bids placed</p>
+                            <div class="d-inline"><a href="/item-details?id=1" class="btn btn-outline-dark fw-bold">Preview</a></div>
+                            <div class="d-inline float-end"><button role="button" class="btn btn-dark fw-bold place-bid" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- modal for bid offer -->
+    <div class="modal fade" id="bid-offer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bid-offerLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 fw-lighter" id="bid-offerLabel">Place Bid for <span id="bid-offer-title" class="fw-bold">Item X</span></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <p>Selling price is <b class="text-danger" id="bid-offer-price">$1000</b></p>
+                        <div class="form-group">
+                            <label for="bid-offer" class="mb-2 fw-bold">What's your offer?</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="offer-sign">£</span>
+                                <input type="number" class="form-control" placeholder="Enter offer for item" aria-label="offer" aria-describedby="offer-sign" min="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-secondary send-offer-auction-details text-end">
+                        <p class="text-danger m-0">430 bids placed</p>
+                        <p class="m-0">Auction ends in <small class="text-danger fw-bolder">1:20:34</small></p>
+                    </div>
+                    <button type="button" class="btn btn-primary">Send offer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END modal for bid offer -->
+
+    <footer class="bg-dark text-white text-center p-3">This is my footer</footer>
+
+    <!-- scripts -->
+    <script src="./js/bootstrap.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>
