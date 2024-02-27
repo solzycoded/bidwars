@@ -4,7 +4,7 @@ header {
 
 #main-section {
     margin-top: 50px !important;
-    margin-bottom: 60px;
+    padding: 20px 100px;
 }
 
 .live-auction-item-name {
