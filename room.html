@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidWars</title>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/room.css">
+</head>
+<body>
+    <header class="bg-dark">
+        <!-- nav -->
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bolder" href="#">Bidwars</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Sell an Item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">Profile</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <div class="input-group">
+                            <div>
+                                <select class="form-select rounded-0" aria-label="Category Filter">
+                                    <option selected disabled>Category</option>
+                                    <option value="1">Antiques</option>
+                                    <option value="2">Vintage Cars</option>
+                                    <option value="3">Electronics</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input class="form-control me-2 rounded-0" type="search" placeholder="Find something" aria-label="Search">
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-danger rounded-0" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-section">
+        <!-- room details -->
+        <section>
+            <div class="card">
+                <div class="card-header p-2 pb-0">
+                    <div class="position-relative">
+                        <div>
+                            <h3>Room X</h3>
+                            <p class="text-danger">1000 active bidders</p>
+                        </div>
+                        <div class="position-absolute end-0 top-0 bottom-0"><button type="button" class="btn btn-dark">Join Room</button></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- room details -->
+                    <div class="container-fluid ps-0 pe-0">
+                        <div class="row mb-20">
+                            <div class="col-12 col-md-4 text-left mb-2">
+                                <h5 class="card-title">Categories</h5>
+                                <div class="mt-2 card-text">
+                                  <div class="d-inline text-secondary pe-2"><a class="text-decoration-none text-dark" href="#">Vintage Cars</a></div>
+                                  <div class="d-inline text-secondary pe-2"><a class="text-decoration-none text-dark" href="#">Vintage Cars</a></div>
+                                  <div class="d-inline text-secondary pe-2"><a class="text-decoration-none text-dark" href="#">Vintage Cars</a></div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 text-left mb-2">
+                                <h5 class="card-title">Bids</h5>
+                                <div class="mt-2 card-text">
+                                    30 bids on 5 items
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 text-left mb-2">
+                                <h5 class="card-title">Auction ends in</h5>
+                                <div class="mt-2 card-text text-danger fw-bold">
+                                    1:45:33
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row h-200">
+                            <div class="col-12 col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
+                                    <div class="card-body">
+                                        <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
+                                        <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
+                                        <p class="card-text fw-bold">$3000</p>
+                                        <p class="card-text text-danger text-end">4 bids placed</p>
+                                        <div class="d-inline"><a href="#" class="btn btn-outline-dark fw-bold">Preview</a></div>
+                                        <div class="d-inline float-end"><a href="#" class="btn btn-dark fw-bold">Place Bid</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
+                                    <div class="card-body">
+                                        <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
+                                        <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
+                                        <p class="card-text fw-bold">$3000</p>
+                                        <p class="card-text text-danger text-end">4 bids placed</p>
+                                        <div class="d-inline"><a href="#" class="btn btn-outline-dark fw-bold">Preview</a></div>
+                                        <div class="d-inline float-end"><a href="#" class="btn btn-dark fw-bold">Place Bid</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
+                                    <div class="card-body">
+                                        <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
+                                        <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
+                                        <p class="card-text fw-bold">$3000</p>
+                                        <p class="card-text text-danger text-end">4 bids placed</p>
+                                        <div class="d-inline"><a href="#" class="btn btn-outline-dark fw-bold">Preview</a></div>
+                                        <div class="d-inline float-end"><a href="#" class="btn btn-dark fw-bold">Place Bid</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
+                                    <div class="card-body">
+                                        <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
+                                        <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
+                                        <p class="card-text fw-bold">$3000</p>
+                                        <p class="card-text text-danger text-end">4 bids placed</p>
+                                        <div class="d-inline"><a href="#" class="btn btn-outline-dark fw-bold">Preview</a></div>
+                                        <div class="d-inline float-end"><a href="#" class="btn btn-dark fw-bold">Place Bid</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
+                                    <div class="card-body">
+                                        <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
+                                        <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
+                                        <p class="card-text fw-bold">$3000</p>
+                                        <p class="card-text text-danger text-end">4 bids placed</p>
+                                        <div class="d-inline"><a href="#" class="btn btn-outline-dark fw-bold">Preview</a></div>
+                                        <div class="d-inline float-end"><a href="#" class="btn btn-dark fw-bold">Place Bid</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="imgs/vintage-car.jpg" class="card-img-top" alt="auction item image">
+                                    <div class="card-body">
+                                        <h5 class="card-title limit-text fw-bolder p-0">1982 Cortina</h5>
+                                        <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
+                                        <p class="card-text fw-bold">$3000</p>
+                                        <p class="card-text text-danger text-end">4 bids placed</p>
+                                        <div class="d-inline"><a href="#" class="btn btn-outline-dark fw-bold">Preview</a></div>
+                                        <div class="d-inline float-end"><a href="#" class="btn btn-dark fw-bold">Place Bid</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- other rooms -->
+        <section class="live-auction-section">
+            <h5>Other Auction Rooms</h5>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 mb-3">
+                        <div class="shadow mb-5 bg-body rounded">
+                            <div class="d-flex justify-content-start">
+                            <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="auction room image"></div>
+                            <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="auction room image"></div>
+                            <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="auction room image"></div>
+                            </div>
+
+                            <div class="p-3">
+                                <div>
+                                <div class="d-inline fw-bold">Room 101</div>
+                                <div class="d-inline text-danger float-end">1000 bids so far</div>
+                                </div>
+                                <div class="mt-2">
+                                <div class="d-inline text-secondary pe-2"><a class="text-decoration-none" href="#">Vintage Cars</a></div>
+                                <div class="d-inline text-secondary pe-2"><a class="text-decoration-none" href="#">Vintage Cars</a></div>
+                                <div class="d-inline text-secondary pe-2"><a class="text-decoration-none" href="#">Vintage Cars</a></div>
+                                </div>
+                    
+                                <div class="mt-2">
+                                <p class="d-inline text-secondary pe-2">1984 Cortina, </p>
+                                <p class="d-inline text-secondary pe-2">Little Finger from Game of Thrones, </p>
+                                <p class="d-inline text-secondary pe-2">Little Finger from Game of Thrones</p>
+                                </div>
+                                <div class="mt-4">
+                                <div class="d-inline">
+                                    <a class="btn btn-outline-dark fw-bold" href="/live-auctions/room-x">Preview</a>
+                                </div>
+                                <div class="d-inline float-end">
+                                    <a class="btn btn-dark fw-bold" href="/live-auctions/room-x">Join Room</a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-sm-12 col-md-6 mb-3">
+                        <div class="shadow mb-5 bg-body rounded">
+                            <div class="d-flex justify-content-start">
+                            <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="auction room image"></div>
+                            <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="auction room image"></div>
+                            <div><img src="imgs/vintage-car.jpg" class="img-fluid" alt="auction room image"></div>
+                            </div>
+
+                            <div class="p-3">
+                                <div>
+                                <div class="d-inline fw-bold">Room 101</div>
+                                <div class="d-inline text-danger float-end">1000 bids so far</div>
+                                </div>
+                                <div class="mt-2">
+                                <div class="d-inline text-secondary pe-2"><a class="text-decoration-none" href="#">Vintage Cars</a></div>
+                                <div class="d-inline text-secondary pe-2"><a class="text-decoration-none" href="#">Vintage Cars</a></div>
+                                <div class="d-inline text-secondary pe-2"><a class="text-decoration-none" href="#">Vintage Cars</a></div>
+                                </div>
+                    
+                                <div class="mt-2">
+                                <p class="d-inline text-secondary pe-2">1984 Cortina, </p>
+                                <p class="d-inline text-secondary pe-2">Little Finger from Game of Thrones, </p>
+                                <p class="d-inline text-secondary pe-2">Little Finger from Game of Thrones</p>
+                                </div>
+                                <div class="mt-4">
+                                <div class="d-inline">
+                                    <a class="btn btn-outline-dark fw-bold" href="/live-auctions/room-x">Preview</a>
+                                </div>
+                                <div class="d-inline float-end">
+                                    <a class="btn btn-dark fw-bold" href="/live-auctions/room-x">Join Room</a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white text-center p-3">This is my footer</footer>
+</body>
+</html>

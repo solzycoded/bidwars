@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidWars | Profile | Notifications</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+    <header class="bg-dark">
+        <!-- main nav -->
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bolder" href="#">Bidwars</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Sell an Item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#my-items">My Items</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#my-bids">My Bids</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/profile/notifications.html">Notifications</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">Log-out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    
+    <main id="main-section">
+        <!-- page header -->
+        <div class="container-fluid">
+            <nav aria-label="breadcrumb" class="bg-light rounded">
+                <ol class="breadcrumb p-1">
+                    <li class="breadcrumb-item fw-bolder"><a href="profile/index">Profile</a></li>
+                    <li class="breadcrumb-item active text-dark" aria-current="page">Notifications</li>
+                </ol>
+            </nav>
+        </div>
+
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 text-secondary"><small>You have <b class="text-danger">1</b> new notification</small></div>
+                    <div class="col-12 col-md-12 col-lg-6 mt-3">
+                        <div class="border-bottom">
+                            <div class="mb-3">
+                                <p class="fw-bolder d-inline">12/02/2024 5:00 AM</p>
+                                <div class="d-inline float-end"><button class="btn btn-danger p-1">Delete</button></div>
+                            </div>
+                            <div>
+                                <p>You have been outbid on your most recent bid <a href="/something">V1 Engine ...</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
