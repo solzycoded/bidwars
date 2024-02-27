@@ -26,30 +26,6 @@ header {
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
 }
-
-.search-results-dropdown {
-    z-index: 9;
-    overflow-y: auto;
-    max-height: 300px;
-    display: none;
-    transition: display 2s ease-out;
-}
-
-.search-results-dropdown.active {
-    display: block;
-}
-
-.search-filter-item {
-    font-weight: lighter;
-    font-size: 16px;
-    transition: font-size 0.4s ease-out;
-}
-
-.search-filter-item:hover {
-    background-color: red;
-    border-color: transparent;
-    font-size: 15px;
-}
 /* 
 footer {
 } */

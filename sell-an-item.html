@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/sell-an-item.css">
+    <link rel="stylesheet" href="css/search.css">
 </head>
 <body>
     <header class="bg-dark">
@@ -35,19 +36,25 @@
                 <div class="position-relative search-container">
                   <div class="input-group mb-1">
                     <div>
-                      <select class="form-select rounded-start rounded-0" aria-label="Category Filter">
+                      <select class="form-select rounded-start rounded-0 category-filter" id="category-filter" aria-label="Category Filter" onchange="includeFilter(this)">
                         <option selected disabled>Category</option>
-                        <option value="1">Antiques</option>
-                        <option value="2">Vintage Cars</option>
-                        <option value="3">Electronics</option>
+                        <option value="antiques">Antiques</option>
+                        <option value="vintage cars">Vintage Cars</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="art">Art</option>
                       </select>
                     </div>
                     <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()">
                   </div>
 
                   <div class="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
-                    <div class="mb-2 d-flex justify-content-start">
-                      <!-- <button class="btn btn-dark rounded-pill ps-2 pe-2 p-0 search-filter-item"><small>something</small></button> -->
+                    <div class="mb-2 d-flex justify-content-start search-filter-items" style="overflow-x: auto;">
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">antiques</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">art</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">electronics</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">furniture</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">vintage cars</button>
                     </div>
                     <div class="list-group">
                       <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
@@ -293,7 +300,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="acquisition-condition" class="mb-2 fw-bold fs-6">In what condition would you say the item current is?</label>
+                        <label for="acquisition-condition" class="mb-2 fw-bold fs-6">Are you satisfied with our price recommendation?</label>
                         <div>
                             <div class="d-inline"><button class="btn btn-outline-dark">Yes</button></div>
                             <div class="d-inline"><button class="btn btn-outline-dark">No</button></div>
