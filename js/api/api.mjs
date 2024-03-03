@@ -230,7 +230,7 @@ class SearchApi {
                 // building query
                 const searchQuery = ["%" + search + "%"];
                 const SQL         = "SELECT id, title FROM bidwars101.Items WHERE title LIKE ?";
-                
+
                 // getting result
                 const result      = await Db.queryPromise(this.con, SQL, searchQuery);
 
