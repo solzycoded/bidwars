@@ -138,10 +138,10 @@ class ItemApi {
                 // building query
                 const item = [title, category_id, item_condition_id, price, selling_time, purchase_duration, id];
                 const SQL  = "UPDATE bidwars101.Items SET title = ?, category_id = ?, item_condition_id = ?, price = ?, selling_time = ?, purchase_duration = ? WHERE id = ?";
-                
+
                 // getting result
                 const result = await Db.queryPromise(this.con, SQL, item);
-        
+
                 res.status(200).json({success: true, id, title});
             } catch(err) {
                 console.log(err);
