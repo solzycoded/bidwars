@@ -15,9 +15,9 @@ export class Db {
         con.query(query, 
             function (err, result) {
                 if (err) throw err;
-                console.log("Created");
-
-                Db.createTables(con);
+                // else {
+                //     console.log("Created");
+                // }
             }
         );
     }
@@ -29,6 +29,8 @@ export class Db {
 
             Db.sendQuery("DROP DATABASE IF EXISTS bidwars101", con);
             Db.sendQuery("CREATE DATABASE IF NOT EXISTS bidwars101", con);
+            Db.createTables(con);
+            Db.insertDefaultData(con);
         });
     }
 
@@ -57,18 +59,19 @@ export class Db {
                         "name VARCHAR(50) NOT NULL UNIQUE," +
                         "email VARCHAR(120) NOT NULL UNIQUE," +
                         "password VARCHAR(30) NOT NULL," +
-                        "created_at TIMESTAMP" +
+                        "created_at DATETIME DEFAULT NOW()" +
                     ");",
             notifications: "CREATE TABLE IF NOT EXISTS bidwars101.Notifications (" +
                             "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                             "user_id INT NOT NULL," +
                             "message TEXT NOT NULL," +
-                            "created_at TIMESTAMP," +
+                            "created_at DATETIME DEFAULT NOW()," +
                             "FOREIGN KEY (user_id) REFERENCES Users(id)" +
                         ");",
             itemConditions: "CREATE TABLE IF NOT EXISTS bidwars101.Item_Conditions (" +
                                 "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
-                                "item_condition VARCHAR(30) NOT NULL UNIQUE" +
+                                "item_condition VARCHAR(30) NOT NULL UNIQUE," +
+                                "pre_condition BOOLEAN default false" +
                             ");",
             items: "CREATE TABLE IF NOT EXISTS bidwars101.Items (" +
                         "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
@@ -79,7 +82,7 @@ export class Db {
                         "price BIGINT NOT NULL," +
                         "selling_time INT NOT NULL," +
                         "purchase_duration INT NOT NULL," +
-                        "created_at TIMESTAMP," +
+                        "created_at DATETIME DEFAULT NOW()," +
                         "FOREIGN KEY (user_id) REFERENCES Users(id)," +
                         "FOREIGN KEY (category_id) REFERENCES Categories(id)," +
                         "FOREIGN KEY (item_condition_id) REFERENCES Item_Conditions(id)" +
@@ -92,7 +95,7 @@ export class Db {
                         ");",
             rooms: "CREATE TABLE IF NOT EXISTS bidwars101.Rooms (" +
                         "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
-                        "room_number VARCHAR(10) NOT NULL" +
+                        "room_tag VARCHAR(10) NOT NULL" +
                     ");",
             auctionRooms: "CREATE TABLE IF NOT EXISTS bidwars101.Auction_Rooms (" +
                             "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
@@ -108,7 +111,7 @@ export class Db {
                 "item_id INT NOT NULL," +
                 "offer BIGINT NOT NULL," +
                 "awarded BOOLEAN DEFAULT false," +
-                "created_at TIMESTAMP," +
+                "created_at DATETIME DEFAULT NOW()," +
                 "FOREIGN KEY (bidder) REFERENCES Users(id)," +
                 "FOREIGN KEY (item_id) REFERENCES Items(id)" +
             ")"
@@ -124,5 +127,19 @@ export class Db {
         Db.sendQuery(table.rooms, con);
         Db.sendQuery(table.auctionRooms, con);
         Db.sendQuery(table.bids, con);
+    }
+
+    static insertDefaultData(con){
+        // categories
+        Db.sendQuery("INSERT IGNORE INTO bidwars101.Categories (name) VALUES ('art'), ('electronics'), ('antiques'), ('vintage cars'), ('furniture');", con);
+
+        // item conditions
+        Db.sendQuery("INSERT IGNORE INTO bidwars101.Item_Conditions (item_condition, pre_condition) VALUES ('used', true), ('brand new', true), ('looks brand new', false), ('very old', false), ('broken and needs fixing', false), ('just needs little dusting', false);", con);
+
+        // rooms (to be removed later)
+        Db.sendQuery("INSERT IGNORE INTO bidwars101.Rooms (room_tag) VALUES ('alpha'), ('beta'), ('bolt'), ('101');", con);
+
+        // users (to be removed later)
+        Db.sendQuery("INSERT IGNORE INTO bidwars101.Users (name, email, password) VALUES ('solzy', 'solzyfrenzy1@gmail.com', 'passworded');", con);
     }
 }
