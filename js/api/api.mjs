@@ -22,8 +22,8 @@ class Api{
     }
 
     startServer(){
-        this.app.listen(3000, () => {
-            console.log("server running on port: 3000"); 
+        this.app.listen(5173, () => {
+            console.log("server running on port: 5173"); 
         });
     }
 
