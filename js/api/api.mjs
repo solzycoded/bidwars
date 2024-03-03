@@ -54,7 +54,7 @@ class ItemApi {
     }
 
     create(){
-        this.app.post('/item/create', async(req, res) => {
+        this.app.post('/api/item/create', async(req, res) => {
             try {
                 // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
                 const {title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration} = req.body;
@@ -85,7 +85,7 @@ class ItemApi {
 
     delete(){
         // DELETE API
-        this.app.delete('/item/delete/:id', async(req, res) => {
+        this.app.delete('/api/item/delete/:id', async(req, res) => {
             try {
                 // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
                 const { id } = req.params;
@@ -108,7 +108,7 @@ class ItemApi {
 
     read(){
         // GET API
-        this.app.get('/items', async(req, res) => {
+        this.app.get('/api/items', async(req, res) => {
             try {
                 const SQL    = "SELECT * FROM bidwars101.Items";
                 const result = await Db.queryPromise(this.con, SQL);
@@ -122,7 +122,7 @@ class ItemApi {
 
     update(){
         // PUT API
-        this.app.put('/item/update/:id', async(req, res) => {
+        this.app.put('/api/item/update/:id', async(req, res) => {
             try {
                 // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
                 const {title, category_id, item_condition_id, price, selling_time, purchase_duration} = req.body;
@@ -149,7 +149,7 @@ class ItemApi {
 
     edit(){
         // PUT API
-        this.app.get('/item/edit/:id', async(req, res) => {
+        this.app.get('/api/item/edit/:id', async(req, res) => {
             try {
                 // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
                 const { id } = req.params;
@@ -191,7 +191,7 @@ class CategoryApi {
 
     // GET ALL CATEGORIES API
     read(){
-        app.get('/categories', async(req, res) => {
+        app.get('/api/categories', async(req, res) => {
             try {
                 const SQL    = "SELECT * FROM bidwars101.Categories";
                 const result = await Db.queryPromise(con, SQL);
@@ -220,7 +220,7 @@ class SearchApi {
     
     read(){
         // PUT API
-        this.app.get('/search', async(req, res) => {
+        this.app.get('/api/search', async(req, res) => {
             try {
                 // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
                 const { search, categories } = req.body; // i'm only implementing the search query for now, without the category
