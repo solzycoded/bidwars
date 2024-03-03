@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/search.css">
 </head>
 <body>
     <header class="bg-dark">
@@ -29,21 +30,41 @@
                 <a class="nav-link" href="/profile">Profile</a>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <div class="input-group">
-                <div>
-                  <select class="form-select rounded-0" aria-label="Category Filter">
-                    <option selected disabled>Category</option>
-                    <option value="1">Antiques</option>
-                    <option value="2">Vintage Cars</option>
-                    <option value="3">Electronics</option>
-                  </select>
-                </div>
-                <div>
-                  <input class="form-control me-2 rounded-0" type="search" placeholder="Find something" aria-label="Search">
-                </div>
-                <div>
-                  <button class="btn btn-outline-danger rounded-0" type="submit">Search</button>
+            <form role="search">
+              <div class="input-group w-100">
+                <div class="position-relative search-container">
+                  <div class="input-group mb-1">
+                    <div>
+                      <select class="form-select rounded-start rounded-0 category-filter" id="category-filter" aria-label="Category Filter" onchange="includeFilter(this)">
+                        <option selected disabled>Category</option>
+                        <option value="antiques">Antiques</option>
+                        <option value="vintage cars">Vintage Cars</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="art">Art</option>
+                      </select>
+                    </div>
+                    <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()" onkeyup="filterSearchResults(this)">
+                  </div>
+
+                  <div class="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
+                    <div class="mb-2 d-flex justify-content-start search-filter-items" style="overflow-x: auto;">
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">antiques</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">art</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">electronics</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">furniture</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">vintage cars</button>
+                    </div>
+                    <div class="list-group">
+                      <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        The current link item
+                      </a>
+                      <a href="#" class="list-group-item list-group-item-action">A second link item</a>
+                      <a href="#" class="list-group-item list-group-item-action">A third link item</a>
+                      <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
+                      <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">A disabled link item</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>

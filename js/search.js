@@ -41,3 +41,16 @@ const toggleSelectedFilter = (targetValue, disable) => {
         }
     });
 }
+
+const filterSearchResults = (target) => {
+    let search = target.value;
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+    //   document.getElementById("txtHint").innerHTML = this.responseText;
+        console.log(this.responseText);
+    }
+
+    xhttp.open("GET", "http://localhost:3000/search?search=" + search);
+    xhttp.send();
+}
