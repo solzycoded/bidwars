@@ -232,7 +232,12 @@ class SearchApi {
                 // getting result
                 const result      = await Db.queryPromise(this.con, SQL, searchQuery);
 
-                res.status(200).json(result);
+                if(result.length > 0){
+                    res.status(200).json(result);
+                }
+                else {
+                    res.status(200).json({message: "No records found!"});
+                }
             } catch(err) {
                 console.log(err);
             }
