@@ -45,7 +45,15 @@ const toggleSelectedFilter = (targetValue, disable) => {
 const filterSearchResults = (target) => {
     let search = target.value;
 
-    fetch('/api/search')
+    const options = {
+        method: 'GET',
+        url: 'http://localhost:3000/api/search/' + search,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    fetch('http://localhost:3000/api/search/' + search)
         .then(response => response.json())
         .then(items => console.log(items));
     // const xhttp = new XMLHttpRequest();
