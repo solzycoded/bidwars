@@ -45,12 +45,15 @@ const toggleSelectedFilter = (targetValue, disable) => {
 const filterSearchResults = (target) => {
     let search = target.value;
 
-    const xhttp = new XMLHttpRequest();
-    xhttp.onload = function() {
-    //   document.getElementById("txtHint").innerHTML = this.responseText;
-        console.log(this.responseText);
-    }
+    fetch('/api/search')
+        .then(response => response.json())
+        .then(items => console.log(items));
+    // const xhttp = new XMLHttpRequest();
+    // xhttp.onload = function() {
+    // //   document.getElementById("txtHint").innerHTML = this.responseText;
+    //     console.log(this.responseText);
+    // }
 
-    xhttp.open("GET", "http://localhost:3000/search?search=" + search);
-    xhttp.send();
+    // xhttp.open("GET", "http://localhost:5173/api/search?search=" + search);
+    // xhttp.send();
 }
