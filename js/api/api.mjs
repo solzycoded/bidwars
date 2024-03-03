@@ -22,8 +22,8 @@ class Api{
     }
 
     startServer(){
-        this.app.listen(5173, () => {
-            console.log("server running on port: 5173"); 
+        this.app.listen(3000, () => {
+            console.log("server running on port: 3000"); 
         });
     }
 
@@ -223,7 +223,7 @@ class SearchApi {
         this.app.get('/api/search', async(req, res) => {
             try {
                 // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
-                const { search, categories } = req.body; // i'm only implementing the search query for now, without the category
+                const { search } = req.body; // i'm only implementing the search query for now, without the category
 
                 // building query
                 const searchQuery = ["%" + search + "%"];
