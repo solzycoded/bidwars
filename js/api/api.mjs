@@ -1,6 +1,7 @@
 import { Db } from "./database.mjs"
 import express from "express"
 import bodyParser from "body-parser"
+import cors from "cors"
 
 class Api{
     constructor(con){
@@ -18,14 +19,26 @@ class Api{
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended: true}));
 
+        app.use(cors(this.setCorsOptions));
+
         return app;
+    }
+
+    setCorsOptions(){
+        const corsOptions = {
+            origin: '*', 
+            credentials: true,            //access-control-allow-credentials:true
+            optionSuccessStatus: 200,
+        };
+
+        return corsOptions;
     }
 
     startServer(){
         const port = process.env.port || 3000;
 
         this.app.listen(port, () => {
-            console.log("server running on port: 3000"); 
+            console.log("server running on port: 3000");
         });
     }
 
