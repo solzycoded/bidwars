@@ -101,7 +101,9 @@ export class Db {
                             "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                             "room_id INT NOT NULL," +
                             "item_id INT NOT NULL," +
-                            "auction_date DATETIME NOT NULL," +
+                            "auction_date DATE NOT NULL," +
+                            "auction_start TIME NOT NULL," +
+                            "auction_end TIME NOT NULL," +
                             "FOREIGN KEY (room_id) REFERENCES Rooms(id)," +
                             "FOREIGN KEY (item_id) REFERENCES Items(id)" +
                         ");",

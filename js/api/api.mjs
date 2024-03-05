@@ -64,39 +64,57 @@ class ItemImageApi {
 
     initialize(){
         this.create();
-        this.read();
-        this.delete();
-        this.edit();  
         this.update();
-
-        // remove later
-        this.insert();
     }
 
     create(){
         this.app.post('/api/item/image/create', async(req, res) => {
             try {
                 // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
-                const {title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration} = req.body;
+                const { item_id, images } = req.body;
 
                 // validation
-                if(!title && !category_id && !user_id && !item_condition_id && !price && !purchase_duration){
+                if(!item_id && !images && images.length==3){
                     throw new Error("There are missing fields!");
                 }
 
                 // building query
-                const item = [title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration];
-                const SQL  = "INSERT IGNORE INTO bidwars101.Items (title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration) VALUES (?,?,?,?,?,?,?)";
+                const SQL  = `INSERT IGNORE INTO bidwars101.Item_Images (item_id, image) VALUES (${item_id}, ${images[0]}), ((${item_id}, ${images[1]}), ((${item_id}, ${images[2]})`;
 
                 // getting result
-                const result = await Db.queryPromise(this.con, SQL, item);
+                const result = await Db.queryPromise(this.con, SQL);
 
-                if(result.insertId==0){
-                    res.status(200).json({success: false, message: "The title you provided already exists!"});
+                // if(result.insertId==0){
+                //     res.status(400).json({success: false, message: "The insertion was unsuccessful!"});
+                // }
+                // else {
+                    res.status(200).json({success: true});
+                // }
+            } catch(err) {
+                console.log(err);
+            }
+        });
+    }
+
+    update(){
+        this.app.put('/api/item/image/update/:id', async(req, res) => {
+            try {
+                // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
+                const { id }    = req.param;
+                const { image } = req.body;
+
+                // validation
+                if(!id && !image){
+                    throw new Error("There are missing fields!");
                 }
-                else {
-                    res.status(200).json({success: true, id: result.insertId, title});
-                }
+
+                // building query
+                const SQL  = `UPDATE bidwars101.Item_Images SET image = ${image} WHERE id = ${id}`;
+
+                // getting result
+                const result = await Db.queryPromise(this.con, SQL);
+
+                res.status(200).json({success: true});
             } catch(err) {
                 console.log(err);
             }
@@ -114,6 +132,8 @@ class ItemApi {
     initialize(){
         this.create();
         this.read();
+        this.upcomingAuctions();
+        this.liveAuctions();
         this.delete();
         this.edit();
         this.update();
@@ -193,11 +213,57 @@ class ItemApi {
         });
     }
 
-    read(){
+    read(){ // upcoming auctions
         // GET API
         this.app.get('/api/items', async(req, res) => {
             try {
-                const SQL    = "SELECT * FROM bidwars101.Items";
+                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image " +
+                    "FROM bidwars101.Items " + 
+                    "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
+                    "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id "
+                    "GROUP BY title";
+                const result = await Db.queryPromise(this.con, SQL);
+        
+                res.status(200).json(result);
+            } catch(err) {
+                console.log(err);
+            }
+        });
+    }
+
+    upcomingAuctions(){ // upcoming auctions
+        // GET API
+        this.app.get('/api/items/upcoming', async(req, res) => {
+            try {
+                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image, COUNT(bidwars101.Auction_Rooms.item_id) AS bid_number " +
+                    "FROM bidwars101.Items " + 
+                    "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
+                    "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
+                    "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+                    "WHERE auction_date > now() " +
+                    "LIMIT 10 " +
+                    "GROUP BY title";
+                const result = await Db.queryPromise(this.con, SQL);
+
+                res.status(200).json(result);
+            } catch(err) {
+                console.log(err);
+            }
+        });
+    }
+
+    liveAuctions(){ // upcoming auctions
+        // GET API
+        this.app.get('/api/items/live', async(req, res) => {
+            try {
+                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image, COUNT(bidwars101.Auction_Rooms.item_id) AS bid_number " +
+                    "FROM bidwars101.Items " + 
+                    "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
+                    "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
+                    "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+                    "WHERE auction_date > now() " +
+                    "LIMIT 5 " +
+                    "GROUP BY title";
                 const result = await Db.queryPromise(this.con, SQL);
         
                 res.status(200).json(result);
@@ -266,6 +332,64 @@ new ItemApi(app, con).initialize();
 
 
 /* CATEGORIES */
+class RoomApi {
+    constructor(app, con){
+        this.app = app;
+        this.con = con;
+    }
+
+    initialize(){
+        this.items();
+    }
+
+    // GET ALL CATEGORIES API
+    // read(){
+    //     app.get('/api/categories', async(req, res) => {
+    //         try {
+    //             const SQL    = "SELECT * FROM bidwars101.Categories";
+    //             const result = await Db.queryPromise(con, SQL);
+
+    //             res.status(200).json(result);
+    //         } catch(err) {
+    //             console.log(err);
+    //         }
+    //     });
+    // }
+
+    // GET ALL CATEGORIES API
+    items(){
+        app.get('/api/room/:room', async(req, res) => {
+            try {
+                const { room } = req.params;
+
+                // validation
+                if(!room){
+                    throw new Error("Category not selected!");
+                }
+
+                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image, COUNT(bidwars101.Auction_Rooms.item_id) AS bid_number " +
+                    "FROM bidwars101.Categories " + 
+                    "INNER JOIN bidwars101.Items ON bidwars101.Categories.id=bidwars101.Items.category_id " +
+                    "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
+                    "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+                    "WHERE auction_date > now() " +
+                    `WHERE name = '${category}'` +
+                    "LIMIT 5 " +
+                    "GROUP BY title";
+                const result = await Db.queryPromise(con, SQL);
+
+                res.status(200).json(result);
+            } catch(err) {
+                console.log(err);
+            }
+        });
+    }
+}
+
+new RoomApi(app, con).read();
+/* end CATEGORIES */
+
+/* CATEGORIES */
 class CategoryApi {
     constructor(app, con){
         this.app = app;
@@ -274,6 +398,7 @@ class CategoryApi {
 
     initialize(){
         this.read();
+        this.items();
     }
 
     // GET ALL CATEGORIES API
@@ -282,7 +407,36 @@ class CategoryApi {
             try {
                 const SQL    = "SELECT * FROM bidwars101.Categories";
                 const result = await Db.queryPromise(con, SQL);
-        
+
+                res.status(200).json(result);
+            } catch(err) {
+                console.log(err);
+            }
+        });
+    }
+
+    // GET ALL CATEGORIES API
+    items(){
+        app.get('/api/category/:category', async(req, res) => {
+            try {
+                const { category } = req.params;
+
+                // validation
+                if(!category){
+                    throw new Error("Category not selected!");
+                }
+
+                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image, COUNT(bidwars101.Auction_Rooms.item_id) AS bid_number " +
+                    "FROM bidwars101.Categories " + 
+                    "INNER JOIN bidwars101.Items ON bidwars101.Categories.id=bidwars101.Items.category_id " +
+                    "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
+                    "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+                    "WHERE auction_date > now() " +
+                    `WHERE name = '${category}'` +
+                    "LIMIT 5 " +
+                    "GROUP BY title";
+                const result = await Db.queryPromise(con, SQL);
+
                 res.status(200).json(result);
             } catch(err) {
                 console.log(err);
