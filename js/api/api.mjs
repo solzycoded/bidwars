@@ -55,6 +55,56 @@ const app = new Api(con).getApp();
 
 
 /* ITEMS */
+/* item images */
+class ItemImageApi {
+    constructor(app, con){
+        this.app = app;
+        this.con = con;
+    }
+
+    initialize(){
+        this.create();
+        this.read();
+        this.delete();
+        this.edit();  
+        this.update();
+
+        // remove later
+        this.insert();
+    }
+
+    create(){
+        this.app.post('/api/item/image/create', async(req, res) => {
+            try {
+                // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
+                const {title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration} = req.body;
+
+                // validation
+                if(!title && !category_id && !user_id && !item_condition_id && !price && !purchase_duration){
+                    throw new Error("There are missing fields!");
+                }
+
+                // building query
+                const item = [title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration];
+                const SQL  = "INSERT IGNORE INTO bidwars101.Items (title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration) VALUES (?,?,?,?,?,?,?)";
+
+                // getting result
+                const result = await Db.queryPromise(this.con, SQL, item);
+
+                if(result.insertId==0){
+                    res.status(200).json({success: false, message: "The title you provided already exists!"});
+                }
+                else {
+                    res.status(200).json({success: true, id: result.insertId, title});
+                }
+            } catch(err) {
+                console.log(err);
+            }
+        });
+    }
+}
+/* item images END */
+
 class ItemApi {
     constructor(app, con){
         this.app = app;
@@ -95,15 +145,15 @@ class ItemApi {
             try {
                 // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
                 const {title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration} = req.body;
-        
+
                 // validation
                 if(!title && !category_id && !user_id && !item_condition_id && !price && !purchase_duration){
                     throw new Error("There are missing fields!");
                 }
-        
+
                 // building query
-                const item   = [title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration];
-                const SQL    = "INSERT IGNORE INTO bidwars101.Items (title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration) VALUES (?,?,?,?,?,?,?)";
+                const item = [title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration];
+                const SQL  = "INSERT IGNORE INTO bidwars101.Items (title, category_id, user_id, item_condition_id, price, selling_time, purchase_duration) VALUES (?,?,?,?,?,?,?)";
                 
                 // getting result
                 const result = await Db.queryPromise(this.con, SQL, item);

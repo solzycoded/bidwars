@@ -76,7 +76,7 @@ export class Db {
             items: "CREATE TABLE IF NOT EXISTS bidwars101.Items (" +
                         "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                         "user_id INT NOT NULL," +
-                        "title VARCHAR(120) NOT NULL UNIQUE," +
+                        "title VARCHAR(120) NOT NULL," +
                         "category_id INT NOT NULL," +
                         "item_condition_id INT NOT NULL," +
                         "price BIGINT NOT NULL," +
