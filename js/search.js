@@ -59,7 +59,24 @@ const filterSearchResults = (target) => {
 
     fetch('http://localhost:3000/api/search/' + search)
         .then(response => response.json())
-        .then(items => console.log(items));
+        .then(items => {
+            console.log(items);
+
+            // let dropdown = getByClassNames('search-results-dropdown-section')[0];
+            // dropdown.innerHTML = '';
+
+            // // let items = [
+            // //     {title: 'something'},
+            // //     {title: 'nothing'},
+            // //     {title: 'another thing'}
+            // // ];
+
+            // items.forEach(item => {
+            //     dropdown.innerHTML += `<a href="/item-details/${item.title}" class="list-group-item list-group-item-action">${item.title}</a>`;
+            // });
+        });
+
+
     // const xhttp = new XMLHttpRequest();
     // xhttp.onload = function() {
     // //   document.getElementById("txtHint").innerHTML = this.responseText;
