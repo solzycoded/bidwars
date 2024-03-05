@@ -1,5 +1,5 @@
 import { Db } from "./database.mjs"
-import express from "express"
+import express, { response } from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
 
@@ -19,11 +19,12 @@ class Api{
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended: true}));
 
-        app.use(cors(this.setCorsOptions));
+        // app.use(cors(this.setCorsOptions));
 
         return app;
     }
 
+    // default insertion END (to be removed later)
     setCorsOptions(){
         const corsOptions = {
             origin: '*', 
@@ -66,6 +67,27 @@ class ItemApi {
         this.delete();
         this.edit();
         this.update();
+
+        // remove later
+        this.insert();
+    }
+
+    // default insertion
+    insert(){
+        let options = {
+            url: 'http://localhost:3000/api/item/create',
+            method: 'POST',
+            body: '{"title": "oakwood deep", "category_id": 1, "user_id": 1, "item_condition_id": 1, "price": 2000, "selling_time": 4, "purchase_duration": 5}',
+            headers: {
+                "content-type": "application/json"
+            }
+        }
+
+        fetch('http://localhost:3000/api/item/create', options)
+            .then(response => response.json())
+            .then(items => {
+                // console.log(items);
+            })
     }
 
     create(){
@@ -230,19 +252,23 @@ class SearchApi {
     }
 
     initialize(){
-        this.read();
+        this.search();
     }
-    
-    read(){
+
+    search(){
         // PUT API
-        this.app.get('/api/search/:search', async(req, res) => {
+        this.app.post('/api/search', async(req, res) => {
             try {
-                // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
-                const { search } = req.params; // i'm only implementing the search query for now, without the category
+                // collect all the data that comes in req.body
+                const { search, categories } = req.body;
 
                 // building query
-                const searchQuery = ["%" + search + "%"];
-                const SQL         = "SELECT id, title FROM bidwars101.Items WHERE title LIKE ?";
+                let   filterConditions = this.categoryFilter(categories);
+                const searchQuery = categories.concat(["%" + search + "%"]);
+
+                const SQL         = "SELECT title FROM bidwars101.Items " + 
+                    "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " + 
+                    "WHERE " + filterConditions + "title LIKE ?";
 
                 // getting result
                 const result      = await Db.queryPromise(this.con, SQL, searchQuery);
@@ -255,8 +281,19 @@ class SearchApi {
                 }
             } catch(err) {
                 console.log(err);
+                // res.status(500).json({message: "Something went wrong!"});
             }
         });
+    }
+
+    categoryFilter(categories){
+        let conditions = "";
+
+        for (let i = 0; i < categories.length; i++) {
+            conditions += "name = ? AND ";
+        }
+
+        return conditions;
     }
 }
 
