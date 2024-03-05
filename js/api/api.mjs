@@ -433,7 +433,7 @@ class RoomApi {
     }
 }
 
-new RoomApi(app, con).read();
+new RoomApi(app, con).initialize();
 /* end CATEGORIES */
 
 /* CATEGORIES */
@@ -492,7 +492,7 @@ class CategoryApi {
     }
 }
 
-new CategoryApi(app, con).read();
+new CategoryApi(app, con).initialize();
 /* end CATEGORIES */
 
 /* SEARCH API */
