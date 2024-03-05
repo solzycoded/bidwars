@@ -49,7 +49,11 @@ const filterSearchResults = (target) => {
         method: 'GET',
         url: 'http://localhost:3000/api/search/' + search,
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : 'http://localhost:3000',
+            'Access-Control-Allow-Methods': 'GET',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            'Access-Control-Allow-Credentials': 'true'
         }
     };
 
