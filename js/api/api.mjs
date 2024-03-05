@@ -367,13 +367,16 @@ class RoomApi {
                     throw new Error("Category not selected!");
                 }
 
-                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image, COUNT(bidwars101.Auction_Rooms.item_id) AS bid_number " +
-                    "FROM bidwars101.Categories " + 
-                    "INNER JOIN bidwars101.Items ON bidwars101.Categories.id=bidwars101.Items.category_id " +
+                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image, COUNT(bidwars101.Bids.item_id) AS bid_number " +
+                    "FROM bidwars101.Rooms " + 
+                    "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Rooms.id=bidwars101.Auction_Rooms.room_id " +
+                    "RIGHT JOIN bidwars101.Items ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+                    "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
                     "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
-                    "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
-                    "WHERE auction_date > now() " +
-                    `WHERE name = '${category}'` +
+                    "INNER JOIN bidwars101.Bids ON bidwars101.Items.id=bidwars101.Bids.item_id " +
+                    "WHERE auction_date == now() " +
+                    "WHERE auction_end <= now() " +
+                    `WHERE room_tag = '${room}'` +
                     "LIMIT 5 " +
                     "GROUP BY title";
                 const result = await Db.queryPromise(con, SQL);
