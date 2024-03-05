@@ -340,21 +340,66 @@ class RoomApi {
 
     initialize(){
         this.items();
+        this.bidders();
+        this.categories();
     }
 
-    // GET ALL CATEGORIES API
-    // read(){
-    //     app.get('/api/categories', async(req, res) => {
-    //         try {
-    //             const SQL    = "SELECT * FROM bidwars101.Categories";
-    //             const result = await Db.queryPromise(con, SQL);
+    // GET THE UNIQUE NUMBER OF BIDDERS CURRENTLY IN THE ROOM
+    bidders(){
+        app.get('/api/room/:room/total-bidders', async(req, res) => {
+            try {
+                const { room } = req.params;
 
-    //             res.status(200).json(result);
-    //         } catch(err) {
-    //             console.log(err);
-    //         }
-    //     });
-    // }
+                // validation
+                if(!room){
+                    throw new Error("Category not selected!");
+                }
+
+                const SQL    = "SELECT COUNT(bidwars101.Bids.bidder) AS bid_number " +
+                    "FROM bidwars101.Rooms " + 
+                    "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Rooms.id=bidwars101.Auction_Rooms.room_id " +
+                    "RIGHT JOIN bidwars101.Items ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+                    "INNER JOIN bidwars101.Bids ON bidwars101.Items.id=bidwars101.Bids.item_id " +
+                    "WHERE auction_date == now() " +
+                    "WHERE auction_end <= now() " +
+                    `WHERE room_tag = '${room}'` +
+                    "GROUP BY bid_number";
+                const result = await Db.queryPromise(con, SQL);
+
+                res.status(200).json(result);
+            } catch(err) {
+                console.log(err);
+            }
+        });
+    }
+
+    categories(){
+        app.get('/api/room/:room/categories', async(req, res) => {
+            try {
+                const { room } = req.params;
+
+                // validation
+                if(!room){
+                    throw new Error("Category not selected!");
+                }
+
+                const SQL    = "SELECT COUNT(bidwars101.Bids.bidders) AS bid_number " +
+                    "FROM bidwars101.Rooms " + 
+                    "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Rooms.id=bidwars101.Auction_Rooms.room_id " +
+                    "RIGHT JOIN bidwars101.Items ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+                    "INNER JOIN bidwars101.Bids ON bidwars101.Items.id=bidwars101.Bids.item_id " +
+                    "WHERE auction_date == now() " +
+                    "WHERE auction_end <= now() " +
+                    `WHERE room_tag = '${room}'` +
+                    "GROUP BY bid_number";
+                const result = await Db.queryPromise(con, SQL);
+
+                res.status(200).json(result);
+            } catch(err) {
+                console.log(err);
+            }
+        });
+    }
 
     // GET ALL CATEGORIES API
     items(){
@@ -377,7 +422,6 @@ class RoomApi {
                     "WHERE auction_date == now() " +
                     "WHERE auction_end <= now() " +
                     `WHERE room_tag = '${room}'` +
-                    "LIMIT 5 " +
                     "GROUP BY title";
                 const result = await Db.queryPromise(con, SQL);
 
