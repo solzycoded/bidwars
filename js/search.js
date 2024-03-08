@@ -42,22 +42,8 @@ const toggleSelectedFilter = (targetValue, disable) => {
     });
 }
 
-const filterSearchResults = (target) => {
-    let search = target.value;
-
-    const options = {
-        method: 'GET',
-        url: 'http://localhost:3000/api/search/' + search,
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin' : 'http://localhost:3000',
-            'Access-Control-Allow-Methods': 'GET',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            'Access-Control-Allow-Credentials': 'true'
-        }
-    };
-
-    fetch('http://localhost:3000/api/search/' + search)
+async function searchResults(options) {
+    fetch('http://localhost:3000/api/search/', options)
         .then(response => response.json())
         .then(items => {
             console.log(items);
@@ -75,8 +61,25 @@ const filterSearchResults = (target) => {
             //     dropdown.innerHTML += `<a href="/item-details/${item.title}" class="list-group-item list-group-item-action">${item.title}</a>`;
             // });
         });
+}
 
+const filterSearchResults = (target) => {
+    let search = target.value;
 
+    const options = {
+        method: 'POST',
+        url: 'http://localhost:3000/api/search/' + search,
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Access-Control-Allow-Origin' : 'http://localhost:3000',
+            // 'Access-Control-Allow-Methods': 'GET',
+            // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            // 'Access-Control-Allow-Credentials': 'true'
+        },
+        body: `{"search": ${search}, "categories": ["art"]}`
+    };
+
+    searchResults(options);
     // const xhttp = new XMLHttpRequest();
     // xhttp.onload = function() {
     // //   document.getElementById("txtHint").innerHTML = this.responseText;
