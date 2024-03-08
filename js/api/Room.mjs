@@ -12,7 +12,7 @@ export class RoomApi {
 
     // GET THE UNIQUE NUMBER OF BIDDERS CURRENTLY IN THE ROOM
     bidders(){
-        app.get('/api/room/:room/total-bidders', async(req, res) => {
+       this.app.get('/api/room/:room/total-bidders', async(req, res) => {
             try {
                 const { room } = req.params;
 
@@ -40,7 +40,7 @@ export class RoomApi {
     }
 
     categories(){
-        app.get('/api/room/:room/categories', async(req, res) => {
+        this.app.get('/api/room/:room/categories', async(req, res) => {
             try {
                 const { room } = req.params;
 
@@ -58,7 +58,7 @@ export class RoomApi {
                     "WHERE auction_end <= now() " +
                     `WHERE room_tag = '${room}'` +
                     "GROUP BY bid_number";
-                const result = await Db.queryPromise(con, SQL);
+                const result = await Db.queryPromise(this.con, SQL);
 
                 res.status(200).json(result);
             } catch(err) {
@@ -69,7 +69,7 @@ export class RoomApi {
 
     // GET ALL CATEGORIES API
     items(){
-        app.get('/api/room/:room', async(req, res) => {
+       this.app.get('/api/room/:room', async(req, res) => {
             try {
                 const { room } = req.params;
 

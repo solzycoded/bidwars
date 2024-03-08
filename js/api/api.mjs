@@ -68,7 +68,7 @@ new ItemApi(app, con).initialize();
 
 
 /* ROOMS */
-new RoomApi(app, con).intialize();
+new RoomApi(app, con).initialize();
 /* end ROOMS */
 
 /* CATEGORIES */

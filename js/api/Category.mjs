@@ -12,10 +12,10 @@ export class CategoryApi {
 
     // GET ALL CATEGORIES API
     read(){
-        app.get('/api/categories', async(req, res) => {
+       this.app.get('/api/categories', async(req, res) => {
             try {
                 const SQL    = "SELECT * FROM bidwars101.Categories";
-                const result = await Db.queryPromise(con, SQL);
+                const result = await Db.queryPromise(this.con, SQL);
 
                 res.status(200).json(result);
             } catch(err) {
@@ -26,7 +26,7 @@ export class CategoryApi {
 
     // GET ALL CATEGORIES API
     items(){
-        app.get('/api/category/:category', async(req, res) => {
+       this.app.get('/api/category/:category', async(req, res) => {
             try {
                 const { category } = req.params;
 
@@ -44,7 +44,7 @@ export class CategoryApi {
                     `WHERE name = '${category}'` +
                     "LIMIT 5 " +
                     "GROUP BY title";
-                const result = await Db.queryPromise(con, SQL);
+                const result = await Db.queryPromise(this.con, SQL);
 
                 res.status(200).json(result);
             } catch(err) {
