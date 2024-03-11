@@ -3,6 +3,10 @@ const toggleSearchResultsDropdown = () => {
     getElementById("search-results-dropdown").classList.toggle("active");
 }
 
+const showSearchResultsDropdown = () => {
+    getElementById("search-results-dropdown").classList.add("active");
+}
+
 const includeFilter = (target) => {
     // show search results dropdown
     getElementById("search-results-dropdown").classList.add("active");
@@ -11,6 +15,8 @@ const includeFilter = (target) => {
     toggleSelectedFilter(target.value, true);
 
     displayFilter(target.value);
+
+    filterSearchResults();
 }
 
 const displayFilter = (selectedFilter) => {
@@ -30,6 +36,8 @@ const hideFilter = (target) => {
 
     // enable the selected filter
     toggleSelectedFilter(target.innerHTML, false);
+
+    filterSearchResults();
 }
 
 const toggleSelectedFilter = (targetValue, disable) => {
@@ -42,50 +50,41 @@ const toggleSelectedFilter = (targetValue, disable) => {
     });
 }
 
-async function searchResults(options) {
-    fetch('http://localhost:3000/api/search/', options)
-        .then(response => response.json())
-        .then(items => {
-            console.log(items);
+const filterSearchResults = () => {
+    let search = getElementById("search-for-item").value;
 
-            // let dropdown = getByClassNames('search-results-dropdown-section')[0];
-            // dropdown.innerHTML = '';
+    const data = {search, categories: getFilters()};
 
-            // // let items = [
-            // //     {title: 'something'},
-            // //     {title: 'nothing'},
-            // //     {title: 'another thing'}
-            // // ];
+    new FetchRequest("POST", "api/search", data).send(searchResults, searchResults);
 
-            // items.forEach(item => {
-            //     dropdown.innerHTML += `<a href="/item-details/${item.title}" class="list-group-item list-group-item-action">${item.title}</a>`;
-            // });
-        });
+    showSearchResultsDropdown();
 }
 
-const filterSearchResults = (target) => {
-    let search = target.value;
+const searchResults = (items) => {
+    let dropdown       = getByClassNames('search-results-dropdown-section')[0];
+    dropdown.innerHTML = '';
 
-    const options = {
-        method: 'POST',
-        url: 'http://localhost:3000/api/search/' + search,
-        headers: {
-            'Content-Type': 'application/json',
-            // 'Access-Control-Allow-Origin' : 'http://localhost:3000',
-            // 'Access-Control-Allow-Methods': 'GET',
-            // 'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            // 'Access-Control-Allow-Credentials': 'true'
-        },
-        body: `{"search": ${search}, "categories": ["art"]}`
-    };
+    if(Array.isArray(items) && items.length > 0){
+        for (const item of items) {
+            dropdown.innerHTML += `<a href="/item-details/${item.title}" class="list-group-item list-group-item-action">${item.title}</a>`;
+        }
+    }
+    else{
+        dropdown.innerHTML += `<a class="list-group-item disabled">${items}</a>`;
+    }
+}
 
-    searchResults(options);
-    // const xhttp = new XMLHttpRequest();
-    // xhttp.onload = function() {
-    // //   document.getElementById("txtHint").innerHTML = this.responseText;
-    //     console.log(this.responseText);
-    // }
+const getFilters = () => {
+    let dropdownItems = getByClassNames('search-filter-item include');
+    let filterList = [];
 
-    // xhttp.open("GET", "http://localhost:5173/api/search?search=" + search);
-    // xhttp.send();
+    for (let index = 0; index < dropdownItems.length; index++) {
+        const filter = dropdownItems[index];
+
+        let filterText = filter.innerHTML;
+
+        filterList[index] = filterText;
+    }
+
+    return filterList;
 }

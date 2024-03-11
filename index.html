@@ -30,7 +30,8 @@
                 <a class="nav-link" href="/profile">Profile</a>
               </li>
             </ul>
-            <form role="search">
+
+            <div>
               <div class="input-group w-100">
                 <div class="position-relative search-container">
                   <div class="input-group mb-1">
@@ -44,7 +45,7 @@
                         <option value="art">Art</option>
                       </select>
                     </div>
-                    <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()" onkeyup="filterSearchResults(this)">
+                    <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()" onkeyup="filterSearchResults()">
                   </div>
 
                   <div class="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
@@ -61,7 +62,7 @@
                   </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </nav>
@@ -139,7 +140,7 @@
       </div>
 
       <!-- Live Auction (items) -->
-      <section class="">
+      <section class="d-none" id="live-auctions-items-section">
         <div class="text-center mb-4">
           <h5>Items</h5>
         </div>
@@ -351,6 +352,8 @@
 
     <script src="./js/bootstrap.js"></script>
     <script src="./js/app.js"></script>
+    <script src="./js/request/fetch.js"></script>
     <script src="./js/search.js"></script>
+    <script src="./js/live-auctions/items.js"></script>
 </body>
 </html>
