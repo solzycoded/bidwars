@@ -1,3 +1,4 @@
+import { Db } from "./database.mjs"
 
 export class ItemApi {
     constructor(app, con){
@@ -128,21 +129,27 @@ export class ItemApi {
         });
     }
 
-    liveAuctions(){ // upcoming auctions
+    liveAuctions(){ // live auctions
         // GET API
         this.app.get('/api/items/live', async(req, res) => {
             try {
-                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image, COUNT(bidwars101.Auction_Rooms.item_id) AS bid_number " +
+                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image_text as image, COUNT(bidwars101.Auction_Rooms.item_id) AS bid_number " +
                     "FROM bidwars101.Items " + 
                     "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
                     "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
                     "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
                     "WHERE auction_date > now() " +
-                    "LIMIT 5 " +
-                    "GROUP BY title";
+                    "GROUP BY title " +
+                    "LIMIT 5";
+
                 const result = await Db.queryPromise(this.con, SQL);
-        
-                res.status(200).json(result);
+                
+                if(result.length > 0){
+                    res.status(200).json({success: true, data: result});
+                }
+                else{
+                    res.status(200).json({success: false, data: ""});
+                }
             } catch(err) {
                 console.log(err);
             }

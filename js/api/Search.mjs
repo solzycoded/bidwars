@@ -1,3 +1,5 @@
+import { Db } from "./database.mjs"
+
 export class SearchApi {
     constructor(app, con){
         this.app = app;
@@ -16,8 +18,8 @@ export class SearchApi {
                 const { search, categories } = req.body;
 
                 // building query
-                let   filterConditions = this.categoryFilter(categories);
-                const searchQuery = categories.concat(["%" + search + "%"]);
+                let filterConditions = this.categoryFilter(categories);
+                const searchQuery    = categories.concat(["%" + search + "%"]);
 
                 const SQL         = "SELECT title FROM bidwars101.Items " + 
                     "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " + 
@@ -26,11 +28,12 @@ export class SearchApi {
                 // getting result
                 const result      = await Db.queryPromise(this.con, SQL, searchQuery);
 
+                // res.send(result);
                 if(result.length > 0){
-                    res.status(200).json(result);
+                    res.status(200).json({success: true, data: result});
                 }
                 else {
-                    res.status(200).json({message: "No records found!"});
+                    res.status(200).json({success: false, data: "No records found!"});
                 }
             } catch(err) {
                 console.log(err);

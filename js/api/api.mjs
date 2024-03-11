@@ -21,7 +21,7 @@ class Api{
         // initialize express
         const app = express();
 
-        app.use(cors(this.setCorsOptions));
+        app.use(cors());
 
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended: true}));
