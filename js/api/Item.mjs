@@ -133,14 +133,31 @@ export class ItemApi {
         // GET API
         this.app.get('/api/items/live', async(req, res) => {
             try {
-                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image_text as image, COUNT(bidwars101.Auction_Rooms.item_id) AS bid_number " +
+                const today = new Date();
+
+                let hour        = today.getHours();
+                let minutes     = today.getMinutes();
+
+                let start = `${hour}:${minutes}:00`;
+                let end   = `${hour + 2}:${minutes}:00`;
+
+                let year        = today.getFullYear();
+                let month       = today.getMonth() + 1;
+                let day         = today.getDate();
+
+                let date = `${year}-${month}-${day}`;
+
+                const SQL    = "SELECT bidwars101.Items.id as id, title, image_text as image, auction_date, auction_start, auction_end, COUNT(bidwars101.Bids.item_id) as bid_number " +
                     "FROM bidwars101.Items " + 
-                    "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
                     "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
                     "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
-                    "WHERE auction_date > now() " +
+                    "LEFT JOIN bidwars101.Bids ON bidwars101.Bids.item_id=bidwars101.Auction_Rooms.item_id " +
+                    `WHERE auction_date = '${date}' ` +
+                    `AND HOUR(auction_start) >= '${start}' ` +
+                    `AND HOUR(auction_end) <= '${end}' ` +
                     "GROUP BY title " +
-                    "LIMIT 5";
+                    "ORDER BY bid_number DESC " + 
+                    "LIMIT 4";
 
                 const result = await Db.queryPromise(this.con, SQL);
                 
@@ -163,7 +180,7 @@ export class ItemApi {
                 // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
                 const {title, category_id, item_condition_id, price, selling_time, purchase_duration} = req.body;
                 const { id } = req.params;
-        
+
                 // validation
                 if(!title && !category_id && !item_condition_id && !price && !purchase_duration){
                     throw new Error("There are missing fields!");

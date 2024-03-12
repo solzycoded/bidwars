@@ -162,8 +162,8 @@ export class Db {
             // items
             Db.sendQuery(`INSERT IGNORE INTO bidwars101.Items (user_id, title, category_id, item_condition_id, price, selling_time, purchase_duration) VALUES (1, '${title}', '${categoryId}', '${itemConditionId}', '${price}', '${sellingTime}', '${purchaseDuration}');`, con);
 
-            let urlKey = Db.generateRandomNumber(4);
             // item images
+            let urlKey = Db.generateRandomNumber(3, 0);
             Db.sendQuery(`INSERT IGNORE INTO bidwars101.Item_Images (item_id, image_text) VALUES (${index + 1}, '${imageUrls[urlKey]}'), (${index + 1}, '${imageUrls[urlKey]}'), (${index + 1}, '${imageUrls[urlKey]}');`, con);
 
             // auction_rooms
