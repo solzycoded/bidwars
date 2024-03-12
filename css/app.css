@@ -1,0 +1,45 @@
+header {
+    height: inherit;
+}
+
+#main-section {
+    margin-top: 50px !important;
+    padding: 20px 100px;
+}
+
+.live-auction-item-name {
+    font-size: 19px !important;
+}
+
+.live-auction-text {
+    font-size: 25px !important;
+}
+
+.live-auction-section {
+    margin-top: 50px !important;
+}
+
+
+.limit-text {
+    width: 200px !important; 
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.h-200 {
+    max-height: 290px;
+    overflow-y: auto;
+}
+
+.live-auction-category-item-name {
+    z-index: 9;
+}
+
+.live-auction-item-image {
+    height: 170px !important;
+}
+
+/* 
+footer {
+} */
