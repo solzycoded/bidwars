@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/search.css">
 </head>
 <body>
     <header class="bg-dark">
@@ -29,24 +30,39 @@
                 <a class="nav-link" href="/profile">Profile</a>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <div class="input-group">
-                <div>
-                  <select class="form-select rounded-0" aria-label="Category Filter">
-                    <option selected disabled>Category</option>
-                    <option value="1">Antiques</option>
-                    <option value="2">Vintage Cars</option>
-                    <option value="3">Electronics</option>
-                  </select>
-                </div>
-                <div>
-                  <input class="form-control me-2 rounded-0" type="search" placeholder="Find something" aria-label="Search">
-                </div>
-                <div>
-                  <button class="btn btn-outline-danger rounded-0" type="submit">Search</button>
+
+            <div>
+              <div class="input-group w-100">
+                <div class="position-relative search-container">
+                  <div class="input-group mb-1">
+                    <div>
+                      <select class="form-select rounded-start rounded-0 category-filter" id="category-filter" aria-label="Category Filter" onchange="includeFilter(this)">
+                        <option selected disabled>Category</option>
+                        <option value="antiques">Antiques</option>
+                        <option value="vintage cars">Vintage Cars</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="art">Art</option>
+                      </select>
+                    </div>
+                    <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()" onkeyup="filterSearchResults()" autocomplete="off">
+                  </div>
+
+                  <div class="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
+                    <div class="mb-2 d-flex justify-content-start search-filter-items" style="overflow-x: auto;">
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">antiques</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">art</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">electronics</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">furniture</button>
+                      <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">vintage cars</button>
+                    </div>
+                    <div class="list-group search-results-dropdown-section">
+                      
+                    </div>
+                  </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </nav>
@@ -124,60 +140,26 @@
       </div>
 
       <!-- Live Auction (items) -->
-      <section class="">
+      <section id="live-auctions-items-section" v-show="hasLiveItems">
         <div class="text-center mb-4">
           <h5>Items</h5>
         </div>
         <div class="container-fluid">
           <div class="row">
-            <div class="col-12 col-md-4 col-lg-3 mb-3">
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" v-for="item in liveAuctionItems" :key="item.id">
               <div class="position-relative">
                 <div>
-                  <img src="/imgs/vintage-car.jpg" class="img-thumbnail w-100" alt="live auction image">
+                  <img :src="item.image" class="img-thumbnail w-100 h-100 live-auction-item-image" alt="live auction image">
                 </div>
                 <div class="">
-                  <p class="fw-bold m-0 live-auction-item-name">Item name</p>
-                  <p class="text-danger m-0">50 bids so far</p>
+                  <p class="fw-bold m-0 live-auction-item-name text-capitalize">{{ item.title }}</p>
+                  <p class="text-danger m-0">{{ item.bid_number }} bids so far</p>
                 </div>
-                <a href="/live-auctions/item name" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
+                <a href="item-details.html/?item=item.title" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
               </div>
             </div>
-            <div class="col-12 col-md-4 col-lg-3 mb-3">
-              <div class="position-relative">
-                <div>
-                  <img src="/imgs/vintage-car.jpg" class="img-thumbnail w-100" alt="live auction image">
-                </div>
-                <div class="">
-                  <p class="fw-bold m-0 live-auction-item-name">Item name</p>
-                  <p class="text-danger m-0">50 bids so far</p>
-                </div>
-                <a href="/live-auctions/item name" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
-              </div>
-            </div>
-            <div class="col-12 col-md-4 col-lg-3 mb-3">
-              <div class="position-relative">
-                <div>
-                  <img src="/imgs/vintage-car.jpg" class="img-thumbnail w-100" alt="live auction image">
-                </div>
-                <div class="">
-                  <p class="fw-bold m-0 live-auction-item-name">Item name</p>
-                  <p class="text-danger m-0">50 bids so far</p>
-                </div>
-                <a href="/live-auctions/item name" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
-              </div>
-            </div>
-            <div class="col-12 col-md-4 col-lg-3 mb-3">
-              <div class="position-relative">
-                <div>
-                  <img src="/imgs/vintage-car.jpg" class="img-thumbnail w-100" alt="live auction image">
-                </div>
-                <div class="">
-                  <p class="fw-bold m-0 live-auction-item-name">Item name</p>
-                  <p class="text-danger m-0">50 bids so far</p>
-                </div>
-                <a href="/live-auctions/item name" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
-              </div>
-            </div>
+
           </div>
         </div>
       </section>
@@ -335,7 +317,10 @@
     <footer class="bg-dark text-white text-center p-3">This is my footer</footer>
 
     <script src="./js/bootstrap.js"></script>
+    <script src="./js/vue.js"></script>
     <script src="./js/app.js"></script>
+    <script src="./js/request/fetch.js"></script>
     <script src="./js/search.js"></script>
+    <script src="./js/live-auctions/items.js"></script>
 </body>
 </html>
