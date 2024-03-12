@@ -35,6 +35,11 @@ header {
 .live-auction-category-item-name {
     z-index: 9;
 }
+
+.live-auction-item-image {
+    height: 170px !important;
+}
+
 /* 
 footer {
 } */

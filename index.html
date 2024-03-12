@@ -45,7 +45,7 @@
                         <option value="art">Art</option>
                       </select>
                     </div>
-                    <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()" onkeyup="filterSearchResults()">
+                    <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()" onkeyup="filterSearchResults()" autocomplete="off">
                   </div>
 
                   <div class="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
@@ -140,60 +140,26 @@
       </div>
 
       <!-- Live Auction (items) -->
-      <section class="d-none" id="live-auctions-items-section">
+      <section id="live-auctions-items-section" v-show="hasLiveItems">
         <div class="text-center mb-4">
           <h5>Items</h5>
         </div>
         <div class="container-fluid">
           <div class="row">
-            <div class="col-12 col-md-4 col-lg-3 mb-3">
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" v-for="item in liveAuctionItems" :key="item.id">
               <div class="position-relative">
                 <div>
-                  <img src="/imgs/vintage-car.jpg" class="img-thumbnail w-100" alt="live auction image">
+                  <img :src="item.image" class="img-thumbnail w-100 h-100 live-auction-item-image" alt="live auction image">
                 </div>
                 <div class="">
-                  <p class="fw-bold m-0 live-auction-item-name">Item name</p>
-                  <p class="text-danger m-0">50 bids so far</p>
+                  <p class="fw-bold m-0 live-auction-item-name text-capitalize">{{ item.title }}</p>
+                  <p class="text-danger m-0">{{ item.bid_number }} bids so far</p>
                 </div>
-                <a href="/live-auctions/item name" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
+                <a href="item-details.html/?item=item.title" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
               </div>
             </div>
-            <div class="col-12 col-md-4 col-lg-3 mb-3">
-              <div class="position-relative">
-                <div>
-                  <img src="/imgs/vintage-car.jpg" class="img-thumbnail w-100" alt="live auction image">
-                </div>
-                <div class="">
-                  <p class="fw-bold m-0 live-auction-item-name">Item name</p>
-                  <p class="text-danger m-0">50 bids so far</p>
-                </div>
-                <a href="/live-auctions/item name" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
-              </div>
-            </div>
-            <div class="col-12 col-md-4 col-lg-3 mb-3">
-              <div class="position-relative">
-                <div>
-                  <img src="/imgs/vintage-car.jpg" class="img-thumbnail w-100" alt="live auction image">
-                </div>
-                <div class="">
-                  <p class="fw-bold m-0 live-auction-item-name">Item name</p>
-                  <p class="text-danger m-0">50 bids so far</p>
-                </div>
-                <a href="/live-auctions/item name" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
-              </div>
-            </div>
-            <div class="col-12 col-md-4 col-lg-3 mb-3">
-              <div class="position-relative">
-                <div>
-                  <img src="/imgs/vintage-car.jpg" class="img-thumbnail w-100" alt="live auction image">
-                </div>
-                <div class="">
-                  <p class="fw-bold m-0 live-auction-item-name">Item name</p>
-                  <p class="text-danger m-0">50 bids so far</p>
-                </div>
-                <a href="/live-auctions/item name" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
-              </div>
-            </div>
+
           </div>
         </div>
       </section>
@@ -351,6 +317,7 @@
     <footer class="bg-dark text-white text-center p-3">This is my footer</footer>
 
     <script src="./js/bootstrap.js"></script>
+    <script src="./js/vue.js"></script>
     <script src="./js/app.js"></script>
     <script src="./js/request/fetch.js"></script>
     <script src="./js/search.js"></script>
