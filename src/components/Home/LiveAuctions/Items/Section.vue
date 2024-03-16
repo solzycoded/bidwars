@@ -1,5 +1,6 @@
 <script setup>
   import { ref, onBeforeMount } from 'vue'
+  import { RouterLink } from "vue-router"
 
   const liveAuctionItems = ref(null);
   const hasLiveItems     = ref(false);
@@ -32,7 +33,7 @@
                     <p class="fw-bold m-0 live-auction-item-name text-capitalize">{{ item.title }}</p>
                     <p class="text-danger m-0">{{ item.bid_number }} bids so far</p>
                 </div>
-                <a href="item-details.html/?item=item.title" class="position-absolute bottom-0 top-0 end-0 start-0"></a>
+                <RouterLink :to="`/live-auction/items/live/${item.title}`" class="position-absolute bottom-0 top-0 end-0 start-0"></RouterLink>
             </div>
         </div>
         </div>

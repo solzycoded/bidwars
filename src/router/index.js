@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHistory } from "vue-router";
 
-import HomeView from "../views/HomeView.vue"
-import CategoryView from "../views/CategoryView.vue"
-import ItemView from "../views/ItemView.vue"
+import HomeView from "../views/HomeView.vue";
+import CategoryView from "../views/CategoryView.vue";
+import ItemView from "../views/ItemView.vue";
+import RoomView from "../views/RoomView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,9 +19,14 @@ const router = createRouter({
       component: CategoryView
     },
     {
-      path: "/live-auction/item/:name",
+      path: "/live-auction/items/live/:name",
       name: "item-details",
       component: ItemView
+    },
+    {
+      path: "/live-auction/rooms/live/:name",
+      name: "room",
+      component: RoomView
     },
   ]
 })

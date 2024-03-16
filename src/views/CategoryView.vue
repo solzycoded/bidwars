@@ -38,7 +38,7 @@ onBeforeMount(() => {
                                 <p class="card-text text-danger text-end">{{ item.bid_number }} bids placed</p>
                                 <div 
                                 class="d-inline">
-                                    <RouterLink :to="`/live-auction/items/${item.title}`" class="btn btn-outline-dark fw-bold">Preview</RouterLink>
+                                    <RouterLink :to="`/live-auction/items/live/${item.title}`" class="btn btn-outline-dark fw-bold">Preview</RouterLink>
                                 </div>
                                 <div class="d-inline float-end">
                                     <button class="btn btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button>
