@@ -6,20 +6,12 @@ export class App {
         this.minutes     = this.today.getMinutes();
     }
 
-    // getStartTime(){
-    //     return `${this.hour}:${this.minutes}:00`;
-    // }
-
-    // getEndTime(hourIncrement = 2){
-    //     return `${this.hour + hourIncrement}:${this.minutes}:00`;
-    // }
-
     getTodaysDate(){
         let year        = this.today.getFullYear();
         let month       = this.today.getMonth() + 1;
         let day         = this.today.getDate();
 
-        let date = `${year}-${month}-${day}`;
+        let date        = `${year}-${month}-${day}`;
 
         return date;
     }

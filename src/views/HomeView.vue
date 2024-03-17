@@ -4,7 +4,7 @@
   import Carousel from '../components/Home/Carousel.vue'
   import LiveAuctionItems from '../components/Home/LiveAuctions/Items/Section.vue'
   import LiveAuctionCategories from '../components/Home/LiveAuctions/Categories/Section.vue'
-  import LiveAuctionRooms from '../components/Home/LiveAuctions/Rooms/Items.vue'
+  import LiveAuctionRooms from '../components/Home/LiveAuctions/Rooms/Section.vue'
 </script>
 
 <template>
@@ -23,4 +23,4 @@
     <LiveAuctionRooms></LiveAuctionRooms>
 
   </main>
-</template>
+</template>../components/Home/LiveAuctions/Rooms/Section.vue

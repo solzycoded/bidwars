@@ -43,6 +43,14 @@ header {
 .img-200 {
     height: 200px !important;
 }
+
+.img-h-120 {
+    height: 120px !important;
+}
+
+.w-100-p {
+    width: 100% !important;
+}
 /* 
 footer {
 } */
