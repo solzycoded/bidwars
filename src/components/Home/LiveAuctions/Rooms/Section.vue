@@ -17,7 +17,7 @@
 
 <template>
     <!-- Live Auction (rooms) -->
-    <section class="live-auction-section" v-show="hasLiveRooms">
+    <section  id="rooms" class="live-auction-section" v-show="hasLiveRooms">
 
         <div class="text-center mb-4">
           <h5>Rooms</h5>

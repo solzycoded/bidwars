@@ -1,9 +1,32 @@
 export class App {
-    constructor(){
-        this.today = new Date();
+    constructor(today = new Date()){
+        this.today = today;
 
         this.hour        = this.today.getHours();
         this.minutes     = this.today.getMinutes();
+    }
+
+    getDate(){
+        return this.getTodaysDate();
+    }
+
+    convertFrom24To12Format(){
+        const time24 = this.formatTime();
+
+        const [sHours, mins] = time24.match(/([0-9]{1,2}):([0-9]{2})/).slice(1);
+        const period = +sHours < 12 ? 'AM' : 'PM';
+        const hours  = +sHours % 12 || 12;
+
+        return `${this.formatDateChar(hours)}:${mins} ${period}`;
+    }
+
+    formatTime(){
+        let hour    = this.today.getHours();
+        let minutes = this.today.getMinutes();
+
+        const time = `${this.formatDateChar(hour)}:${this.formatDateChar(minutes)}`;
+
+        return time;
     }
 
     getTodaysDate(){

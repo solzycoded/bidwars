@@ -23,4 +23,4 @@
     <LiveAuctionRooms></LiveAuctionRooms>
 
   </main>
-</template>../components/Home/LiveAuctions/Rooms/Section.vue
+</template>

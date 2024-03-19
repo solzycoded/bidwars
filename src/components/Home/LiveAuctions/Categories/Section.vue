@@ -18,7 +18,7 @@ onBeforeMount(() => {
 
 <template>
   <!-- Live Auction (categories) -->
-  <section class="live-auction-section" v-show="hasCategories">
+  <section id="categories" class="live-auction-section" v-show="hasCategories">
       <div class="text-center mb-4">
         <h5>Categories</h5>
       </div>
