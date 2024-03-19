@@ -27,8 +27,10 @@ export class App {
     static async startCountDown(target, to = "17:03:00"){
         const app = new App();
 
-        let date  = app.getTodaysDate() + " ";
         // Set the date we're counting down to
+        let date  = app.getTodaysDate() + " ";
+        to        = app.formatToTime(to);
+
         let countDownDate = new Date(date + to).getTime();
 
         // Update the count down every 1 second
@@ -41,7 +43,7 @@ export class App {
 
             // Time calculations for days, hours, minutes and seconds
             // let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
@@ -58,5 +60,27 @@ export class App {
 
     formatDateChar(character){
         return character.toString().length == 1 ? '0' + character : character;
+    }
+
+    formatToTime(to){
+        let splitTo = to.split(":");
+
+        let hour = splitTo[0];
+
+        if(Number(hour) > 23){
+            splitTo[0] = hour==24 ? "00" : hour==25 ? "01" : "02";
+
+            return splitTo.join(":");
+        }
+
+        return to;
+    }
+
+    formatDistance(countDownDate, now){
+        if(countDownDate > now){
+            return countDownDate - now;
+        }
+
+        return now - countDownDate;
     }
 }

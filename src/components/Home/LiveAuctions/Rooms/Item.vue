@@ -1,7 +1,7 @@
 <script setup>
     import { ref, onBeforeMount } from 'vue';
     import { RouterLink } from "vue-router";
-
+ 
     const props = defineProps(['room']);
 
     const pictures   = ref([]);

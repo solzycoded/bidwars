@@ -28,14 +28,12 @@ onBeforeMount(() => {
     const displayItem = (itemDetails) => {
         item.value = itemDetails;
 
+        App.startCountDown(countDown, itemDetails.auction_end);
+
         new FetchRequest("GET", `api/item/image/${item.value.id}`).send(getItemImages, getItemImages);
     }
 
     new FetchRequest("GET", `api/items/${name}`).send(displayItem, displayItem);
-});
-
-onMounted(() => {
-    App.startCountDown(countDown);
 });
 </script>
 
