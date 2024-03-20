@@ -5,6 +5,7 @@ import CategoryView from "../views/CategoryView.vue";
 import ItemView from "../views/ItemView.vue";
 import RoomView from "../views/RoomView.vue";
 import ProfileView from "../views/ProfileView.vue";
+import SellAnItemView from "../views/SellAnItemView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +34,11 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: ProfileView
+    },
+    {
+      path: "/sell-an-item",
+      name: "sell_an_item",
+      component: SellAnItemView
     },
   ]
 })

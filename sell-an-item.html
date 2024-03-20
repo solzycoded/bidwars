@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BidWars</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidWars</title>
 
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/sell-an-item.css">
-  <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/sell-an-item.css">
+    <link rel="stylesheet" href="css/search.css">
 </head>
 <body>
   <header class="bg-dark">
@@ -76,10 +76,10 @@
 
   <main id="main-section">
       <div class="mb-3">
-          <h4>Sell your Item (<span class="sell-an-item-position fw-lighter">X</span>/6)</h4>
+          <h4 class="link-offset-3">Sell your Item (<span id="sell-an-item-position" class="sell-an-item-position fw-lighter">1</span>/6)</h4>
       </div>
 
-      <section id="select-category">
+      <section class="sell-your-item-section active-section" id="select-category">
           <div class="container-fluid p-0">
               <div class="text-start mb-4">
                   <h5>Category</h5>
@@ -138,15 +138,10 @@
                 </div>
                 
               </div>
-
-              <div class="mt-4">
-                  <div class="d-inline"><button role="button" class="btn btn-dark active fs-4">Prev</button></div>
-                  <div class="d-inline float-end"><button role="button" class="btn btn-dark fs-4">Next</button></div>
-              </div>
           </div>
       </section>
 
-      <section id="input-item-name">
+      <section class="sell-your-item-section" id="input-item-name">
           <div class="container-fluid p-0">
               <div class="text-start mb-4">
                   <h5>Name of Item</h5>
@@ -158,15 +153,10 @@
                       <p class="m-0 mt-2 fw-lighter"><small>Items that have been in this category have names like: X, Y, Z.</small></p>
                   </div>
               </div>
-
-              <div class="mt-4">
-                  <div class="d-inline"><button role="button" class="btn btn-dark fs-4">Prev</button></div>
-                  <div class="d-inline float-end"><button role="button" class="btn btn-dark fs-4">Next</button></div>
-              </div>
           </div>
       </section>
 
-      <section id="image-upload">
+      <section class="sell-your-item-section" id="image-upload">
           <div class="container-fluid p-0">
               <div class="text-start mb-4">
                   <h5>Images of Item (<span class="fw-lighter">0</span>/3)</h5>
@@ -228,15 +218,10 @@
                       </div>
                   </div>
               </div>
-
-              <div class="mt-4">
-                  <div class="d-inline"><button role="button" class="btn btn-dark active fs-4">Prev</button></div>
-                  <div class="d-inline float-end"><button role="button" class="btn btn-dark fs-4">Next</button></div>
-              </div>
           </div>
       </section>
 
-      <section id="item-condition">
+      <section class="sell-your-item-section" id="item-condition">
           <div class="container-fluid p-0">
               <div class="text-start mb-4">
                   <h5>Condition of Item</h5>
@@ -280,15 +265,10 @@
                       <label for="acquisition-condition">In what condition would you say the item current is?</label>
                   </div>
               </div>
-
-              <div class="mt-4">
-                  <div class="d-inline"><button role="button" class="btn btn-dark fs-4">Prev</button></div>
-                  <div class="d-inline float-end"><button role="button" class="btn btn-dark fs-4">Next</button></div>
-              </div>
           </div>
       </section>
       
-      <section id="input-item-name">
+      <section class="sell-your-item-section" id="input-item-name">
           <div class="container-fluid p-0">
               <div class="text-start mb-4">
                   <h5>Price of Item</h5>
@@ -312,15 +292,10 @@
                       <input type="text" name="price" id="item-price" class="form-control" placeholder="Enter your price">
                   </div>
               </div>
-
-              <div class="mt-4">
-                  <div class="d-inline"><button role="button" class="btn btn-dark fs-4">Prev</button></div>
-                  <div class="d-inline float-end"><button role="button" class="btn btn-dark fs-4">Next</button></div>
-              </div>
           </div>
       </section>
       
-      <section id="input-sale-period">
+      <section class="sell-your-item-section" id="input-sale-period">
           <div class="container-fluid p-0">
               <div>
                   <label for="sale-period" class="mb-2 fw-bold fs-6">How fast would you like your item to be sold?</label>
@@ -333,19 +308,24 @@
                       <option value="5">5</option>
                   </select>
               </div>
-
-              <div class="mt-4">
-                  <div class="d-inline"><button role="button" class="btn btn-dark fs-4">Prev</button></div>
-                  <div class="d-inline float-end"><button role="button" class="btn btn-dark fs-4">Next</button></div>
-              </div>
           </div>
       </section>
+
+      <div class="mt-4">
+          <div class="d-inline">
+            <button role="button" id="prev-section" class="btn btn-dark disabled fs-4" onclick="prevSection()">Prev</button>
+          </div>
+          <div class="d-inline float-end">
+            <button role="button" id="next-section" class="btn btn-dark fs-4" onclick="nextSection()">Next</button>
+          </div>
+      </div>
   </main>
 
-  <footer class="bg-dark text-white text-center p-3 mt-5">This is my footer</footer>
+  <!-- <footer class="bg-dark text-white text-center p-3 mt-5">This is my footer</footer> -->
 
   <script src="./js/app.js"></script>
   <script src="./js/sell-an-item/category.js"></script>
+  <script src="./js/sell-an-item/sell-an-item.js"></script>
   <script src="./js/sell-an-item/image.js"></script>
   <script src="./js/search.js"></script>
 </body>
