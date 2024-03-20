@@ -3,6 +3,7 @@ import "./assets/css/bootstrap.css"
 import "./assets/css/app.css"
 import "./assets/css/search.css"
 import "./assets/css/room.css"
+import "./assets/css/profile.css"
 
 import { createApp } from 'vue'
 import App from './App.vue'
