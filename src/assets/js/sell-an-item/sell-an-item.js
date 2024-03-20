@@ -6,6 +6,10 @@ const changePos = (increase = false) => {
 
     pos = increase ? pos + 1 : pos - 1;
 
+    // enable next and prev buttons
+    toggleBtns("next", true);
+    toggleBtns("prev", true);
+
     if(pos >= sections.length - 1){
         pos = sections.length - 1;
         // disable next button
@@ -15,11 +19,6 @@ const changePos = (increase = false) => {
         pos = 0;
         // disable next button
         toggleBtns("prev", false);
-    }
-    else{
-        // enable next and prev buttons
-        toggleBtns("next", true);
-        toggleBtns("prev", true);
     }
 
     posIndicator.innerHTML = pos + 1;

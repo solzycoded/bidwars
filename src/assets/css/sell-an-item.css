@@ -24,3 +24,13 @@
     display: block;
     transition: display 0.7s ease-out;
 }
+
+.item-image-selector{
+    display: none !important;
+}
+
+.image-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
