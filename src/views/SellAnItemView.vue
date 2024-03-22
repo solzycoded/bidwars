@@ -5,9 +5,23 @@ import ImageUpload from "../components/SellAnItem/ImageUpload/Section.vue";
 import ItemCondition from "../components/SellAnItem/ItemCondition/Section.vue";
 import ItemPrice from "../components/SellAnItem/ItemPrice/Section.vue";
 import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.vue";
+import { ref } from 'vue';
+</script>
 
-import { ref, onBeforeMount, onMounted } from 'vue';
-import { RouterLink, useRoute } from "vue-router";
+
+<script>
+export default {
+    data() {
+        return {
+            category: "",
+        }
+    },
+    methods: {
+        createAnItem(){
+            console.log("something");
+        }
+    },
+}
 </script>
 
 <template>
@@ -16,20 +30,25 @@ import { RouterLink, useRoute } from "vue-router";
             <h4 class="link-offset-3">Sell your Item (<span id="sell-an-item-position" class="sell-an-item-position fw-lighter">1</span>/6)</h4>
         </div>
 
-        <Category></Category>
-        <ItemName></ItemName>
-        <ImageUpload></ImageUpload>
-        <ItemCondition></ItemCondition>
-        <ItemPrice></ItemPrice>
-        <ItemSalePeriod></ItemSalePeriod>
+        <form method="post" action="http://localhost:3000/api/items/create" @submit.prevent="createAnItem">
+            <Category :category="category"></Category>
+            <ItemName></ItemName>
+            <ImageUpload></ImageUpload>
+            <ItemCondition></ItemCondition>
+            <ItemPrice></ItemPrice>
+            <ItemSalePeriod></ItemSalePeriod>
 
-        <div class="mt-4">
-            <div class="d-inline">
-                <button role="button" id="prev-section" class="btn btn-dark disabled fs-4" onclick="prevSection()">Prev</button>
+            <div class="mt-4">
+                <div class="d-inline">
+                    <button type="button" role="button" id="prev-section" class="btn btn-dark disabled fs-4" onclick="prevSection()">Prev</button>
+                </div>
+                <div class="d-inline float-end" id="next-item-section">
+                    <button type="button" role="button" id="next-section" class="btn btn-dark fs-4" onclick="nextSection()">Next</button>
+                </div>
+                <div class="d-inline float-end d-none" id="submit-item-section">
+                    <button type="submit" role="submit" id="submit-item" class="btn btn-dark fs-4" onclick="createItem({})">Finish</button>
+                </div>
             </div>
-            <div class="d-inline float-end">
-                <button role="button" id="next-section" class="btn btn-dark fs-4" onclick="nextSection()">Next</button>
-            </div>
-        </div>
+        </form>
     </main>
 </template>

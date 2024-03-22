@@ -6,6 +6,8 @@ import ItemView from "../views/ItemView.vue";
 import RoomView from "../views/RoomView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import SellAnItemView from "../views/SellAnItemView.vue";
+import LoginView from "../views/LoginView.vue";
+import SignupView from "../views/SignupView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +41,16 @@ const router = createRouter({
       path: "/sell-an-item",
       name: "sell_an_item",
       component: SellAnItemView
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: LoginView
+    },
+    {
+      path: "/signup",
+      name: "signup",
+      component: SignupView
     },
   ]
 })

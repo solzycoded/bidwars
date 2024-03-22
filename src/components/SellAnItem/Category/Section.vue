@@ -1,4 +1,5 @@
 <script setup>
+import { def } from "@vue/shared";
 import CategoryItem from "./Item.vue";
 import { ref, onBeforeMount, onMounted } from 'vue';
 import { RouterLink, useRoute } from "vue-router";
@@ -13,8 +14,23 @@ onBeforeMount(() => {
 
     new FetchRequest("GET", "api/categories").send(displayCategories, displayCategories);
 });
+
 </script>
 
+<script>
+export default {
+    // data() {
+    //     return {
+    //         something: "afda",
+    //     }
+    // },
+    // methods: {
+    //     createAnItem(){
+    //         console.log("something");
+    //     }
+    // },
+}
+</script>
 <template>
 
     <section class="sell-your-item-section active-section" id="select-category">
@@ -25,7 +41,8 @@ onBeforeMount(() => {
                 </div>
                 <div class="row">
 
-                    <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item" onclick="onCategorySelected(this)" v-for="category in categories" :key="category.id">
+                    <input type="hidden" name="category" id="selected-category">
+                    <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item" v-for="category in categories" :key="category.id" onclick="onCategorySelected(this, 'something')">
                         <CategoryItem :category="category"></CategoryItem>
                     </div>
 

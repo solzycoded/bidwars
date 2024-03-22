@@ -26,6 +26,12 @@
                     <li class="nav-item">
                         <RouterLink active-class="active" class="nav-link" to="/profile">Profile</RouterLink>
                     </li>
+                    <li class="nav-item">
+                        <RouterLink active-class="active" class="nav-link" to="/login">Login</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink active-class="active" class="nav-link btn bg-danger text-white" to="/signup">Sign up</RouterLink>
+                    </li>
                 </ul>
 
                 <div>

@@ -14,14 +14,33 @@ const changePos = (increase = false) => {
         pos = sections.length - 1;
         // disable next button
         toggleBtns("next", false);
+        togglelSubmitItemSection(true, "submit-item-section");
+        togglelSubmitItemSection(false, "next-item-section");
+
     }
     else if(pos <= 0){
         pos = 0;
         // disable next button
         toggleBtns("prev", false);
     }
+    else{
+        togglelSubmitItemSection(false, "submit-item-section");
+        togglelSubmitItemSection(true, "next-item-section");
+    }
 
     posIndicator.innerHTML = pos + 1;
+}
+
+const togglelSubmitItemSection = (show, target) => {
+    let submitItemSection = document.getElementById(target);
+    let classList         = submitItemSection.classList;
+    
+    if(show){
+        classList.remove('d-none');
+    }
+    else{
+        classList.add('d-none');
+    }
 }
 
 const changeDisplay = () => {
