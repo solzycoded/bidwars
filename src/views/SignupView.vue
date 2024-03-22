@@ -13,6 +13,7 @@ import { RouterLink } from "vue-router"
                 </div>
 
                 <div>
+                    <div class="text-danger" v-show="error!==''">{{ error }}</div>
                     <div class="mb-3">
                         <label 
                             class="form-label text-capitalize fw-bold" 
@@ -87,22 +88,33 @@ import { RouterLink } from "vue-router"
                 username: '',
                 email: '',
                 password: '',
-                rePassword: ''
+                rePassword: '',
+                error: ''
             };
         },
         methods: {
             async signup() {
-                this.$store.dispatch('login', { token: "sljfaljdfaf", username: "something", role: "user", id: "id" });
-                // const data = {username: this.username, email: this.email, password: this.password};
-                // new FetchRequest("POST", "api/users", data).send(this.signupSuccess, this.signupFailure);
+                const data = {username: this.username, email: this.email, password: this.password};
+                new FetchRequest("POST", "api/users", data).send(this.signupSuccess, this.signupFailure);
             },
             signupSuccess(data){
                 this.$store.dispatch('login', data);
-                console.log(data);
+
+                this.goToProfilePage();
+
+                this.error = '';
             },
             signupFailure(data){
-                console.log(data);
+                this.error = data.message;
+            },
+            goToProfilePage(){
+                if(this.$store.getters.isLoggedIn){
+                    this.$router.push("profile");
+                }
             }
+        },
+        mounted(){
+            this.goToProfilePage();
         }
     };
 </script>
