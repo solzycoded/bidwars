@@ -12,6 +12,9 @@ import { UserApi } from "./User.mjs"
 import { TimeFrameApi } from "./TimeFrame.mjs"
 import { ItemConditionApi } from "./ItemCondition.mjs"
 
+import userController from './controllers/UserController.js';
+import itemController from './controllers/ItemController.js';
+
 class Api{
     constructor(con){
         // create database, it's tables and do a few inserts
@@ -64,15 +67,20 @@ const app = new Api(con).getApp();
 const prefix = "/api/";
 
 /* USERS */
-// const userController = require();
-import userController from './controllers/UserController.js';
-
 userController.injectDB(con);
 
 const userPrefix = `${prefix}users/`;
 app.post(`${userPrefix}signup`, userController.createUser);
 app.post(`${userPrefix}login`, userController.loginUser);
 app.post(`${userPrefix}create-token`, userController.createUserToken);
+/* end USERS */
+
+/* ITEMS */
+itemController.injectDB(con);
+
+const itemPrefix = `${prefix}items/`;
+app.post(`${itemPrefix}create/:userId`, itemController.createItem);
+app.get(`${itemPrefix}check-title/:title`, itemController.checkTitle);
 /* end USERS */
 
 /* ITEMS */
