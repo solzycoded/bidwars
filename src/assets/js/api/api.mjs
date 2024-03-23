@@ -69,7 +69,10 @@ import userController from './controllers/UserController.js';
 
 userController.injectDB(con);
 
-app.post(`${prefix}users`, userController.createUser);
+const userPrefix = `${prefix}users/`;
+app.post(`${userPrefix}signup`, userController.createUser);
+app.post(`${userPrefix}login`, userController.loginUser);
+app.post(`${userPrefix}create-token`, userController.createUserToken);
 /* end USERS */
 
 /* ITEMS */

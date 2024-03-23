@@ -5,7 +5,7 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <RouterLink active-class="active" class="navbar-brand fw-bolder" to="/">Bidwars</RouterLink>
+            <RouterLink active-class="active" class="navbar-brand fw-bolder" to="/"><img src="/imgs/bidwars-logo-sm.png" alt="bidwars logo" class="img-fluid" id="app-logo"</RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,45 +24,48 @@
                         <a class="nav-link" href="/#rooms">Rooms</a>
                     </li>
                     <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link" to="/profile">Profile</RouterLink>
+                        <RouterLink active-class="active" class="nav-link" to="/profile" v-show="userHasLoggedIn">Profile</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link" to="/login">Login</RouterLink>
+                        <button class="nav-link btn bg-secondary text-white" v-show="userHasLoggedIn" @click="logout">Log out</button>
                     </li>
                     <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link btn bg-danger text-white" to="/signup">Sign up</RouterLink>
+                        <RouterLink active-class="active" class="nav-link" to="/login" v-show="!userHasLoggedIn">Login</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink active-class="active" class="nav-link btn bg-danger text-white" to="/signup" v-show="!userHasLoggedIn">Sign up</RouterLink>
                     </li>
                 </ul>
 
                 <div>
                     <div class="input-group w-100">
                         <div class="position-relative search-container">
-                        <div class="input-group mb-1">
-                            <div>
-                            <select class="form-select rounded-start rounded-0 category-filter" id="category-filter" aria-label="Category Filter" onchange="includeFilter(this)">
-                                <option selected disabled>Category</option>
-                                <option value="antiques">Antiques</option>
-                                <option value="vintage cars">Vintage Cars</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="furniture">Furniture</option>
-                                <option value="art">Art</option>
-                            </select>
+                            <div class="input-group mb-1">
+                                <div>
+                                <select class="form-select rounded-start rounded-0 category-filter" id="category-filter" aria-label="Category Filter" onchange="includeFilter(this)">
+                                    <option selected disabled>Category</option>
+                                    <option value="antiques">Antiques</option>
+                                    <option value="vintage cars">Vintage Cars</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="furniture">Furniture</option>
+                                    <option value="art">Art</option>
+                                </select>
+                                </div>
+                                <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()" onkeyup="filterSearchResults()" autocomplete="off">
                             </div>
-                            <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()" onkeyup="filterSearchResults()" autocomplete="off">
-                        </div>
 
-                        <div class="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
-                            <div class="mb-2 d-flex justify-content-start search-filter-items" style="overflow-x: auto;">
-                            <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">antiques</button>
-                            <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">art</button>
-                            <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">electronics</button>
-                            <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">furniture</button>
-                            <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">vintage cars</button>
+                            <div class="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
+                                <div class="mb-2 d-flex justify-content-start search-filter-items" style="overflow-x: auto;">
+                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">antiques</button>
+                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">art</button>
+                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">electronics</button>
+                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">furniture</button>
+                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">vintage cars</button>
+                                </div>
+                                <div class="list-group search-results-dropdown-section">
+                                
+                                </div>
                             </div>
-                            <div class="list-group search-results-dropdown-section">
-                            
-                            </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -70,3 +73,20 @@
         </div>
     </nav>
 </template>
+
+
+<script>
+    export default {
+        methods: {
+            logout(){
+                this.$store.dispatch('logout');
+                this.$router.push("/");
+            }
+        },
+        computed: {
+            userHasLoggedIn(){
+                return this.$store.getters.isLoggedIn;
+            }
+        }
+    };
+</script>

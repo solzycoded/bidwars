@@ -25,7 +25,7 @@ class FetchRequest {
         return options;
     }
 
-    async send(successFn, failureFn = () => {}) {
+    async send(successFn = () => {}, failureFn = () => {}) {
         await fetch(this.url, this.options)
             .then(response => response.json())
             .then(items => {

@@ -1,7 +1,6 @@
 <script setup>
 import MyItems from '../components/Profile/Items/Section.vue'
 import MyBids from '../components/Profile/Bids/Section.vue'
-import { RouterLink, useRoute } from "vue-router"
 </script>
 
 <template>
@@ -27,3 +26,18 @@ import { RouterLink, useRoute } from "vue-router"
         </section>
     </main>
 </template>
+
+<script>
+    export default {
+        methods: {
+            goToHomePage(){
+                if(!this.$store.getters.isLoggedIn){
+                    this.$router.push("/");
+                }
+            }
+        },
+        mounted(){
+            this.goToHomePage();
+        }
+    };
+</script>

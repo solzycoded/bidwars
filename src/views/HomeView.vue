@@ -2,6 +2,7 @@
   import Nav from '../components/Nav.vue'
   import Header from '../components/Home/Header.vue'
   import Carousel from '../components/Home/Carousel.vue'
+  import Invitation from '../components/Home/Invitation.vue'
   import LiveAuctionItems from '../components/Home/LiveAuctions/Items/Section.vue'
   import LiveAuctionCategories from '../components/Home/LiveAuctions/Categories/Section.vue'
   import LiveAuctionRooms from '../components/Home/LiveAuctions/Rooms/Section.vue'
@@ -9,7 +10,8 @@
 
 <template>
   <!-- <Header> -->
-    <Carousel></Carousel>
+    <Carousel v-if="userIsLoggedIn"></Carousel>
+    <Invitation v-else></Invitation>
   <!-- </Header> -->
 
   <main id="main-section">
@@ -24,3 +26,13 @@
 
   </main>
 </template>
+
+<script>
+    export default {
+        computed: {
+            userIsLoggedIn(){
+                return this.$store.getters.isLoggedIn;
+            }
+        }
+    };
+</script>

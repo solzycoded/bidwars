@@ -22,6 +22,39 @@ function getAllUsers(req, res) {
     });
 }
 
+async function loginUser(req, res) {
+    const { username, password } = req.body;
+
+    const data  = [username];
+
+    user.login(data, (err, results) => {
+        if(err || results.length == 0){
+            return res.status(201).json({ success: false, data: { message: "The Credentials you provided are invalid!" } });
+        }
+
+        const user = results[0];
+
+        bcrypt.compare(password, user.password, (err, result) => {
+            if (result) {
+                const token = App.token();
+                res.status(200).json({ success: true, data: { token: token, username: user.name, role: user.role, id: user.id }});
+            } else {
+                res.status(201).json({ success: false, data: { message: "The Credentials you provided are invalid!" } });
+            }
+        });
+    });
+}
+
+async function createUserToken(req, res) {
+    const { id, token } = req.body;
+
+    const data  = [token, id];
+
+    user.createToken(data, (err, results) => {
+        res.status(201).json({ success: true });
+    });
+}
+
 async function createUser(req, res) {
     const { email, username, password } = req.body;
 
@@ -38,11 +71,6 @@ async function createUser(req, res) {
 
         user.create(data, (err, result) => {
             try{
-                // if (err) {
-                //     res.status(500).json({ error: err.message });
-                //     return;
-                // }
-
                 if(result.insertId==undefined){
                     res.status(201).json({ success: false, data: { message: "Username or Email already exists" } });
                 }
@@ -51,7 +79,6 @@ async function createUser(req, res) {
                 }
             } catch(err) {
                 res.status(201).json({ success: false, data: { message: "Username or Email already exists" } });
-                // console.log(err);
             }
         });
     });
@@ -60,7 +87,9 @@ async function createUser(req, res) {
 const UserController = {
     getAllUsers,
     createUser,
-    injectDB
+    injectDB,
+    loginUser,
+    createUserToken
 };
 
 export default UserController;

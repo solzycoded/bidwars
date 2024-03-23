@@ -13,7 +13,7 @@ import { RouterLink } from "vue-router"
                 </div>
 
                 <div>
-                    <div class="text-danger" v-show="error!==''">{{ error }}</div>
+                    <div class="text-danger mb-2 text-center" v-show="error!==''">{{ error }}</div>
                     <div class="mb-3">
                         <label 
                             class="form-label text-capitalize fw-bold" 
@@ -80,7 +80,6 @@ import { RouterLink } from "vue-router"
 
 </template>
 
-
 <script>
     export default {
         data() {
@@ -95,7 +94,7 @@ import { RouterLink } from "vue-router"
         methods: {
             async signup() {
                 const data = {username: this.username, email: this.email, password: this.password};
-                new FetchRequest("POST", "api/users", data).send(this.signupSuccess, this.signupFailure);
+                new FetchRequest("POST", "api/users/signup", data).send(this.signupSuccess, this.signupFailure);
             },
             signupSuccess(data){
                 this.$store.dispatch('login', data);

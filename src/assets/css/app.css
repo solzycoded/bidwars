@@ -2,6 +2,11 @@ header {
     height: inherit;
 }
 
+#app-logo {
+    /* width: 40px; */
+    height: 50px;
+}
+
 #main-section {
     margin-top: 30px !important;
     margin-bottom: 20px;
@@ -9,22 +14,6 @@ header {
     transition: padding 0.8s ease-out;
     /* transition: margin-top 0.8s ease-in; */
 }
-
-/*  */
-@media (max-width: 900px) {
-    #main-section {
-        margin-top: 15px;
-        padding: 10px 40px;
-    }
-}
-
-@media (max-width: 700px) {
-    #main-section {
-        margin-top: 5px;
-        padding: 0px 5px;
-    }
-}
-/*  */
 
 .live-auction-item-name {
     font-size: 19px !important;
@@ -74,6 +63,64 @@ header {
 .w-100-p {
     width: 100% !important;
 }
-/* 
-footer {
-} */
+
+.invitation-img {
+    max-height: 500px;
+    width: inherit !important;
+}
+
+.invitation-message-container {
+    padding: 40px;
+}
+
+.invitation-message-container h5 {
+    max-width: 600px;
+    font-size: 40px;
+}
+
+.invitation-message-container h6 {
+    max-width: 500px;
+    font-size: 30px;
+    font-weight: lighter;
+}
+
+.invitation-message-container p {
+    max-width: 600px;
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+/*  */
+@media (max-width: 900px) {
+    #main-section {
+        margin-top: 15px;
+        padding: 10px 40px;
+    }
+}
+
+@media (max-width: 700px) {
+    .invitation-message-container h6 {
+        max-width: 100% !important;
+        font-size: 20px;
+    }
+
+    .invitation-message-container h5 {
+        max-width: 100% !important;
+        font-size: 25px;
+    }
+
+    .invitation-message-container p {
+        max-width: 600px;
+        font-size: 15px;
+    }
+
+    .invitation-message-container {
+        padding: 20px;
+    }
+
+    #main-section {
+        margin-top: 5px;
+        padding: 0px 5px;
+    }
+}
+/*  */
