@@ -8,7 +8,8 @@
             </div>
             <div>
                 <div class="form-group">
-                    <input type="text" name="item_name" id="item-name" class="form-control" placeholder="Enter item name">
+                    <input type="text" name="item_name" id="item-name" class="form-control" placeholder="Enter item name" onkeyup="validateTitle(this)">
+                    <small class="m-0 text-danger fw-bolder" id="item-title-error"></small>
                     <p class="m-0 mt-2 fw-lighter"><small>Items that have been in this category have names like: X, Y, Z.</small></p>
                 </div>
             </div>

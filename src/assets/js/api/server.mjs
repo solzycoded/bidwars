@@ -7,13 +7,14 @@ import { ItemApi } from "./Item.mjs"
 import { RoomApi } from "./Room.mjs"
 import { CategoryApi } from "./Category.mjs";
 import { SearchApi } from "./Search.mjs"
-import { BidApi } from "./Bid.mjs"
 import { UserApi } from "./User.mjs"
 import { TimeFrameApi } from "./TimeFrame.mjs"
 import { ItemConditionApi } from "./ItemCondition.mjs"
 
 import userController from './controllers/UserController.js';
 import itemController from './controllers/ItemController.js';
+import itemImageController from './controllers/ItemImageController.js';
+import bidController from './controllers/BidController.js';
 
 class Api{
     constructor(con){
@@ -81,7 +82,27 @@ itemController.injectDB(con);
 const itemPrefix = `${prefix}items/`;
 app.post(`${itemPrefix}create/:userId`, itemController.createItem);
 app.get(`${itemPrefix}check-title/:title`, itemController.checkTitle);
-/* end USERS */
+app.get(`${itemPrefix}:title`, itemController.findByName);
+app.get(`${itemPrefix}:id/id`, itemController.findById);
+app.get(`${itemPrefix}live/all`, itemController.liveAuctionItems);
+/* end ITEMS */
+
+/* ITEMIMAGES */
+itemImageController.injectDB(con);
+// itemImageController.injectApp(app);
+
+const itemImagePrefix = `${prefix}item-images/`;
+const upload = itemImageController.upload();
+
+app.post(`${itemImagePrefix}create/:itemId`, upload.array('image'), itemImageController.createItemImage);
+/* end ITEMIMAGES */
+
+/* ITEMS */
+bidController.injectDB(con);
+
+const bidPrefix = `${prefix}items/`;
+app.get(`${bidPrefix}:itemId/bids`, bidController.getTotalBids);
+/* end ITEMS */
 
 /* ITEMS */
 /* item images */
@@ -105,10 +126,6 @@ new CategoryApi(app, con).initialize();
 
 /* SEARCH API */
 new SearchApi(app, con).initialize();
-/* end SEARCH API */
-
-/* SEARCH API */
-new BidApi(app, con).initialize();
 /* end SEARCH API */
 
 /* TIME FRAME API */

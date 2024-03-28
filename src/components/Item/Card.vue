@@ -2,6 +2,7 @@
     import { ref, onBeforeMount } from 'vue'
     import { RouterLink, useRoute } from "vue-router"
     import { App } from "../../assets/js/util/app.js"
+    import PlaceBidButton from "./PlaceBidButton.vue"
 
     const props = defineProps(['item']);
 
@@ -30,7 +31,9 @@
             <div class="d-inline">
                 <RouterLink :to="`/live-auction/items/live/${item.title}`" class="btn btn-outline-dark fw-bold">Preview</RouterLink>
             </div>
-            <div class="d-inline float-end"><button class="btn btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button></div>
+            <div class="d-inline float-end">
+                <PlaceBidButton :item="item" :classContent="`btn btn-dark fw-bold`"></PlaceBidButton>
+            </div>
         </div>
     </div>
 </template>

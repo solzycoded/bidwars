@@ -1,11 +1,6 @@
 const onImageSelected = (target) => {
     // convert image to blog / base 64
     convertImageToBlob(target);
-
-    // get the index of the used input file
-    
-
-    // use the index to add file
 }
 
 const convertImageToBlob = (target) => {
@@ -34,4 +29,19 @@ const setBlobAsImageSrc = (target, src) => {
     let targetImageTag = getByClassNames("item-image")[index];
 
     targetImageTag.src = src;
+    targetImageTag.classList.add("has-image");
+}
+
+// get the blob values of uploaded images
+const getItemImages = () => {
+    let uploadImages = document.querySelectorAll(".has-image");
+    let images = [];
+
+    uploadImages.forEach((v) => {
+        let src = v.src;
+
+        images.push(src);
+    });
+
+    return images;
 }

@@ -11,7 +11,7 @@
       hasLiveItems.value     = items.length > 0;
     }
 
-    new FetchRequest("GET", "api/items/live").send(listOfItems, listOfItems);
+    new FetchRequest("GET", "api/items/live/all").send(listOfItems, listOfItems);
   });
 
 </script>

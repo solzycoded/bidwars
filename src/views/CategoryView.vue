@@ -4,6 +4,7 @@ import PlaceBidModal from '../components/Item/PlaceBid.vue'
 import { ref, onBeforeMount } from 'vue'
 import { RouterLink, useRoute } from "vue-router"
 import { App } from "../assets/js/util/app.js"
+import PlaceBidButton from "../components/Item/PlaceBidButton.vue"
 
 const route = useRoute();
 
@@ -41,7 +42,7 @@ onBeforeMount(() => {
                                     <RouterLink :to="`/live-auction/items/live/${item.title}`" class="btn btn-outline-dark fw-bold">Preview</RouterLink>
                                 </div>
                                 <div class="d-inline float-end">
-                                    <button class="btn btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button>
+                                    <PlaceBidButton :item="item" :classContent="`btn btn-dark fw-bold`"></PlaceBidButton>
                                 </div>
                             </div>
                         </div>

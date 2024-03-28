@@ -28,8 +28,8 @@ export class App {
         return date;
     }
 
-    static rand(){
-        return Math.random().toString(36).substr(2); // remove `0.`
+    static rand(target = 36){
+        return Math.random().toString(target).substr(2); // remove `0.`
     };
 
     static token() {

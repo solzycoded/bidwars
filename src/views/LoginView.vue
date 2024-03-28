@@ -84,12 +84,14 @@ import { RouterLink } from "vue-router"
             },
             goToProfilePage(){
                 if(this.$store.getters.isLoggedIn){
-                    if(this.$store.state.role=="user"){
-                        this.$router.push("profile");
+                    let role = this.$store.state.auth.role;
+                    let location = "profile";
+
+                    if(role=="admin"){
+                        location = "dashboard";
                     }
-                    else if(this.$store.state.role=="admin"){
-                        alert("now on the admin page");
-                    }
+
+                    this.$router.push(location);
                 }
             }
         },

@@ -41,9 +41,9 @@ export default {
                 </div>
                 <div class="row">
 
-                    <input type="hidden" name="category" id="selected-category">
-                    <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item" v-for="category in categories" :key="category.id" onclick="onCategorySelected(this, 'something')">
+                    <div class="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item" v-for="category in categories" :key="category.id" onclick="onCategorySelected(this)">
                         <CategoryItem :category="category"></CategoryItem>
+                        <input type="hidden" name="category_id" class="category_id" :value="`${category.id}`">
                     </div>
 
                 </div>

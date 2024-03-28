@@ -80,16 +80,20 @@ export class Db {
                         "user_id INT NOT NULL," +
                         "title VARCHAR(120) NOT NULL UNIQUE," +
                         "category_id INT NOT NULL," +
-                        "item_condition_id INT NOT NULL," +
+                        "current_condition_id INT NOT NULL," +
+                        "pre_condition_id INT NOT NULL," +
                         "price BIGINT NOT NULL," +
                         "selling_time INT NOT NULL," +
                         "purchase_duration INT NOT NULL," +
                         "time_frame_id INT NOT NULL," +
                         "created_at DATETIME DEFAULT NOW()," +
+                        "sold BOOLEAN DEFAULT FALSE," +
+                        "date_sold DATETIME," +
                         "FOREIGN KEY (user_id) REFERENCES Users(id)," +
                         "FOREIGN KEY (category_id) REFERENCES Categories(id)," +
                         "FOREIGN KEY (time_frame_id) REFERENCES Time_Frames(id)," +
-                        "FOREIGN KEY (item_condition_id) REFERENCES Item_Conditions(id)" +
+                        "FOREIGN KEY (current_condition_id) REFERENCES Item_Conditions(id)," +
+                        "FOREIGN KEY (pre_condition_id) REFERENCES Item_Conditions(id)" +
                     ");",
             time_frames: "CREATE TABLE IF NOT EXISTS bidwars101.Time_Frames (" +
                         "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
@@ -97,7 +101,6 @@ export class Db {
                     ");",
             itemImages: "CREATE TABLE IF NOT EXISTS bidwars101.Item_Images (" +
                             "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
-                            "image_blob BLOB," +
                             "image_text text," +
                             "item_id INT NOT NULL," +
                             "FOREIGN KEY (item_id) REFERENCES Items(id)" +
@@ -173,7 +176,7 @@ export class Db {
             const timeFrameId = Db.generateRandomNumber(4);
 
             // items
-            Db.sendQuery(`INSERT IGNORE INTO bidwars101.Items (user_id, title, category_id, item_condition_id, price, selling_time, purchase_duration, time_frame_id) VALUES (1, '${title}', '${categoryId}', '${itemConditionId}', '${price}', '${sellingTime}', '${purchaseDuration}', '${timeFrameId}');`, con);
+            Db.sendQuery(`INSERT IGNORE INTO bidwars101.Items (user_id, title, category_id, current_condition_id, pre_condition_id, price, selling_time, purchase_duration, time_frame_id) VALUES (1, '${title}', '${categoryId}', '${itemConditionId}', '${itemConditionId}', '${price}', '${sellingTime}', '${purchaseDuration}', '${timeFrameId}');`, con);
 
             // item images
             let urlKey = Db.generateRandomNumber(3, 0);

@@ -1,4 +1,4 @@
-pages
+pages:
     1. home page
 
     2. item details page
@@ -11,3 +11,9 @@ pages
     5. room page (with live auctions)
 
     6. category page (with live auctions)
+
+    7. login
+
+    8. signup
+
+    9. admin dashboard

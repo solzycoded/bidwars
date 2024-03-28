@@ -2,6 +2,11 @@ header {
     height: inherit;
 }
 
+.active {
+    font-weight: bolder;
+    color: black;
+}
+
 #app-logo {
     /* width: 40px; */
     height: 50px;
@@ -26,7 +31,6 @@ header {
 .live-auction-section {
     margin-top: 50px !important;
 }
-
 
 .limit-text {
     width: 200px !important; 

@@ -1,30 +1,37 @@
 <script setup>
-    import { RouterLink } from "vue-router"
+    import { RouterLink } from "vue-router";
+
 </script>
 
 <template>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <RouterLink active-class="active" class="navbar-brand fw-bolder" to="/"><img src="/imgs/bidwars-logo-sm.png" alt="bidwars logo" class="img-fluid" id="app-logo"</RouterLink>
+            <RouterLink active-class="active" class="navbar-brand fw-bolder" to="/"><img src="/imgs/bidwars-logo-sm.png" alt="bidwars logo" class="img-fluid" id="app-logo"></RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link active" aria-current="page" to="/">Home</RouterLink>
+                        <RouterLink active-class="active" class="nav-link" aria-current="page" to="/">Home</RouterLink>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-show="!onDashboard">
                         <RouterLink active-class="active" class="nav-link" to="/sell-an-item">Sell an Item</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/#categories">Categories</a>
+                        <a class="nav-link" href="/#categories" v-show="onHome">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/#rooms">Rooms</a>
+                        <a class="nav-link" href="/#rooms" v-show="onHome">Rooms</a>
                     </li>
                     <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link" to="/profile" v-show="userHasLoggedIn">Profile</RouterLink>
+                        <RouterLink active-class="active" class="nav-link" to="/profile" v-show="userHasLoggedIn && !onDashboard">Profile</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink active-class="active" class="nav-link" to="/dashboard" v-show="userHasLoggedIn && onDashboard">Dashboard</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink active-class="active" class="nav-link" to="/notifications" v-show="userHasLoggedIn && !isAdmin">Notifications</RouterLink>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link btn bg-secondary text-white" v-show="userHasLoggedIn" @click="logout">Log out</button>
@@ -37,7 +44,7 @@
                     </li>
                 </ul>
 
-                <div>
+                <div v-show="!onDashboard && !onProfile">
                     <div class="input-group w-100">
                         <div class="position-relative search-container">
                             <div class="input-group mb-1">
@@ -86,6 +93,21 @@
         computed: {
             userHasLoggedIn(){
                 return this.$store.getters.isLoggedIn;
+            },
+            routeName(){
+                return this.$route.name;
+            },
+            onDashboard(){
+                return this.routeName=="dashboard";
+            },
+            onProfile(){
+                return this.routeName=="profile";
+            },
+            onHome(){
+                return this.routeName=="home";
+            },
+            isAdmin(){
+                return this.$store.state.role=="admin";
             }
         }
     };

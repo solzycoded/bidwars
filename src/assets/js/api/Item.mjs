@@ -8,20 +8,18 @@ export class ItemApi {
     }
 
     initialize(){
-        this.create();
+        // this.create();
         this.read();
         this.upcomingAuctions();
-        this.liveAuctions();
         this.delete();
         this.edit();
         this.update();
-        this.find();
         this.bids();
         this.userLive();
         this.userOthers();
 
         // remove later
-        this.insert();
+        // this.insert();
     }
 
     // GET ALL OF THE ITEMS THAT BELONG TO A USER
@@ -102,22 +100,22 @@ export class ItemApi {
     }
 
     // default insertion
-    insert(){
-        let options = {
-            url: 'http://localhost:3000/api/item/create',
-            method: 'POST',
-            body: '{"title": "oakwood deep", "category_id": 1, "user_id": 1, "item_condition_id": 1, "price": 2000, "selling_time": 4, "purchase_duration": 5}',
-            headers: {
-                "content-type": "application/json"
-            }
-        }
+    // insert(){
+    //     let options = {
+    //         url: 'http://localhost:3000/api/item/create',
+    //         method: 'POST',
+    //         body: '{"title": "oakwood deep", "category_id": 1, "user_id": 1, "item_condition_id": 1, "price": 2000, "selling_time": 4, "purchase_duration": 5}',
+    //         headers: {
+    //             "content-type": "application/json"
+    //         }
+    //     }
 
-        fetch('http://localhost:3000/api/item/create', options)
-            .then(response => response.json())
-            .then(items => {
-                // console.log(items);
-            })
-    }
+    //     fetch('http://localhost:3000/api/item/create', options)
+    //         .then(response => response.json())
+    //         .then(items => {
+    //             // console.log(items);
+    //         })
+    // }
 
     create(){
         this.app.post('/api/item/create', async(req, res) => {
@@ -211,38 +209,6 @@ export class ItemApi {
         });
     }
 
-    liveAuctions(){ // live auctions
-        // GET API
-        this.app.get('/api/items/live', async(req, res) => {
-            try {
-                const app = new App();
-
-                const SQL    = "SELECT bidwars101.Items.id as id, title, image_text as image, auction_date, auction_start, auction_end, COUNT(bidwars101.Bids.item_id) as bid_number " +
-                    "FROM bidwars101.Items " + 
-                    "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
-                    "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
-                    "LEFT JOIN bidwars101.Bids ON bidwars101.Bids.item_id=bidwars101.Auction_Rooms.item_id " +
-                    `WHERE auction_date = '${app.getTodaysDate()}' ` +
-                    `AND HOUR(auction_start) >= '${app.getStartTime()}' ` +
-                    `AND TIME(auction_end) <= '${app.getEndTime()}' ` +
-                    "GROUP BY title " +
-                    "ORDER BY bid_number DESC " + 
-                    "LIMIT 4";
-
-                const result = await Db.queryPromise(this.con, SQL);
-                
-                if(result.length > 0){
-                    res.status(200).json({success: true, data: result});
-                }
-                else{
-                    res.status(200).json({success: false, data: ""});
-                }
-            } catch(err) {
-                console.log(err);
-            }
-        });
-    }
-
     update(){
         // PUT API
         this.app.put('/api/item/update/:id', async(req, res) => {
@@ -289,39 +255,6 @@ export class ItemApi {
                 }
                 else {
                     res.status(404).json({message: "The selected record does not exist"});
-                }
-            } catch(err) {
-                console.log(err);
-            }
-        });
-    }
-
-    find(){
-        // GET
-        this.app.get('/api/items/:title', async(req, res) => {
-            try {
-                // collect all the data that comes in req.body (REQUEST HAS NO DATA IN ITS BODY)
-                const { title } = req.params;
-                
-                // building query
-                const item = [title];
-                const SQL  = "SELECT bidwars101.Items.id AS id, title, price, bidwars101.Categories.name as category, purchase_duration, bidwars101.Time_Frames.name as time_frame, bidwars101.Item_Conditions.item_condition, bidwars101.Rooms.room_tag AS room, auction_end " +
-                    "FROM bidwars101.Items " +
-                    "INNER JOIN bidwars101.Categories on bidwars101.Categories.id=bidwars101.Items.category_id " +
-                    "INNER JOIN bidwars101.Time_Frames on bidwars101.Time_Frames.id=bidwars101.Items.time_frame_id " +
-                    "INNER JOIN bidwars101.Item_Conditions on bidwars101.Item_Conditions.id=bidwars101.Items.item_condition_id " +
-                    "INNER JOIN bidwars101.Auction_Rooms on bidwars101.Auction_Rooms.item_id=bidwars101.Items.id " +
-                    "INNER JOIN bidwars101.Rooms on bidwars101.Rooms.id=bidwars101.Auction_Rooms.room_id " +
-                    "WHERE bidwars101.Items.title = ?";
-
-                // getting result
-                const result = await Db.queryPromise(this.con, SQL, item);
-
-                if(result.length > 0){
-                    res.status(200).json({success: true, data: result[0]});
-                }
-                else{
-                    res.status(200).json({success: false, data: null});
                 }
             } catch(err) {
                 console.log(err);

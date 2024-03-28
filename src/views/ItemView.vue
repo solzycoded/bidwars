@@ -3,6 +3,8 @@ import PlaceBidModal from '../components/Item/PlaceBid.vue'
 import { ref, onBeforeMount, onMounted } from 'vue'
 import { RouterLink, useRoute } from "vue-router"
 import { App } from "../assets/js/util/app.js"
+import PlaceBidButton from "../components/Item/PlaceBidButton.vue"
+// import { PlaceBid } from "../assets/js/place-bid/item-details.js"
 
 const route    = useRoute();
 
@@ -65,7 +67,8 @@ onBeforeMount(() => {
 
                 <div>
                     <div class="d-inline">
-                        <button role="button" class="btn btn-dark fs-4 place-bid" data-bs-toggle="modal" data-bs-target="#bid-offer">Place Bid</button>
+                        <!-- <button role="button" class="btn btn-dark fs-4 place-bid" data-bs-toggle="modal" data-bs-target="#bid-offer" onclick="PlaceBid.itemDetails(this)" :item-id="`${item.id}`">Place Bid</button> -->
+                        <PlaceBidButton :item="item" :classContent="`btn btn-dark fs-4 place-bid`"></PlaceBidButton>
                     </div>
                     <div class="d-inline ms-2"><small class="text-secondary fw-bold fs-6 p-0">{{ (bidTotal==undefined ? 0 : bidTotal.bids) }} bids placed on item.</small></div>
                 </div>
