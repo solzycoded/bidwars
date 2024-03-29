@@ -15,6 +15,8 @@ import userController from './controllers/UserController.js';
 import itemController from './controllers/ItemController.js';
 import itemImageController from './controllers/ItemImageController.js';
 import bidController from './controllers/BidController.js';
+import roomController from './controllers/RoomController.js';
+import auctionRoomController from './controllers/AuctionRoomController.js';
 
 class Api{
     constructor(con){
@@ -85,6 +87,7 @@ app.get(`${itemPrefix}check-title/:title`, itemController.checkTitle);
 app.get(`${itemPrefix}:title`, itemController.findByName);
 app.get(`${itemPrefix}:id/id`, itemController.findById);
 app.get(`${itemPrefix}live/all`, itemController.liveAuctionItems);
+app.get(`${itemPrefix}all/available`, itemController.availableItems);
 /* end ITEMS */
 
 /* ITEMIMAGES */
@@ -103,6 +106,25 @@ bidController.injectDB(con);
 const bidPrefix = `${prefix}items/`;
 app.get(`${bidPrefix}:itemId/bids`, bidController.getTotalBids);
 /* end ITEMS */
+
+/* ROOMS */
+roomController.injectDB(con);
+
+const roomPrefix = `${prefix}rooms/`;
+app.get(`${roomPrefix}all`, roomController.allRooms);
+/* end ROOMS */
+
+/* AUCTION ROOMS */
+auctionRoomController.injectDB(con);
+
+const auctionRoomPrefix = `${prefix}auction-rooms/`;
+app.post(`${auctionRoomPrefix}`, auctionRoomController.createAuction);
+app.get(`${auctionRoomPrefix}dates/all`, auctionRoomController.allAuctionDates);
+app.get(`${auctionRoomPrefix}start-times/all`, auctionRoomController.allStartTimes);
+app.get(`${auctionRoomPrefix}items/all`, auctionRoomController.allAuctionItems);
+app.post(`${auctionRoomPrefix}items/filter`, auctionRoomController.filteredItems);
+app.delete(`${auctionRoomPrefix}:id`, auctionRoomController.deleteAuctionItem);
+/* end AUCTION ROOMS */
 
 /* ITEMS */
 /* item images */

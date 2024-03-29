@@ -3,6 +3,15 @@ export default class Item {
       this.db = db;
     }
 
+    available(data, callback) {
+        const query = "SELECT bidwars101.Items.id, title " +
+            "FROM bidwars101.Items " +
+            "LEFT JOIN bidwars101.Auction_Rooms ON bidwars101.Auction_Rooms.item_id=bidwars101.Items.id " +
+            "WHERE Auction_Rooms.item_id IS NULL " +
+            "GROUP BY bidwars101.Items.id";
+        this.db.query(query, data, callback);
+    }
+
     live(data, callback) {
         const query = "SELECT bidwars101.Items.id as id, title, image_text as image, auction_date, auction_start, auction_end, COUNT(bidwars101.Bids.item_id) as bid_number " +
             "FROM bidwars101.Items " + 

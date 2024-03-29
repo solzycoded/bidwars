@@ -60,22 +60,31 @@ onBeforeMount(() => {
                     <p class="fs-6 item-price">{{ App.appendCurrency(App.formatNumber(item.price)) }}</p>
                 </div>
 
-                <div class="mt-4 fs-6">
+                <div class="mt-4 fs-6" v-if="countDown!='EXPIRED'">
                     <p class="m-0">Item is currently live in <RouterLink :to="`/live-auction/rooms/live/${item.room}`" class="link-offset-2">Room <span>{{ item.room }}</span></RouterLink></p>
                     <p>Auction ends in <small class="text-danger bid-countdown">{{ countDown }}</small></p>
                 </div>
 
                 <div>
-                    <div class="d-inline">
-                        <!-- <button role="button" class="btn btn-dark fs-4 place-bid" data-bs-toggle="modal" data-bs-target="#bid-offer" onclick="PlaceBid.itemDetails(this)" :item-id="`${item.id}`">Place Bid</button> -->
+                    <div class="d-inline" v-if="!isAdmin">
                         <PlaceBidButton :item="item" :classContent="`btn btn-dark fs-4 place-bid`"></PlaceBidButton>
                     </div>
-                    <div class="d-inline ms-2"><small class="text-secondary fw-bold fs-6 p-0">{{ (bidTotal==undefined ? 0 : bidTotal.bids) }} bids placed on item.</small></div>
+                    <div class="d-inline ms-2"><small class="text-secondary fw-bold fs-6 p-0">{{ (bidTotal==undefined ? 0 : bidTotal.bids) }} bid(s) placed on item.</small></div>
                 </div>
             </div>
         </section>
         <div class="fs-4" v-else>The selected Item does not exist! Please make a different selection.</div>
     </main>
 
-    <PlaceBidModal></PlaceBidModal>
+    <PlaceBidModal v-if="!isAdmin"></PlaceBidModal>
 </template>
+
+<script>
+    export default {
+        computed: {
+            isAdmin(){
+                return this.$store.state.auth.role=='admin';
+            }
+        }
+    }
+</script>

@@ -31,9 +31,20 @@
             <div class="d-inline">
                 <RouterLink :to="`/live-auction/items/live/${item.title}`" class="btn btn-outline-dark fw-bold">Preview</RouterLink>
             </div>
-            <div class="d-inline float-end">
+            <div class="d-inline float-end" v-if="!isAdmin">
                 <PlaceBidButton :item="item" :classContent="`btn btn-dark fw-bold`"></PlaceBidButton>
             </div>
         </div>
     </div>
 </template>
+
+
+<script>
+    export default {
+        computed: {
+            isAdmin(){
+                return this.$store.state.auth.role=='admin';
+            }
+        }
+    }
+</script>

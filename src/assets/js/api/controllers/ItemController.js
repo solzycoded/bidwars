@@ -109,13 +109,29 @@ async function liveAuctionItems(req, res){
     });
 }
 
+async function availableItems(req, res){
+    item.available(null, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(200).json({success: false, data: []});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
 const ItemController = {
     createItem,
     injectDB,
     checkTitle,
     findByName,
     liveAuctionItems,
-    findById
+    findById,
+    availableItems,
 };
 
 export default ItemController;

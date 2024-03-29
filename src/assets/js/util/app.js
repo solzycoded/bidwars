@@ -29,12 +29,16 @@ export class App {
         return time;
     }
 
-    getTodaysDate(){
-        let year        = this.today.getFullYear();
-        let month       = this.today.getMonth() + 1;
-        let day         = this.today.getDate();
+    getTodaysDate(format = false){
+        let year  = this.today.getFullYear();
 
-        let date        = `${year}-${month}-${day}`;
+        let month = this.today.getMonth() + 1;
+        month     = format ? this.formatDateChar(month) : month;
+
+        let day   = this.today.getDate();
+        day       = format ? this.formatDateChar(day) : day;
+
+        let date  = `${year}-${month}-${day}`;
 
         return date;
     }
@@ -105,5 +109,15 @@ export class App {
         }
 
         return now - countDownDate;
+    }
+
+    static generateNumbers(start, end){
+        let arr = [];
+
+        for (let index = start; index <= end; index++) {
+            arr.push(index);
+        }
+
+        return arr;
     }
 }

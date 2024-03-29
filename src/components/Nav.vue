@@ -15,32 +15,32 @@
                     <li class="nav-item">
                         <RouterLink active-class="active" class="nav-link" aria-current="page" to="/">Home</RouterLink>
                     </li>
-                    <li class="nav-item" v-show="!onDashboard">
+                    <li class="nav-item" v-show="!isAdmin">
                         <RouterLink active-class="active" class="nav-link" to="/sell-an-item">Sell an Item</RouterLink>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#categories" v-show="onHome">Categories</a>
+                    <li class="nav-item" v-show="onHome">
+                        <a class="nav-link" href="/#categories">Categories</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#rooms" v-show="onHome">Rooms</a>
+                    <li class="nav-item" v-show="onHome">
+                        <a class="nav-link" href="/#rooms">Rooms</a>
                     </li>
-                    <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link" to="/profile" v-show="userHasLoggedIn && !onDashboard">Profile</RouterLink>
+                    <li class="nav-item" v-show="userHasLoggedIn && !isAdmin && !onDashboard">
+                        <RouterLink active-class="active" class="nav-link" to="/profile">Profile</RouterLink>
                     </li>
-                    <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link" to="/dashboard" v-show="userHasLoggedIn && onDashboard">Dashboard</RouterLink>
+                    <li class="nav-item" v-show="userHasLoggedIn && isAdmin">
+                        <RouterLink active-class="active" class="nav-link" to="/dashboard">Dashboard</RouterLink>
                     </li>
-                    <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link" to="/notifications" v-show="userHasLoggedIn && !isAdmin">Notifications</RouterLink>
+                    <li class="nav-item" v-if="userHasLoggedIn && !isAdmin">
+                        <RouterLink active-class="active" class="nav-link" to="/notifications">Notifications</RouterLink>
                     </li>
-                    <li class="nav-item">
-                        <button class="nav-link btn bg-secondary text-white" v-show="userHasLoggedIn" @click="logout">Log out</button>
+                    <li class="nav-item" v-show="userHasLoggedIn">
+                        <button class="nav-link btn bg-secondary text-white" @click="logout">Log out</button>
                     </li>
-                    <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link" to="/login" v-show="!userHasLoggedIn">Login</RouterLink>
+                    <li class="nav-item" v-show="!userHasLoggedIn">
+                        <RouterLink active-class="active" class="nav-link" to="/login">Login</RouterLink>
                     </li>
-                    <li class="nav-item">
-                        <RouterLink active-class="active" class="nav-link btn bg-danger text-white" to="/signup" v-show="!userHasLoggedIn">Sign up</RouterLink>
+                    <li class="nav-item" v-show="!userHasLoggedIn">
+                        <RouterLink active-class="active" class="nav-link btn bg-danger text-white" to="/signup">Sign up</RouterLink>
                     </li>
                 </ul>
 
@@ -107,7 +107,7 @@
                 return this.routeName=="home";
             },
             isAdmin(){
-                return this.$store.state.role=="admin";
+                return this.$store.state.auth.role=="admin";
             }
         }
     };

@@ -1,3 +1,18 @@
+.alert-container {
+    bottom: 2%;
+    position: fixed;
+    z-index: 9999;
+}
+
+.alert-btn {
+    border-radius: 20px; 
+    padding: 5px 15px 5px 15px; 
+    color: white; 
+    border: 0px; 
+    font-weight: bold; 
+    box-shadow: 1px 0px 20px #d1d1d1 !important;
+}
+
 header {
     height: inherit;
 }

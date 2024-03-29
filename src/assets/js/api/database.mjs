@@ -1,4 +1,5 @@
 import mysql from "mysql";
+import bcrypt from 'bcrypt';
 
 export class Db {
     static con() {
@@ -155,12 +156,24 @@ export class Db {
         Db.sendQuery("INSERT IGNORE INTO bidwars101.Rooms (room_tag) VALUES ('alpha'), ('beta'), ('bolt'), ('101');", con);
 
         // users (to be removed later)
-        Db.sendQuery("INSERT IGNORE INTO bidwars101.Users (name, email, password) VALUES ('solzy', 'solzyfrenzy1@gmail.com', 'passworded'), ('mon', 'mon@gmail.com', 'passworded'), ('monny', 'monny@gmail.com', 'passworded');", con);
+        Db.sendQuery("INSERT IGNORE INTO bidwars101.Users (name, email, password, role, token) VALUES ('mon', 'mon@gmail.com', 'passworded', 'user', 'aldfjadlfsjalfdj2aodfuafdlkja'), ('monny', 'monny@gmail.com', 'passworded', 'user', 'ajfdaljfdafjafsdjalf');", con);
 
         // time_frames (to be removed later)
         Db.sendQuery("INSERT IGNORE INTO bidwars101.Time_Frames (name) VALUES ('year'), ('month'), ('day'), ('hour');", con);
 
+        Db.createAdminUser(con);
+
         Db.insertItems(con);
+    }
+
+    static createAdminUser(con){
+        bcrypt.hash('coveredinpassworded3421', 10, (err, hash) => {
+            if (err) {
+                return;
+            }
+
+            Db.sendQuery(`INSERT IGNORE INTO bidwars101.Users (name, email, password, role, token) VALUES ('admin', 'admin@bidwars.com', '${hash}', 'admin', 'aljflafiwoe8092afdafaafldajfda892039');`, con);
+        });
     }
 
     static insertItems(con){
@@ -183,7 +196,11 @@ export class Db {
             Db.sendQuery(`INSERT IGNORE INTO bidwars101.Item_Images (item_id, image_text) VALUES (${index + 1}, '${imageUrls[urlKey]}'), (${index + 1}, '${imageUrls[urlKey]}'), (${index + 1}, '${imageUrls[urlKey]}');`, con);
 
             // auction_rooms
-            Db.auctionRoom(index, con);
+            let addToAuction = Db.generateRandomNumber(3, 1)==1;
+
+            if(addToAuction){
+                Db.auctionRoom(index, con);
+            }
 
             // bids
             let offer  = Db.generateRandomNumber(100000, 10);
@@ -207,7 +224,7 @@ export class Db {
 
         const date = Db.createDate(liveActionDate);
 
-        let hour   = date.hour;
+        let hour    = date.hour;
         let minutes = date.minutes;
 
         const start = `${hour}:${minutes}:00`;

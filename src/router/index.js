@@ -11,6 +11,9 @@ import LoginView from "../views/LoginView.vue";
 import SignupView from "../views/SignupView.vue";
 
 import DashboardView from "../views/DashboardView.vue";
+import store from '../assets/js/store/index.js'
+
+import { mapState } from 'vuex';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +31,11 @@ const router = createRouter({
     {
       path: "/live-auction/items/live/:name",
       name: "item-details",
+      component: ItemView
+    },
+    {
+      path: "/items/:name",
+      name: "full-item-details",
       component: ItemView
     },
     {
@@ -63,4 +71,5 @@ const router = createRouter({
   ]
 })
 
-export default router
+
+export default router;
