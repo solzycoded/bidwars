@@ -78,7 +78,7 @@ export class ItemImageApi {
                 }
 
                 // building query
-                const SQL  = `SELECT id, image_text FROM bidwars101.Item_Images WHERE item_id = ${itemId} LIMIT 3`;
+                const SQL  = `SELECT id, image_blob FROM bidwars101.Item_Images WHERE item_id = ${itemId} LIMIT 3`;
 
                 // getting result
                 const result = await Db.queryPromise(this.con, SQL);

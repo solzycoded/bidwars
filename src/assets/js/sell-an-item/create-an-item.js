@@ -21,8 +21,10 @@ const createItem = () => {
 const createItemSuccess = (data) => {
     // upload images    
     const images = getItemImages();
-    
-    Image.upload(images, data.id);
+
+    console.log(images);
+
+    ItemImage.upload(images, data.id);
 }
 
 const createItemFailure = (data) => {

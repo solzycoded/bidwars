@@ -1,9 +1,6 @@
 <script setup>
 import AuctionList from "../components/Dashboard/Auction/List.vue";
 import { App } from "../assets/js/util/app.js";
-import { ref, onBeforeMount} from 'vue';
-import { RouterLink } from "vue-router";
-import Alert from "../components/Alert/Item.vue";
 
 </script>
 
@@ -110,8 +107,6 @@ import Alert from "../components/Alert/Item.vue";
                 <AuctionList :items="items" :token="token"></AuctionList>
             </div>
         </div>
-
-        <!-- <Alert :show="showAlert" :message="message" :success="isSuccess"></Alert> -->
     </section>
 </template>
 
@@ -120,7 +115,6 @@ import Alert from "../components/Alert/Item.vue";
     export default {
         data() {
             return {
-                showAlert: true,
                 message: "something",
                 isSuccess: false,
                 token: this.$store.state.auth.token,

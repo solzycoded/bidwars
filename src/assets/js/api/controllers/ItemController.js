@@ -124,6 +124,30 @@ async function availableItems(req, res){
     });
 }
 
+async function deleteItem(req, res){
+    const { itemId } = req.params;
+    const { user_id, token } = req.body;
+
+    if(!itemId || !user_id || !token){
+        return res.status(201).json({success: false, data: {message: "Some fields are missing!"}});
+    }
+
+    const data = [itemId, user_id];
+
+    item.delete(data, (err, result) => {
+        try{
+            if(result!=undefined && result.affectedRows >= 0){
+                res.status(200).json({success: true, data: {message: "Your Item was successfully deleted!"}});
+            }
+            else{
+                res.status(201).json({success: false, data: {message: "You're not authorized to perform this action"}});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
 const ItemController = {
     createItem,
     injectDB,
@@ -132,6 +156,7 @@ const ItemController = {
     liveAuctionItems,
     findById,
     availableItems,
+    deleteItem,
 };
 
 export default ItemController;

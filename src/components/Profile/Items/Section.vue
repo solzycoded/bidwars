@@ -4,21 +4,7 @@ import { ref, onBeforeMount } from 'vue';
 import { RouterLink, useRoute } from "vue-router";
 // import { App } from "../assets/js/util/app.js";
 
-const liveItems = ref(null);
-const otherItems = ref(null);
-
-onBeforeMount(() => {
-    const displayLiveItems = (items) => {
-        liveItems.value = items;
-    }
-
-    const displayOtherItems = (items) => {
-        otherItems.value = items;
-    }
-
-    new FetchRequest("GET", `api/items/2/live`).send(displayLiveItems, displayLiveItems);
-    new FetchRequest("GET", `api/items/2/others`).send(displayOtherItems, displayOtherItems);
-});
+defineProps(['userId']);
 </script>
 
 <template>
@@ -27,12 +13,12 @@ onBeforeMount(() => {
         <h6 class="p-0">My Items</h6>
         <hr>
         <div class="row">
-            <div class="col-12 col-sm-6 col-lg-4 mb-3" v-for="item in liveItems" :key="item.id">
-                <MyItem :item="item" :liveItem="true"></MyItem>
+            <div class="col-12 col-sm-6 col-lg-4 mb-3 my-item" v-for="item in liveItems" :key="item.id" :my-item="`my-item-${item.id}`">
+                <MyItem :item="item" :liveItem="true" :userId="userId"></MyItem>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-4 mb-3" v-for="item in otherItems" :key="item.id">
-                <MyItem :item="item" :liveItem="false"></MyItem>
+            <div class="col-12 col-sm-6 col-md-4 mb-3" v-for="item in otherItems" :key="item.id" :my-item="`my-item-${item.id}`">
+                <MyItem :item="item" :liveItem="false" :userId="userId"></MyItem>
             </div>
 
             <div class="col-12" v-show="(liveItems == 0 && otherItems == 0)">
@@ -42,3 +28,34 @@ onBeforeMount(() => {
         </div>
     </div>
 </template>
+
+<script>
+    export default {
+        data() {
+            return {
+                liveItems: [],
+                otherItems: []
+            }
+        },
+        methods: {
+            getLiveItems(){
+                const displayLiveItems = (items) => {
+                    this.liveItems = items;
+                }
+
+                new FetchRequest("GET", `api/items/${this.userId}/live`).send(displayLiveItems, displayLiveItems);
+           },
+            getOtherItems(){
+                const displayOtherItems = (items) => {
+                    this.otherItems = items;
+                }
+
+                new FetchRequest("GET", `api/items/${this.userId}/others`).send(displayOtherItems, displayOtherItems);
+           },
+        },
+        mounted(){
+            this.getLiveItems();
+            this.getOtherItems();
+        }
+    };
+</script>

@@ -1,10 +1,9 @@
 <script setup>
 import PlaceBidModal from '../components/Item/PlaceBid.vue'
-import { ref, onBeforeMount, onMounted } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { RouterLink, useRoute } from "vue-router"
 import { App } from "../assets/js/util/app.js"
 import PlaceBidButton from "../components/Item/PlaceBidButton.vue"
-// import { PlaceBid } from "../assets/js/place-bid/item-details.js"
 
 const route    = useRoute();
 
@@ -64,9 +63,13 @@ onBeforeMount(() => {
                     <p class="m-0">Item is currently live in <RouterLink :to="`/live-auction/rooms/live/${item.room}`" class="link-offset-2">Room <span>{{ item.room }}</span></RouterLink></p>
                     <p>Auction ends in <small class="text-danger bid-countdown">{{ countDown }}</small></p>
                 </div>
+                <div class="mt-4 fs-6" v-else>
+                    <p class="m-0">Item in <b>Room {{ item.room }}</b></p>
+                </div>
 
                 <div>
-                    <div class="d-inline" v-if="!isAdmin">
+                    <!-- v-if="!isAdmin && countDown!='EXPIRED'" -->
+                    <div class="d-inline">
                         <PlaceBidButton :item="item" :classContent="`btn btn-dark fs-4 place-bid`"></PlaceBidButton>
                     </div>
                     <div class="d-inline ms-2"><small class="text-secondary fw-bold fs-6 p-0">{{ (bidTotal==undefined ? 0 : bidTotal.bids) }} bid(s) placed on item.</small></div>

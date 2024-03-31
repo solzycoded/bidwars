@@ -5,10 +5,9 @@ import ImageUpload from "../components/SellAnItem/ImageUpload/Section.vue";
 import ItemCondition from "../components/SellAnItem/ItemCondition/Section.vue";
 import ItemPrice from "../components/SellAnItem/ItemPrice/Section.vue";
 import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.vue";
-import { ref } from 'vue';
 
 </script>
-
+ 
 <template>
     <main id="main-section">
         <div class="mb-3">

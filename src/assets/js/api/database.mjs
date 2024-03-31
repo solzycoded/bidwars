@@ -16,9 +16,6 @@ export class Db {
         con.query(query, 
             function (err, result) {
                 if (err) throw err;
-                // else {
-                //     console.log("Created");
-                // }
             }
         );
     }
@@ -28,7 +25,6 @@ export class Db {
             if (err) throw err;
             console.log("Connected!");
 
-            Db.sendQuery("DROP DATABASE IF EXISTS bidwars101", con);
             Db.sendQuery("CREATE DATABASE IF NOT EXISTS bidwars101", con);
             Db.createTables(con);
             Db.insertDefaultData(con);
@@ -61,7 +57,7 @@ export class Db {
                         "email VARCHAR(120) NOT NULL UNIQUE," +
                         "password text NOT NULL," +
                         "role VARCHAR(8) NOT NULL," +
-                        "token text NOT NULL," +
+                        "token text," +
                         "created_at DATETIME DEFAULT NOW()" +
                     ");",
             notifications: "CREATE TABLE IF NOT EXISTS bidwars101.Notifications (" +
@@ -102,7 +98,7 @@ export class Db {
                     ");",
             itemImages: "CREATE TABLE IF NOT EXISTS bidwars101.Item_Images (" +
                             "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
-                            "image_text text," +
+                            "image_blob text," +
                             "item_id INT NOT NULL," +
                             "FOREIGN KEY (item_id) REFERENCES Items(id)" +
                         ");",
@@ -146,33 +142,54 @@ export class Db {
     }
 
     static insertDefaultData(con){
+        Db.createCustomerUser1(con);
+
         // categories
         Db.sendQuery("INSERT IGNORE INTO bidwars101.Categories (name) VALUES ('art'), ('electronics'), ('antiques'), ('vintage cars'), ('furniture');", con);
 
         // item conditions
         Db.sendQuery("INSERT IGNORE INTO bidwars101.Item_Conditions (item_condition, pre_condition) VALUES ('used', true), ('brand new', true), ('looks brand new', false), ('very old', false), ('broken and needs fixing', false), ('just needs little dusting', false);", con);
 
+        Db.createAdminUser(con);
+
         // rooms (to be removed later)
         Db.sendQuery("INSERT IGNORE INTO bidwars101.Rooms (room_tag) VALUES ('alpha'), ('beta'), ('bolt'), ('101');", con);
-
-        // users (to be removed later)
-        Db.sendQuery("INSERT IGNORE INTO bidwars101.Users (name, email, password, role, token) VALUES ('mon', 'mon@gmail.com', 'passworded', 'user', 'aldfjadlfsjalfdj2aodfuafdlkja'), ('monny', 'monny@gmail.com', 'passworded', 'user', 'ajfdaljfdafjafsdjalf');", con);
 
         // time_frames (to be removed later)
         Db.sendQuery("INSERT IGNORE INTO bidwars101.Time_Frames (name) VALUES ('year'), ('month'), ('day'), ('hour');", con);
 
-        Db.createAdminUser(con);
+        Db.createCustomerUser2(con);
 
         Db.insertItems(con);
     }
 
-    static createAdminUser(con){
+    static async createAdminUser(con){
         bcrypt.hash('coveredinpassworded3421', 10, (err, hash) => {
             if (err) {
                 return;
             }
 
-            Db.sendQuery(`INSERT IGNORE INTO bidwars101.Users (name, email, password, role, token) VALUES ('admin', 'admin@bidwars.com', '${hash}', 'admin', 'aljflafiwoe8092afdafaafldajfda892039');`, con);
+            Db.sendQuery(`INSERT IGNORE INTO bidwars101.Users (name, email, password, role) VALUES ('admin', 'admin@bidwars.com', '${hash}', 'admin');`, con);
+        });
+    }
+
+    static async createCustomerUser1(con){
+        bcrypt.hash('passworded', 10, (err, hash) => {
+            if (err) {
+                return;
+            }
+
+            Db.sendQuery(`INSERT IGNORE INTO bidwars101.Users (name, email, password, role) VALUES ('solzy1', 'solzycoded@gmail.com', '${hash}', 'user');`, con);
+        });
+    }
+
+    static async createCustomerUser2(con){
+        bcrypt.hash('passworded', 10, (err, hash) => {
+            if (err) {
+                return;
+            }
+
+            Db.sendQuery(`INSERT IGNORE INTO bidwars101.Users (name, email, password, role) VALUES ('solzy2', 'solzyfrenzy1@gmail.com', '${hash}', 'user');`, con);
         });
     }
 
@@ -193,7 +210,7 @@ export class Db {
 
             // item images
             let urlKey = Db.generateRandomNumber(3, 0);
-            Db.sendQuery(`INSERT IGNORE INTO bidwars101.Item_Images (item_id, image_text) VALUES (${index + 1}, '${imageUrls[urlKey]}'), (${index + 1}, '${imageUrls[urlKey]}'), (${index + 1}, '${imageUrls[urlKey]}');`, con);
+            Db.sendQuery(`INSERT IGNORE INTO bidwars101.Item_Images (item_id, image_blob) VALUES (${index + 1}, '${imageUrls[urlKey]}'), (${index + 1}, '${imageUrls[urlKey]}'), (${index + 1}, '${imageUrls[urlKey]}');`, con);
 
             // auction_rooms
             let addToAuction = Db.generateRandomNumber(3, 1)==1;
@@ -204,7 +221,7 @@ export class Db {
 
             // bids
             let offer  = Db.generateRandomNumber(100000, 10);
-            let bidder = Db.generateRandomNumber(3, 2);
+            let bidder = 3;
             let itemId     = Db.generateRandomNumber(index + 1);
 
             Db.sendQuery(`INSERT IGNORE INTO bidwars101.Bids (bidder, item_id, offer) VALUES (${bidder}, '${itemId}', '${offer}');`, con);

@@ -9,7 +9,6 @@ import MyBids from '../components/Profile/Bids/Section.vue'
         <div class="container-fluid">
             <nav aria-label="breadcrumb" class="bg-light rounded">
                 <ol class="breadcrumb p-1">
-                    <!-- <li class="breadcrumb-item fw-bolder"><a href="#">Home</a></li> -->
                     <li class="breadcrumb-item active text-dark fw-bold p-1" aria-current="page">Profile</li>
                 </ol>
             </nav>
@@ -19,8 +18,8 @@ import MyBids from '../components/Profile/Bids/Section.vue'
         <section>
             <div class="container-fluid">
                 <div class="row">
-                    <MyItems></MyItems>
-                    <MyBids></MyBids>
+                    <MyItems :userId="userId"></MyItems>
+                    <MyBids :userId="userId"></MyBids>
                 </div>
             </div>
         </section>
@@ -29,6 +28,11 @@ import MyBids from '../components/Profile/Bids/Section.vue'
 
 <script>
     export default {
+        data() {
+            return {
+                userId: this.$store.state.auth.id
+            }
+        },
         methods: {
             goToHomePage(){
                 if(!this.$store.getters.isLoggedIn){

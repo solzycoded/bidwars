@@ -3,7 +3,7 @@
     import { RouterLink, useRoute } from "vue-router";
     import BidItem from "./Item.vue";
 
-    const props = defineProps(['item']);
+    const props = defineProps(['item', 'userId']);
 
     const userBids = ref(null); // all of the bids under each item
 
@@ -13,7 +13,7 @@
         }
 
         // get userBids
-        new FetchRequest("GET", `api/items/2/bids/${props.item.id}`).send(getUserBids, getUserBids);
+        new FetchRequest("GET", `api/items/${props.userId}/bids/${props.item.id}`).send(getUserBids, getUserBids);
     });
 </script>
 

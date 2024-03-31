@@ -157,7 +157,7 @@ export class RoomApi {
                     throw new Error("Room was not selected!");
                 }
 
-                const SQL    = "SELECT DISTINCT bidwars101.Items.id, image_text " +
+                const SQL    = "SELECT DISTINCT bidwars101.Items.id, image_blob " +
                     "FROM bidwars101.Rooms " + 
                     "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Auction_Rooms.room_id=bidwars101.Rooms.id " +
                     "INNER JOIN bidwars101.Items ON bidwars101.Auction_Rooms.item_id=bidwars101.Items.id " +
@@ -257,7 +257,7 @@ export class RoomApi {
 
                 const app = new App();
 
-                const SQL    = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_text, COUNT(bidwars101.Bids.id) as bids " +
+                const SQL    = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_blob, COUNT(bidwars101.Bids.id) as bids " +
                     "FROM bidwars101.Auction_Rooms " +
                     "INNER JOIN bidwars101.Items ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
                     "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +

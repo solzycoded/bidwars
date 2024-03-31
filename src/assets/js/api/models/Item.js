@@ -13,7 +13,7 @@ export default class Item {
     }
 
     live(data, callback) {
-        const query = "SELECT bidwars101.Items.id as id, title, image_text as image, auction_date, auction_start, auction_end, COUNT(bidwars101.Bids.item_id) as bid_number " +
+        const query = "SELECT bidwars101.Items.id as id, title, image_blob as image, auction_date, auction_start, auction_end, COUNT(bidwars101.Bids.item_id) as bid_number " +
             "FROM bidwars101.Items " + 
             "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
             "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
@@ -29,6 +29,13 @@ export default class Item {
 
     create(data, callback) {
         this.db.query('INSERT INTO bidwars101.Items (title, category_id, current_condition_id, price, selling_time, purchase_duration, time_frame_id, user_id, pre_condition_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', data, callback);
+    }
+
+    delete(data, callback) {
+        const query = "DELETE FROM bidwars101.Items " + 
+            "WHERE bidwars101.Items.id = ? " + 
+            "AND user_id = ?";
+        this.db.query(query, data, callback);
     }
 
     checkTitle(data, callback) {

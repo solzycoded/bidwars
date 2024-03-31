@@ -44,7 +44,7 @@ export class CategoryApi {
 
                 const app = new App();
 
-                const SQL = "SELECT bidwars101.Items.id as id, title, price, bidwars101.Categories.name as category, image_text as image, COUNT(bidwars101.Bids.item_id) as bid_number " +
+                const SQL = "SELECT bidwars101.Items.id as id, title, price, bidwars101.Categories.name as category, image_blob as image, COUNT(bidwars101.Bids.item_id) as bid_number " +
                     "FROM bidwars101.Categories " + 
                     "INNER JOIN bidwars101.Items ON bidwars101.Categories.id=bidwars101.Items.category_id " +
                     "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +

@@ -3,15 +3,7 @@ import MyBid from './Card.vue';
 import { ref, onBeforeMount } from 'vue';
 import { RouterLink, useRoute } from "vue-router";
 
-const items = ref(null);
-
-onBeforeMount(() => {
-    const displayItems = (listOfItems) => {
-        items.value = listOfItems;
-    }
-
-    new FetchRequest("GET", `api/items/2/bids`).send(displayItems, displayItems);
-});
+defineProps(['userId']);
 </script>
 
 <template>
@@ -21,7 +13,7 @@ onBeforeMount(() => {
         <hr>
         <div class="row">
             <div class="col-12 col-md-6 mb-3" v-for="item in items" :key="item.id">
-                <MyBid :item="item"></MyBid>
+                <MyBid :item="item" :userId="userId"></MyBid>
             </div>
             
             <div class="col-12" v-show="(items == 0)">
@@ -32,3 +24,25 @@ onBeforeMount(() => {
         </div>
     </div>
 </template>
+
+<script>
+    export default {
+        data() {
+            return {
+                items: []
+            }
+        },
+        methods: {
+            mybids(){
+                const displayItems = (listOfItems) => {
+                    this.items = listOfItems;
+                }
+
+                new FetchRequest("GET", `api/items/${this.userId}/bidder-items`).send(displayItems, displayItems);
+            }
+        },
+        mounted() {
+            this.mybids();
+        },
+    }
+</script>

@@ -36,6 +36,9 @@ class Api{
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({extended: true}));
 
+        // Parse JSON bodies (as sent by API clients)
+        app.use(bodyParser.json({ limit: '100mb' }));
+
         return app;
     }
 
@@ -88,6 +91,7 @@ app.get(`${itemPrefix}:title`, itemController.findByName);
 app.get(`${itemPrefix}:id/id`, itemController.findById);
 app.get(`${itemPrefix}live/all`, itemController.liveAuctionItems);
 app.get(`${itemPrefix}all/available`, itemController.availableItems);
+app.delete(`${itemPrefix}:itemId`, itemController.deleteItem);
 /* end ITEMS */
 
 /* ITEMIMAGES */
@@ -95,17 +99,21 @@ itemImageController.injectDB(con);
 // itemImageController.injectApp(app);
 
 const itemImagePrefix = `${prefix}item-images/`;
-const upload = itemImageController.upload();
+// const upload = itemImageController.upload();
 
-app.post(`${itemImagePrefix}create/:itemId`, upload.array('image'), itemImageController.createItemImage);
+// , upload.single('image')
+
+app.post(`${itemImagePrefix}create/:itemId`, itemImageController.createItemImage);
 /* end ITEMIMAGES */
 
-/* ITEMS */
+/* BIDS */
 bidController.injectDB(con);
 
 const bidPrefix = `${prefix}items/`;
 app.get(`${bidPrefix}:itemId/bids`, bidController.getTotalBids);
-/* end ITEMS */
+app.get(`${bidPrefix}:bidder/bidder-items`, bidController.getBidderItems);
+app.post(`${bidPrefix}:itemId/bids`, bidController.createBid);
+/* end BIDS */
 
 /* ROOMS */
 roomController.injectDB(con);

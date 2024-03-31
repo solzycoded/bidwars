@@ -20,16 +20,30 @@ function injectDB(database) {
 
 
 // Multer configuration to handle file uploads
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'imgs/items/');
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
-    }
-});
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//       cb(null, 'imgs/items/');
+//     },
+//     filename: function (req, file, cb) {
+//       cb(null, file.originalname);
+//     }
+// });
 
-const upload = () => {return multer({ storage })};
+//Setting storage engine
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, path.join(__dirname, 'uploads')); // Use path.join to get the correct path
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//   }
+// });
+// // Define limits for uploaded files
+// const limits = {
+//   fileSize: 10 * 1024 * 1024, // 10 MB (adjust this value according to your needs)
+// };
+
+// const upload = () => multer({ storage, limits });
 
 // function storeItemImage(prefix){
 //     app.post('imgs/items/', upload.single('image'), (req, res) => {
@@ -43,27 +57,24 @@ const upload = () => {return multer({ storage })};
 // }
 
 async function createItemImage(req, res) {
-    // const { images } = req.body;
-    // const { itemId } = req.params;
-
-    // const data  = [itemId];
-
-    // storeImages(images);
-    const filePaths = req.files.map(file => path.join(__dirname, 'imgs/items', file.filename));
-    // Perform additional operations as needed, such as saving file metadata to a database
-    res.json({ filePaths });
-    // item.create(data, (err, result) => {
-    //     try{
-    //         if(result.insertId==undefined){
-    //             res.status(201).json({ success: false, data: { message: "Title already exists! Please type something else." } });
-    //         }
-    //         else{
-    //             res.status(201).json({ success: true, data: { id: result.insertId } });
-    //         }
-    //     } catch(err) {
-    //         res.status(201).json({ success: false, data: { message: "Title already exists! Please type something else." } });
-    //     }
-    // });
+    const { image } = req.body;
+    
+    if(!image){
+      res.status(201).json({ success: false, data: { message: "Image file is missing." } });
+    }
+  
+    item.create(data, (err, result) => {
+        try{
+            if(result==undefined){
+              res.status(201).json({ success: false, data: { message: "Image was not uploaded. Something went wrong." } });
+            }
+            else{
+              res.status(201).json({ success: true, data: { message: "Your item was successfully created" } });
+            }
+        } catch(err) {
+          res.status(201).json({ success: false, data: { message: "Image was not uploaded. Something went wrong." } });
+        }
+    });
 }
 
 // function storeImages(images){
@@ -95,10 +106,8 @@ async function createItemImage(req, res) {
 // }
 
 const ItemImageController = {
-    injectDB,
-    // injectApp,
-    createItemImage,
-    upload
+  injectDB,
+  createItemImage,
 };
 
 export default ItemImageController;

@@ -35,7 +35,7 @@ export class ItemApi {
 
                 const app = new App();
 
-                const SQL    = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_text " +
+                const SQL    = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_blob " +
                     "FROM bidwars101.Auction_Rooms " +
                     "INNER JOIN bidwars101.Items ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
                     "INNER JOIN bidwars101.Users ON bidwars101.Items.user_id=bidwars101.Items.user_id " +
@@ -73,7 +73,7 @@ export class ItemApi {
 
                 const app = new App();
 
-                const SQL    = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_text " +
+                const SQL    = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_blob " +
                     "FROM bidwars101.Auction_Rooms " +
                     "INNER JOIN bidwars101.Items ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
                     "INNER JOIN bidwars101.Users ON bidwars101.Items.user_id=bidwars101.Items.user_id " +
@@ -174,7 +174,7 @@ export class ItemApi {
         // GET API
         this.app.get('/api/items', async(req, res) => {
             try {
-                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image_text " +
+                const SQL    = "SELECT title, price, bidwars101.Categories.name as category, image_blob " +
                     "FROM bidwars101.Items " + 
                     "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
                     "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id "

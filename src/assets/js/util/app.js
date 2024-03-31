@@ -120,4 +120,34 @@ export class App {
 
         return arr;
     }
+
+    static alert(isSuccess, message){
+        let alert = document.querySelector("#alert");
+
+        let alertClassList = alert.classList;
+        
+        alertClassList.remove("d-none");
+
+        // display message
+        let alertMessageTag = document.querySelector(".alert-message-content");
+        alertMessageTag.innerHTML = message;
+
+        // set alert background color
+        let alertBtn          = document.querySelector(".alert-btn");
+        let alertBtnClassList = alertBtn.classList;
+
+        if(isSuccess){
+            alertBtnClassList.add("bg-success");
+            alertBtnClassList.remove("bg-danger");
+        }
+        else{
+            alertBtnClassList.add("bg-danger");
+            alertBtnClassList.remove("bg-success");
+        }
+
+        // trigger the btn to disappear
+        setTimeout(() => {
+            alertClassList.add("d-none");
+        }, 7000);
+    }
 }

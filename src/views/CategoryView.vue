@@ -1,5 +1,4 @@
 <script setup>
-import MainSection from '../components/Category/Section.vue'
 import PlaceBidModal from '../components/Item/PlaceBid.vue'
 import { ref, onBeforeMount } from 'vue'
 import { RouterLink, useRoute } from "vue-router"

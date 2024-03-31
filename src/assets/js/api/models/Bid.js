@@ -9,6 +9,16 @@ export default class Bid {
     }
 
     create(data, callback){
-        this.db.query('INSERT INTO FROM bidwars101.Bids (bidder, item_id, offer) VALUES (?, ?, ?)', data, callback);
+        this.db.query('INSERT INTO bidwars101.Bids (bidder, item_id, offer) VALUES (?, ?, ?)', data, callback);
+    }
+
+    bidderItems(data, callback){
+        const query = "SELECT bidwars101.Items.id, title " +
+            "FROM bidwars101.Bids " + 
+            "INNER JOIN bidwars101.Items ON bidwars101.Bids.item_id=bidwars101.Items.id " +
+            "WHERE bidder = ? " +
+            "GROUP BY bidwars101.Items.id;";
+
+        this.db.query(query, data, callback);
     }
 }

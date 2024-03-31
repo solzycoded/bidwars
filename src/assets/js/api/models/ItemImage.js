@@ -4,6 +4,6 @@ export default class ItemImage {
     }
 
     create(data, callback) {
-        this.db.query('INSERT INTO bidwars101.Item_Images (item_id, image_text) VALUES (?, ?)', data, callback);
+        this.db.query('INSERT INTO bidwars101.Item_Images (item_id, image_blob) VALUES (?, ?)', data, callback);
     }
 }

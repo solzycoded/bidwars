@@ -35,14 +35,15 @@ async function getTotalBids(req, res) {
 }
 
 async function createBid(req, res) {
-    const { bidder, item_id, offer }    = req.body;
+    const { bidder, offer } = req.body;
+    const { itemId }        = req.params;
 
     // validation
-    if(!bidder || !item_id || !offer){
-        throw new Error("There are missing fields!");
+    if(!bidder || !itemId || !offer){
+        res.status(201).json({success: false, data: {message: "There are missing values!"}});
     }
 
-    const data = [bidder, item_id, offer];
+    const data = [bidder, itemId, offer];
 
     bid.create(data, (err, result) => {
         try{
@@ -58,10 +59,35 @@ async function createBid(req, res) {
     });
 }
 
+async function getBidderItems(req, res) {
+    const { bidder }        = req.params;
+
+    // validation
+    if(!bidder){
+        return res.status(201).json({success: false, data: {message: "There are missing values!"}});
+    }
+
+    const data = [bidder];
+
+    bid.bidderItems(data, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(201).json({success: false, data: []});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
 const BidController = {
     getTotalBids,
     createBid,
     injectDB,
+    getBidderItems
 };
 
 export default BidController;

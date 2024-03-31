@@ -1,8 +1,9 @@
 <script setup>
-    import { ref, onBeforeMount } from 'vue'
-    import { RouterLink, useRoute } from "vue-router"
+    import { ref, onBeforeMount } from 'vue';
+    import { RouterLink, useRoute } from "vue-router";
+    import { App } from "../../../assets/js/util/app.js";
 
-    const props = defineProps(['item', 'liveItem']);
+    const props = defineProps(['item', 'liveItem', 'userId']);
 
     const bidColor = props.liveItem ? "danger" : "secondary";
 
@@ -21,9 +22,11 @@
 <template>
     <div class="card">
         <div class="position-relative">
-            <img :src="`${item.image_text}`" class="card-img-top img-h-150 w-100" alt="auction item picture">
+            <img :src="`${item.image_blob}`" class="card-img-top img-h-150 w-100" alt="auction item picture">
             <div class="position-absolute end-0 top-0 p-1">
-                <button type="button" class="btn btn-danger fw-lighter p-1 fs-6">Delete</button>
+                <form @submit.prevent="deleteItem">
+                    <button type="submit" class="btn btn-danger fw-lighter p-1 fs-6">Delete</button>
+                </form>
             </div>
         </div>
         <div class="card-body p-2">
@@ -37,3 +40,37 @@
         </div>
     </div>
 </template>
+
+<script>
+    export default {
+        data() {
+            return {
+                token: this.$store.state.auth.token
+            }
+        },
+        methods: {
+            deleteItem(){
+                const confirmAction = confirm("Your item will now be deleted.");
+
+                if(confirmAction){
+                    let data = {user_id: this.userId, token: this.token};
+
+                    new FetchRequest("DELETE", `api/items/${this.item.id}`, data).send(this.successResponse, this.failureResponse);
+                }
+            },
+            successResponse(data){
+                let itemContainer = document.querySelector(`.my-item[my-item='my-item-${this.item.id}']`);
+
+                if(itemContainer!=null){
+                    itemContainer.classList.add('d-none');
+
+                    // show alert
+                    App.alert(true, data.message);
+                }
+            },
+            failureResponse(data){
+                App.alert(false, data.message);
+            }
+        },
+    }
+</script>
