@@ -19,12 +19,10 @@ const createItem = () => {
 }
 
 const createItemSuccess = (data) => {
-    // upload images    
-    const images = getItemImages();
-
-    console.log(images);
-
-    ItemImage.upload(images, data.id);
+    if(uploadedImages.length > 0){
+        ItemImage.upload(uploadedImages, data.id);
+        document.querySelector("#profile-link").click();
+    }
 }
 
 const createItemFailure = (data) => {

@@ -6,7 +6,7 @@ import { App } from "../assets/js/util/app.js";
 
 <template>
     <section id="main-section">
-        <div class="container-fluid p-0 mb-5">
+        <div class="container-fluid p-0 mb-5" id="set-auction">
             <div class="mb-3 fw-bold">
                 <h3>Set Auction</h3>
             </div>
@@ -65,7 +65,7 @@ import { App } from "../assets/js/util/app.js";
             </form>
         </div>
         <br>
-        <div class="mb-5 mt-3">
+        <div class="mb-5 mt-3" id="auction-list">
             <div class="mb-3">
                 <h4>Auctions</h4>
             </div>
@@ -188,7 +188,7 @@ import { App } from "../assets/js/util/app.js";
                 this.getAuctionStartTimes();
                 this.getItemsInRooms();
 
-                alert("Auction was successfully scheduled!");
+                App.alert(true, "Auction was successfully scheduled!");
             },
             resetFields(){
                 this.selectedRoom = "";
@@ -205,7 +205,7 @@ import { App } from "../assets/js/util/app.js";
                 this.selectedAuctionTime = "";
             },
             failureResponse(data){
-                this.error = data.message;
+                App.alert(false, data.message);
             },
             getAvailableItems(){
                 const items = (itemList) => {

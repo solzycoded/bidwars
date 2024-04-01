@@ -1,11 +1,10 @@
 import { Db } from "./database.mjs"
-import express, { response } from "express"
+import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
 import { ItemImageApi } from "./ItemImage.mjs"
 import { ItemApi } from "./Item.mjs"
 import { RoomApi } from "./Room.mjs"
-import { CategoryApi } from "./Category.mjs";
 import { SearchApi } from "./Search.mjs"
 import { UserApi } from "./User.mjs"
 import { TimeFrameApi } from "./TimeFrame.mjs"
@@ -17,6 +16,8 @@ import itemImageController from './controllers/ItemImageController.js';
 import bidController from './controllers/BidController.js';
 import roomController from './controllers/RoomController.js';
 import auctionRoomController from './controllers/AuctionRoomController.js';
+import notificationController from './controllers/NotificationController.js';
+import categoryController from './controllers/CategoryController.js';
 
 class Api{
     constructor(con){
@@ -92,18 +93,17 @@ app.get(`${itemPrefix}:id/id`, itemController.findById);
 app.get(`${itemPrefix}live/all`, itemController.liveAuctionItems);
 app.get(`${itemPrefix}all/available`, itemController.availableItems);
 app.delete(`${itemPrefix}:itemId`, itemController.deleteItem);
+app.get(`${itemPrefix}:itemId/bidders`, itemController.getItemBidders);
+app.get(`${itemPrefix}:userId/all-items`, itemController.allUserItems);
 /* end ITEMS */
 
 /* ITEMIMAGES */
 itemImageController.injectDB(con);
-// itemImageController.injectApp(app);
 
 const itemImagePrefix = `${prefix}item-images/`;
-// const upload = itemImageController.upload();
+const upload = itemImageController.upload();
 
-// , upload.single('image')
-
-app.post(`${itemImagePrefix}create/:itemId`, itemImageController.createItemImage);
+app.post(`${itemImagePrefix}create/:itemId`, upload.single('image'), itemImageController.createItemImage);
 /* end ITEMIMAGES */
 
 /* BIDS */
@@ -120,6 +120,13 @@ roomController.injectDB(con);
 
 const roomPrefix = `${prefix}rooms/`;
 app.get(`${roomPrefix}all`, roomController.allRooms);
+app.get(`${roomPrefix}live/items/:roomId`, roomController.itemsInARoom);
+app.get(`${roomPrefix}live`, roomController.getLiveRooms);
+app.get(`${roomPrefix}live/images/:roomId`, roomController.getImagesInARoom);
+app.get(`${roomPrefix}live/bids/:roomId`, roomController.totalBidsInARoom);
+app.get(`${roomPrefix}live/categories/:roomId`, roomController.categoriesInARoom);
+app.get(`${roomPrefix}live/items/:roomId/all`, roomController.allItemsInARoom);
+app.get(`${roomPrefix}live/:roomName`, roomController.findRoom);
 /* end ROOMS */
 
 /* AUCTION ROOMS */
@@ -133,6 +140,22 @@ app.get(`${auctionRoomPrefix}items/all`, auctionRoomController.allAuctionItems);
 app.post(`${auctionRoomPrefix}items/filter`, auctionRoomController.filteredItems);
 app.delete(`${auctionRoomPrefix}:id`, auctionRoomController.deleteAuctionItem);
 /* end AUCTION ROOMS */
+
+/* NOTIFICATIONS */
+notificationController.injectDB(con);
+
+const notificationPrefix = `${prefix}notifications/`;
+app.post(`${notificationPrefix}`, notificationController.createNotification);
+app.get(`${notificationPrefix}:userId`, notificationController.getUserNotifications);
+/* end NOTIFICATIONS */
+
+/* CATEGORIES */
+categoryController.injectDB(con);
+
+const categoryPrefix = `${prefix}category/`;
+app.get(`${categoryPrefix}:name`, categoryController.getLiveItemsInACategory);
+app.get(`${prefix}categories`, categoryController.getAllCategories);
+/* end CATEGORIES */
 
 /* ITEMS */
 /* item images */
@@ -149,10 +172,6 @@ new UserApi(app, con).initialize();
 /* ROOMS */
 new RoomApi(app, con).initialize();
 /* end ROOMS */
-
-/* CATEGORIES */
-new CategoryApi(app, con).initialize();
-/* end CATEGORIES */
 
 /* SEARCH API */
 new SearchApi(app, con).initialize();

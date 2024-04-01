@@ -30,20 +30,21 @@ function injectDB(database) {
 // });
 
 //Setting storage engine
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, path.join(__dirname, 'uploads')); // Use path.join to get the correct path
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname);
-//   }
-// });
-// // Define limits for uploaded files
-// const limits = {
-//   fileSize: 10 * 1024 * 1024, // 10 MB (adjust this value according to your needs)
-// };
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/imgs/items/'); // Use path.join to get the correct path
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
 
-// const upload = () => multer({ storage, limits });
+// Define limits for uploaded files
+const limits = {
+  fileSize: 10 * 1024 * 1024, // 10 MB (adjust this value according to your needs)
+};
+
+const upload = () => multer({ storage, limits });
 
 // function storeItemImage(prefix){
 //     app.post('imgs/items/', upload.single('image'), (req, res) => {
@@ -52,29 +53,46 @@ function injectDB(database) {
 //         // Perform additional operations as needed, such as saving file metadata to a database
 //         res.json({ filePath });
 //     });
-  
+
 //     // app.post(`${prefix}create/:itemId`, createItemImage);
 // }
 
+// function saveImageFromBlob(blobData, filePath) {
+//   // Create a buffer from the blob data
+//   const buffer = Buffer.from(blobData, 'binary');
+
+//   // Write the buffer to a file
+//   fs.writeFile(filePath, buffer, 'binary', err => {
+//       if (err) {
+//           console.error('Error saving image:', err);
+//       } else {
+//           console.log('Image saved successfully');
+//       }
+//   });
+// }
+
 async function createItemImage(req, res) {
-    const { image } = req.body;
-    
-    if(!image){
-      res.status(201).json({ success: false, data: { message: "Image file is missing." } });
+  const { itemId } = req.params;
+  const image = req.file.filename;
+
+  if(!image || !itemId){
+    res.status(201).json({ success: false, data: { message: "Image file is missing." } });
+  }
+
+  let data = [itemId, image];
+
+  itemImage.create(data, (err, result) => {
+    try{
+      if(result==undefined){
+        res.status(201).json({ success: false, data: { message: "Image was not uploaded. Something went wrong." } });
+      }
+      else{
+        res.status(201).json({ success: true, data: { message: "Your item was successfully created" } });
+      }
+    } catch(err) {
+      res.status(201).json({ success: false, data: { message: "Image was not uploaded. Something went wrong." } });
     }
-  
-    item.create(data, (err, result) => {
-        try{
-            if(result==undefined){
-              res.status(201).json({ success: false, data: { message: "Image was not uploaded. Something went wrong." } });
-            }
-            else{
-              res.status(201).json({ success: true, data: { message: "Your item was successfully created" } });
-            }
-        } catch(err) {
-          res.status(201).json({ success: false, data: { message: "Image was not uploaded. Something went wrong." } });
-        }
-    });
+  });
 }
 
 // function storeImages(images){
@@ -108,6 +126,7 @@ async function createItemImage(req, res) {
 const ItemImageController = {
   injectDB,
   createItemImage,
+  upload
 };
 
 export default ItemImageController;

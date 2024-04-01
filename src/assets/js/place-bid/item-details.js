@@ -25,9 +25,41 @@ class PlaceBid{
     static setItemValues(item){
         getElementById("bid-offer-title").innerHTML = item.title;
         getElementById("bid-offer-price").innerHTML = PlaceBid.appendCurrency(PlaceBid.formatNumber(item.price));
-        getElementById("offer-number-of-bids").innerHTML = item.total_bids;
-        // start countdown for offer modal
-        PlaceBid.startCountDown(getElementById("offer-auction-countdown"), item.auction_end);
+
+        let numberOfBidsTag = getElementById("offer-number-of-bids");
+
+        if(numberOfBidsTag!=null){
+            numberOfBidsTag.innerHTML = item.total_bids;
+
+            // start countdown for offer modal
+            PlaceBid.startCountDown(getElementById("offer-auction-countdown"), item.auction_end);
+        }
+
+        let ownerIdTag = document.querySelector("#modal-owner-id");
+
+        ownerIdTag.value = item.user_id;
+
+        PlaceBid.checkUserIsOwner(ownerIdTag.value);
+    }
+
+    static checkUserIsOwner(ownerId){
+        let loggedInUserId = document.querySelector("#logged-in-user").value;
+        let userIsOwner    = loggedInUserId==ownerId;
+
+        let offerTag        = document.querySelector("#bid-offer-input");
+        let submitOfferBtn  = document.querySelector("#send-offer");
+        let ownerMessageTag = document.querySelector("#owner-message");
+
+        if(userIsOwner){
+            offerTag.disabled = true;
+            submitOfferBtn.disabled = true;
+            ownerMessageTag.innerHTML = "This is your Item, bruv. You can't place a bid on it!";
+        }
+        else{
+            offerTag.removeAttribute("disabled");
+            submitOfferBtn.removeAttribute("disabled");
+            ownerMessageTag.innerHTML = "";
+        }
     }
 
     static formatNumber(number) {

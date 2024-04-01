@@ -1,5 +1,6 @@
 <script setup>
 import PlaceBidModal from '../components/Item/PlaceBid.vue'
+import Bids from '../components/Item/Bids.vue'
 import { ref, onBeforeMount } from 'vue'
 import { RouterLink, useRoute } from "vue-router"
 import { App } from "../assets/js/util/app.js"
@@ -10,6 +11,7 @@ const route    = useRoute();
 const { name } = route.params;
 
 const item       = ref(null);
+const ownerId    = ref(null);
 const itemImages = ref(null);
 const bidTotal   = ref(null);
 
@@ -29,9 +31,13 @@ onBeforeMount(() => {
     const displayItem = (itemDetails) => {
         item.value = itemDetails;
 
-        App.startCountDown(countDown, itemDetails.auction_end);
+        if(itemDetails!=null){
+            ownerId.value = itemDetails.owner;
 
-        new FetchRequest("GET", `api/item/image/${item.value.id}`).send(getItemImages, getItemImages);
+            App.startCountDown(countDown, itemDetails.auction_end);
+
+            new FetchRequest("GET", `api/item/image/${item.value.id}`).send(getItemImages, getItemImages);
+        }
     }
 
     new FetchRequest("GET", `api/items/${name}`).send(displayItem, displayItem);
@@ -39,44 +45,57 @@ onBeforeMount(() => {
 </script>
 
 <template>
+
     <main id="main-section">
         <!-- item details -->
         <section class="shadow bg-body rounded" v-if="item!=null">
             <div class="d-flex justify-content-start">
-                <div v-for="image in itemImages" :key="image.id"><img :src="image.image_text" class="img-fluid w-100 h-100" alt="item picture"></div>
+                <div v-for="image in itemImages" :key="image.id"><img :src="image.image_blob" class="img-fluid w-100 h-100" alt="item picture"></div>
             </div>
-            <div class="p-3 fs-5">
-                <h5 class="fw-bolder fs-4 item-name text-capitalize">{{ item.title }}</h5>
-                <p class=""><RouterLink :to="`/live-auction/category/${item.category}`" class="link-offset-3 text-capitalize">{{ item.category }}</RouterLink></p>
-                <p>Item was acquired <small class="fw-lighter">{{ item.purchase_duration + " " + item.time_frame + "(s)"}} ago</small></p>
-                <div>
-                    <p class="fw-bold m-0">Condition of Item</p>
-                    <p class="fs-6 text-uppercase">{{ item.item_condition }}</p>
-                </div>
+            
+    <!-- v-if="(item!=null && loggedInUserId==item.owner)" -->
+            <div class="p-3 fs-5 container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <h5 class="fw-bolder fs-4 item-name text-capitalize">{{ item.title }}</h5>
+                        <p class=""><RouterLink :to="`/live-auction/category/${item.category}`" class="link-offset-3 text-capitalize">{{ item.category }}</RouterLink></p>
+                        <p>Item was acquired <small class="fw-lighter">{{ item.purchase_duration + " " + item.time_frame + "(s)"}} ago</small></p>
+                        <div>
+                            <p class="fw-bold m-0">Condition of Item</p>
+                            <p class="fs-6 text-uppercase">{{ item.item_condition }}</p>
+                        </div>
 
-                <div>
-                    <p class="fw-bold m-0">Sellers Price</p>
-                    <p class="fs-6 item-price">{{ App.appendCurrency(App.formatNumber(item.price)) }}</p>
-                </div>
+                        <div>
+                            <p class="fw-bold m-0">Sellers Price</p>
+                            <p class="fs-6 item-price">{{ App.appendCurrency(App.formatNumber(item.price)) }}</p>
+                        </div>
 
-                <div class="mt-4 fs-6" v-if="countDown!='EXPIRED'">
-                    <p class="m-0">Item is currently live in <RouterLink :to="`/live-auction/rooms/live/${item.room}`" class="link-offset-2">Room <span>{{ item.room }}</span></RouterLink></p>
-                    <p>Auction ends in <small class="text-danger bid-countdown">{{ countDown }}</small></p>
-                </div>
-                <div class="mt-4 fs-6" v-else>
-                    <p class="m-0">Item in <b>Room {{ item.room }}</b></p>
-                </div>
+                        <div class="mt-4 fs-6" v-if="countDown!='EXPIRED'">
+                            <p class="m-0">Item is currently live in <RouterLink :to="`/live-auction/rooms/live/${item.room}`" class="link-offset-2">Room <span>{{ item.room }}</span></RouterLink></p>
+                            <p>Auction ends in <small class="text-danger bid-countdown">{{ countDown }}</small></p>
+                        </div>
+                        <div class="mt-4 fs-6" v-else>
+                            <p class="m-0">Item in <b>Room {{ item.room }}</b></p>
+                        </div>
 
-                <div>
-                    <!-- v-if="!isAdmin && countDown!='EXPIRED'" -->
-                    <div class="d-inline">
-                        <PlaceBidButton :item="item" :classContent="`btn btn-dark fs-4 place-bid`"></PlaceBidButton>
+                        <div>
+                            <div class="d-inline me-2" v-if="!isAdmin && countDown!='EXPIRED'">
+                                <PlaceBidButton :item="item" :classContent="`btn btn-dark fs-4 place-bid`"></PlaceBidButton>
+                            </div>
+                            <div class="d-inline">
+                                <small class="text-secondary fw-bold fs-6 p-0">{{ (bidTotal==undefined ? 0 : bidTotal.bids) }} bid(s) placed on item.</small>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-inline ms-2"><small class="text-secondary fw-bold fs-6 p-0">{{ (bidTotal==undefined ? 0 : bidTotal.bids) }} bid(s) placed on item.</small></div>
+                    <div class="col-12 col-md-6 bidding-info" v-if="(item!=null && (loggedInUserId==item.owner || isAdmin))">
+                        <Bids :itemId="item.id"></Bids>
+                    </div>
                 </div>
             </div>
         </section>
+
         <div class="fs-4" v-else>The selected Item does not exist! Please make a different selection.</div>
+
     </main>
 
     <PlaceBidModal v-if="!isAdmin"></PlaceBidModal>
@@ -84,6 +103,11 @@ onBeforeMount(() => {
 
 <script>
     export default {
+        data() {
+            return {
+                loggedInUserId: this.$store.state.auth.id
+            }
+        },
         computed: {
             isAdmin(){
                 return this.$store.state.auth.role=='admin';

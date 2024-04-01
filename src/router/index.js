@@ -11,9 +11,7 @@ import LoginView from "../views/LoginView.vue";
 import SignupView from "../views/SignupView.vue";
 
 import DashboardView from "../views/DashboardView.vue";
-import store from '../assets/js/store/index.js'
-
-import { mapState } from 'vuex';
+import NotificationView from "../views/NotificationView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,6 +65,16 @@ const router = createRouter({
       path: "/dashboard",
       name: "dashboard",
       component: DashboardView
+    },
+    {
+      path: "/dashboard/",
+      name: "dashboard",
+      component: DashboardView
+    },
+    {
+      path: "/profile/notifications",
+      name: "notifications",
+      component: NotificationView
     },
   ]
 })

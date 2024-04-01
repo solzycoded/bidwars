@@ -53,12 +53,16 @@ async function createItem(req, res) {
 async function findByName(req, res) {
     const { title } = req.params;
 
+    if(!title){
+        return res.status(200).json({success: false, data: {message: "Title wasn't provided"}});
+    }
+
     // building query
     const data = [title];
 
     item.findByName(data, (err, result) => {
         try{
-            if(result.length > 0){
+            if(result!=undefined && result.length > 0){
                 res.status(200).json({success: true, data: result[0]});
             }
             else{
@@ -73,16 +77,20 @@ async function findByName(req, res) {
 async function findById(req, res) {
     const { id } = req.params;
 
+    if(!id){
+        return res.status(200).json({success: false, data: {message: "Id wasn't provided"}});
+    }
+
     // building query
     const data = [id];
 
     item.findById(data, (err, result) => {
         try{
-            if(result.length > 0){
+            if(result!=undefined && result.length > 0){
                 res.status(200).json({success: true, data: result[0]});
             }
             else{
-                res.status(200).json({success: false, data: null});
+                res.status(200).json({success: false, data: {message: "Item does not exist"}});
             }
         } catch(err) {
             console.error(err);
@@ -148,7 +156,56 @@ async function deleteItem(req, res){
     });
 }
 
+async function getItemBidders(req, res) {
+    const { itemId } = req.params;
+
+    if(!itemId){
+        return res.status(200).json({success: false, data: {message: "Item Id wasn't provided"}});
+    }
+
+    // building query
+    const data = [itemId];
+
+    item.bidders(data, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(200).json({success: false, data: []});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
+async function allUserItems(req, res) {
+    const { userId } = req.params;
+
+    if(!userId){
+        return res.status(200).json({success: false, data: {message: "Item Id wasn't provided"}});
+    }
+
+    // building query
+    const data = [userId];
+
+    item.userItems(data, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(200).json({success: false, data: []});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
 const ItemController = {
+    allUserItems,
     createItem,
     injectDB,
     checkTitle,
@@ -157,6 +214,7 @@ const ItemController = {
     findById,
     availableItems,
     deleteItem,
+    getItemBidders
 };
 
 export default ItemController;

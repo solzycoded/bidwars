@@ -1,5 +1,4 @@
 <script setup>
-  import Carousel from '../components/Home/Carousel.vue'
   import Invitation from '../components/Home/Invitation.vue'
   import LiveAuctionItems from '../components/Home/LiveAuctions/Items/Section.vue'
   import LiveAuctionCategories from '../components/Home/LiveAuctions/Categories/Section.vue'
@@ -8,8 +7,7 @@
 
 <template>
 
-    <Carousel v-if="userIsLoggedIn"></Carousel>
-    <Invitation v-else></Invitation>
+  <Invitation v-if="!userIsAdmin"></Invitation>
 
   <main id="main-section">
 
@@ -22,13 +20,17 @@
     <LiveAuctionRooms></LiveAuctionRooms>
 
   </main>
+
 </template>
 
 <script>
     export default {
         computed: {
             userIsLoggedIn(){
-                return this.$store.getters.isLoggedIn;
+              return this.$store.getters.isLoggedIn;
+            },
+            userIsAdmin(){
+              return this.$store.state.auth.role=='admin';
             }
         }
     };

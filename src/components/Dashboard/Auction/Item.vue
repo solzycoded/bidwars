@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { App } from "../../../assets/js/util/app.js";
 
 const props = defineProps(['item', 'adminToken']);
 </script>
@@ -46,10 +46,14 @@ const props = defineProps(['item', 'adminToken']);
             successResponse(data){
                 let row = document.querySelector(`.auction-item-row[auction-id='auction-${this.item.auction_room_id}']`);
 
-                row.classList.add('d-none');
+                if(row!=null){
+                    row.classList.add('d-none');
+
+                    App.alert(true, data.message);
+                }
             },
             failureResponse(data){
-                alert(data.message);
+                App.alert(false, data.message);
             },
             setAuctionRoomId(){
                 this.auctionRoomId = this.item.auction_room_id;

@@ -28,8 +28,8 @@
 
         new FetchRequest("GET", `api/rooms/live/images/${props.room.id}`).send(getRoomImages, getRoomImages);
         new FetchRequest("GET", `api/rooms/live/bids/${props.room.id}`).send(getBids, getBids);
-        new FetchRequest("GET", `api/rooms/live/categories/${props.room.id}-3`).send(getCategories, getCategories);
-        new FetchRequest("GET", `api/rooms/live/items/${props.room.id}-5`).send(getItems, getItems);
+        new FetchRequest("GET", `api/rooms/live/categories/${props.room.id}`).send(getCategories, getCategories);
+        new FetchRequest("GET", `api/rooms/live/items/${props.room.id}`).send(getItems, getItems);
     });
 </script>
 
@@ -39,7 +39,7 @@
         <div class="d-flex justify-content-start">
             <!-- <div class="row bg-secondary"> class="col-4 col-sm-4" -->
                 <div v-for="picture in pictures" :key="picture.id" class="w-100-p">
-                    <img :src="`${picture.image_text}`" class="img-fluid w-100 img-h-120 w-inherit" alt="auction room image">
+                    <img :src="`${picture.image_blob}`" class="img-fluid w-100 img-h-120 w-inherit" alt="auction room image">
                 </div>
             <!-- </div> -->
         </div>
@@ -63,9 +63,9 @@
                 <div class="d-inline">
                     <RouterLink class="btn btn-outline-dark fw-bold" :to="`/live-auction/rooms/live/${room.room}`">Preview</RouterLink>
                 </div>
-                <div class="d-inline float-end">
+                <!-- <div class="d-inline float-end">
                     <button class="btn btn-dark fw-bold">Join Room</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

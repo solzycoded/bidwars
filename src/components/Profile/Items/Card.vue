@@ -1,6 +1,6 @@
 <script setup>
     import { ref, onBeforeMount } from 'vue';
-    import { RouterLink, useRoute } from "vue-router";
+    import { RouterLink } from "vue-router";
     import { App } from "../../../assets/js/util/app.js";
 
     const props = defineProps(['item', 'liveItem', 'userId']);
@@ -35,7 +35,7 @@
             <p class="card-text fw-bold">$3000</p>
             <p :class="`card-text text-${bidColor} text-start text-small`">{{ bids.bids }} bids placed</p>
             <div class="d-inline" v-show="liveItem">
-                <RouterLink :to="`/live-auction/items/live/${item.title}`" class="btn btn-outline-dark fw-bold">Preview</RouterLink>
+                <RouterLink :to="`/items/${item.title}`" class="btn btn-outline-dark fw-bold">Preview</RouterLink>
             </div>
         </div>
     </div>

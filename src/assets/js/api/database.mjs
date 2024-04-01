@@ -25,6 +25,7 @@ export class Db {
             if (err) throw err;
             console.log("Connected!");
 
+            Db.sendQuery("DROP DATABASE IF EXISTS bidwars101", con);
             Db.sendQuery("CREATE DATABASE IF NOT EXISTS bidwars101", con);
             Db.createTables(con);
             Db.insertDefaultData(con);
@@ -64,6 +65,7 @@ export class Db {
                             "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                             "user_id INT NOT NULL," +
                             "message TEXT NOT NULL," +
+                            "un_read BOOLEAN DEFAULT true," +
                             "created_at DATETIME DEFAULT NOW()," +
                             "FOREIGN KEY (user_id) REFERENCES Users(id)" +
                         ");",

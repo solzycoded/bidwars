@@ -41,11 +41,20 @@ import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.vue"
         computed: {
             userId(){
                 return this.$store.state.auth.id;
+            },
+            userIsLoggedIn(){
+                return this.$store.getters.isLoggedIn;
+            },
+            userIsAdmin(){
+                return this.$store.state.auth.role=='admin';
             }
         },
         mounted() {
-            if(!this.$store.getters.isLoggedIn){
+            if(!this.userIsLoggedIn){
                 this.$router.push("login");
+            }
+            if(this.userIsLoggedIn && this.userIsAdmin){
+                this.$router.push("");
             }
         }
     }

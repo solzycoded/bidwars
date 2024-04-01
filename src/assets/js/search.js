@@ -66,7 +66,7 @@ const searchResults = (items) => {
 
     if(Array.isArray(items) && items.length > 0){
         for (const item of items) {
-            dropdown.innerHTML += `<a href="/item-details/${item.title}" class="list-group-item list-group-item-action">${item.title}</a>`;
+            dropdown.innerHTML += `<RouterLink to="/live-auction/items/live/${item.title}" class="list-group-item list-group-item-action">${item.title}</RouterLink>`;
         }
     }
     else{

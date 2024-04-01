@@ -7,6 +7,8 @@ import "./assets/css/profile.css"
 import "./assets/css/sell-an-item.css"
 import "./assets/css/login.css"
 import "./assets/css/dashboard.css"
+import "./assets/css/notifications.css"
+import "./assets/css/item-details.css"
 
 import { createApp } from 'vue'
 import App from './App.vue'

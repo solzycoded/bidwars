@@ -115,6 +115,14 @@ header {
         margin-top: 15px;
         padding: 10px 40px;
     }
+
+    .img-h-150 {
+        height: 250px !important;
+    }
+
+    .img-h-150 {
+        height: 200px !important;
+    }
 }
 
 @media (max-width: 700px) {

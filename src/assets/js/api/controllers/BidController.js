@@ -40,7 +40,7 @@ async function createBid(req, res) {
 
     // validation
     if(!bidder || !itemId || !offer){
-        res.status(201).json({success: false, data: {message: "There are missing values!"}});
+        return res.status(201).json({success: false, data: {message: "There are missing values!"}});
     }
 
     const data = [bidder, itemId, offer];

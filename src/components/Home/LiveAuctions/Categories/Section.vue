@@ -27,7 +27,7 @@ onBeforeMount(() => {
           <div class="col-12 col-sm-12 col-md-4 mb-3" v-for="category in listOfCategories" :key="category.id">
             <div class="position-relative">
               <div>
-                <img src="/imgs/bidwars-logo.png" alt="category image" class="img-fluid h-100">
+                <img src="/imgs/bidwars-logo.png" alt="category image" class="img-fluid w-100">
               </div>
               <div class="position-absolute top-50 start-50 translate-middle p-0 live-auction-category-item-name">
                 <RouterLink :to="`/live-auction/category/${category.name}`" class="text-white fw-bolder live-auction-text text-decoration-none text-capitalize">{{ category.name }}</RouterLink>

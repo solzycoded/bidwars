@@ -6,8 +6,8 @@ export class App {
         this.minutes     = this.today.getMinutes();
     }
 
-    getDate(){
-        return this.getTodaysDate();
+    getDate(format = false){
+        return this.getTodaysDate(format);
     }
 
     convertFrom24To12Format(){
@@ -51,7 +51,7 @@ export class App {
         return currency + target;
     }
 
-    static async startCountDown(target, to){
+    static async startCountDown(target, to, aSelector = false){
         const app = new App();
 
         // Set the date we're counting down to
@@ -74,13 +74,25 @@ export class App {
             let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Display the result in the element with id="demo"
-            target.value = app.formatDateChar(hours) + ":" + app.formatDateChar(minutes) + ":" + app.formatDateChar(seconds);
+            let countDown = app.formatDateChar(hours) + ":" + app.formatDateChar(minutes) + ":" + app.formatDateChar(seconds);
+
+            if(aSelector){
+                target.innerHTML = countDown;
+            }
+            else{
+                target.value = countDown;
+            }
 
             // If the count down is finished, write some text
             if (distance < 0) {
                 clearInterval(x);
-                target.value = "EXPIRED";
+
+                if(aSelector){
+                    target.innerHTML = countDown;
+                }
+                else{
+                    target.value = countDown;
+                }
             }
         }, 500);
     }

@@ -1,5 +1,6 @@
 // controllers/roomController.js
 import Room from '../models/Room.js';
+import { App } from "../util.js";
 
 let db;
 let room;
@@ -25,9 +26,169 @@ async function allRooms(req, res) {
     });
 }
 
+async function itemsInARoom(req, res) {
+    const {roomId} = req.params;
+
+    if(!roomId){
+        return res.status(200).json({success: false, data: {message: "Room id is missing!"}});
+    }
+
+    let data = [roomId];
+
+    room.items(data, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(200).json({success: false, data: []});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
+async function getLiveRooms(req, res) {
+    room.live(null, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(200).json({success: false, data: []});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
+async function getImagesInARoom(req, res) {
+    const {roomId} = req.params;
+
+    if(!roomId){
+        return res.status(200).json({success: false, data: {message: "Room id is missing!"}});
+    }
+
+    let data  = [roomId];
+
+    room.images(data, (err, result) => {
+        try{
+            if(result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(201).json({success: false, data: []});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
+async function totalBidsInARoom(req, res) {
+    const {roomId} = req.params;
+
+    if(!roomId){
+        return res.status(200).json({success: false, data: {message: "Room id is missing!"}});
+    }
+
+    let data  = [roomId];
+
+    room.bids(data, (err, result) => {
+        try{
+            if(result.length > 0){
+                res.status(200).json({success: true, data: result[0]});
+            }
+            else{
+                res.status(201).json({success: false, data: { bids: 0}});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
+async function categoriesInARoom(req, res) {
+    const {roomId} = req.params;
+
+    if(!roomId){
+        return res.status(200).json({success: false, data: {message: "Room id is missing!"}});
+    }
+
+    let data  = [roomId];
+
+    room.categories(data, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(201).json({success: false, data: []});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
+async function allItemsInARoom(req, res) {
+    const {roomId} = req.params;
+
+    if(!roomId){
+        return res.status(200).json({success: false, data: {message: "Room id is missing!"}});
+    }
+
+    let data = [roomId];
+
+    room.allItems(data, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(201).json({success: false, data: []});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
+async function findRoom(req, res) {
+    const {roomName} = req.params;
+
+    if(!roomName){
+        return res.status(200).json({success: false, data: {message: "Room name is missing!"}});
+    }
+
+    let data = [roomName];
+
+    room.find(data, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result[0]});
+            }
+            else{
+                res.status(201).json({success: false, data: null});
+            }
+        } catch(err) {
+            console.error(err);
+        }
+    });
+}
+
 const RoomController = {
+    findRoom,
     allRooms,
     injectDB,
+    itemsInARoom,
+    getLiveRooms,
+    getImagesInARoom,
+    categoriesInARoom,
+    totalBidsInARoom,
+    allItemsInARoom
 };
 
 export default RoomController;

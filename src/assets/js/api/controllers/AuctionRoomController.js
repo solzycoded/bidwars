@@ -76,7 +76,7 @@ async function deleteAuctionItem(req, res) {
     auctionRoom.delete(data, (err, result) => {
         try{
             if(result!=undefined && result.affectedRows >= 1){
-                res.status(200).json({success: true, data: null});
+                res.status(200).json({success: true, data: {message: "Item was successfully removed from auction room!"}});
             }
             else{
                 return res.status(200).json({success: false, data: {message: "Record does not exist!"}});

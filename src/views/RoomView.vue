@@ -31,19 +31,21 @@
         const getRoomDets = (roomDets) => {
             room.value = roomDets;
 
-            let roomId = roomDets.id;
+            if(roomDets!=null){
+                let roomId = roomDets.id;
 
-            // get bids
-            new FetchRequest("GET", `api/rooms/live/bids/${roomId}`).send(getBids, getBids);
+                // get bids
+                new FetchRequest("GET", `api/rooms/live/bids/${roomId}`).send(getBids, getBids);
 
-            // initiate countdown
-            App.startCountDown(countDown, roomDets.auction_end);
+                // initiate countdown
+                App.startCountDown(countDown, roomDets.auction_end);
 
-            // get categories
-            new FetchRequest("GET", `api/rooms/live/categories/${roomId}`).send(getCategories, getCategories);
+                // get categories
+                new FetchRequest("GET", `api/rooms/live/categories/${roomId}`).send(getCategories, getCategories);
 
-            // get items
-            new FetchRequest("GET", `api/rooms/live/items/${roomId}/all`).send(getItems, getItems);
+                // get items
+                new FetchRequest("GET", `api/rooms/live/items/${roomId}/all`).send(getItems, getItems);
+            }
         }
 
         new FetchRequest("GET", `api/rooms/live/${name}`).send(getRoomDets, getRoomDets);
@@ -53,7 +55,7 @@
 <template>
     <main id="main-section">
         <!-- room details -->
-        <section>
+        <section v-if="room!=null">
             <div class="card">
                 <div class="card-header p-2 pb-0">
                     <div class="position-relative">
@@ -61,9 +63,9 @@
                             <h3 class="text-capitalize">Room {{ name }}</h3>
                             <p class="text-danger">{{ (room==null ? 0 : room.bidders) }} active bidder(s)</p>
                         </div>
-                        <div class="position-absolute end-0 top-0 bottom-0">
+                        <!-- <div class="position-absolute end-0 top-0 bottom-0">
                             <button type="button" class="btn btn-dark">Join Room</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="card-body">
@@ -103,6 +105,7 @@
                 </div>
             </div>
         </section>
+        <div v-else>Sorry. Room {{ name }} has no live items in it.</div>
     </main>
 
     <PlaceBidModal></PlaceBidModal>

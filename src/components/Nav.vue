@@ -19,19 +19,33 @@
                         <RouterLink active-class="active" class="nav-link" to="/sell-an-item">Sell an Item</RouterLink>
                     </li>
                     <li class="nav-item" v-show="onHome">
-                        <a class="nav-link" href="/#categories">Categories</a>
+                        <a class="nav-link" href="#categories">Categories</a>
                     </li>
                     <li class="nav-item" v-show="onHome">
-                        <a class="nav-link" href="/#rooms">Rooms</a>
+                        <a class="nav-link" href="#rooms">Rooms</a>
                     </li>
                     <li class="nav-item" v-show="userHasLoggedIn && !isAdmin && !onDashboard">
-                        <RouterLink active-class="active" class="nav-link" to="/profile">Profile</RouterLink>
+                        <RouterLink active-class="active" class="nav-link" to="/profile" id="profile-link">Profile</RouterLink>
                     </li>
                     <li class="nav-item" v-show="userHasLoggedIn && isAdmin">
                         <RouterLink active-class="active" class="nav-link" to="/dashboard">Dashboard</RouterLink>
                     </li>
+
+                    <li class="nav-item" v-show="userHasLoggedIn && isAdmin && !onDashboard">
+                        <RouterLink class="nav-link" to="/dashboard#set-auction">Schedule Auction</RouterLink>
+                    </li>
+                    <li class="nav-item" v-show="userHasLoggedIn && isAdmin && onDashboard">
+                        <a class="nav-link" href="#set-auction">Schedule Auction</a>
+                    </li>
+                    <li class="nav-item" v-show="userHasLoggedIn && isAdmin && !onDashboard">
+                        <RouterLink class="nav-link" to="/dashboard#auction-list">Auction List</RouterLink>
+                    </li>
+                    <li class="nav-item" v-show="userHasLoggedIn && isAdmin && onDashboard">
+                        <a class="nav-link" href="/dashboard#auction-list">Auction List</a>
+                    </li>
+
                     <li class="nav-item" v-if="userHasLoggedIn && !isAdmin">
-                        <RouterLink active-class="active" class="nav-link" to="/notifications">Notifications</RouterLink>
+                        <RouterLink active-class="active" class="nav-link" to="/profile/notifications">Notifications</RouterLink>
                     </li>
                     <li class="nav-item" v-show="userHasLoggedIn">
                         <button class="nav-link btn bg-secondary text-white" @click="logout">Log out</button>

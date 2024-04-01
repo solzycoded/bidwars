@@ -28,12 +28,12 @@ class FetchRequest {
     async send(successFn = () => {}, failureFn = () => {}) {
         await fetch(this.url, this.options)
             .then(response => response.json())
-            .then(items => {
-                if(items.success){
-                    successFn(items.data);
+            .then(response => {
+                if(response.success){
+                    successFn(response.data);
                 }
                 else{
-                    failureFn(items.data);
+                    failureFn(response.data);
                 }
             })
             .catch(err => {

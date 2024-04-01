@@ -1,10 +1,6 @@
 <script setup>
-import { ref } from "vue";
 import { App } from "../../assets/js/util/app.js";
 
-// let countDown = ref("00:00:00");
-
-// App.startCountDown(countDown, itemDetails.auction_end);
 </script>
 
 <template>
@@ -20,14 +16,17 @@ import { App } from "../../assets/js/util/app.js";
                     <div class="modal-body">
                         <div>
                             <p>Sellers price is <b class="text-danger" id="bid-offer-price">$1000</b></p>
+                            <input type="hidden" id="modal-owner-id">
+                            <input type="hidden" id="logged-in-user" v-model="loggedInUserId">
                             <div class="form-group">
                                 <p class="text-danger">{{ error }}</p>
                                 <label for="bid-offer" class="mb-2 fw-bold">What's your offer?</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="offer-sign">£</span>
                                     <input type="hidden" id="offer-item-id">
-                                    <input type="number" class="form-control" placeholder="Enter offer for item" aria-label="offer" aria-describedby="offer-sign" min="1" v-model="offer">
+                                    <input type="number" class="form-control" placeholder="Enter offer for item" aria-label="offer" aria-describedby="offer-sign" min="1" v-model="offer" id="bid-offer-input">
                                 </div>
+                                <p class="text-success" id="owner-message"></p>
                             </div>
                         </div>
                     </div>
@@ -36,7 +35,7 @@ import { App } from "../../assets/js/util/app.js";
                             <p class="text-danger m-0"><span id="offer-number-of-bids"></span> bids placed</p>
                             <p class="m-0">Auction ends in <small class="text-danger fw-bolder" id="offer-auction-countdown"></small></p>
                         </div>
-                        <button type="submit" class="btn btn-dark">Send offer</button>
+                        <button type="submit" class="btn btn-dark" id="send-offer">Send offer</button>
                     </div>
                 </form>
             </div>
@@ -51,7 +50,8 @@ import { App } from "../../assets/js/util/app.js";
             return {
                 offer: null,
                 bidder: this.$store.state.auth.id,
-                error: null
+                error: null,
+                loggedInUserId: this.$store.state.auth.id
             }
         },
         methods: {
@@ -62,12 +62,34 @@ import { App } from "../../assets/js/util/app.js";
                 (new FetchRequest("POST", `api/items/${itemId}/bids`, data)).send(this.successResponse, this.failureResponse);
             },
             successResponse(data){
-                App.alert(true, `Your offer has been received!`);
+                App.alert(true, data.message);
                 document.querySelector(".btn-close").click();
+
+                // send notification
+                this.sendNotification();
             },
             failureResponse(data){
                 this.error = data.message;
                 App.alert(false, data.message);
+            },
+            sendNotification(){
+                // send notification
+                let owner = this.getOwnerId();
+                let title = document.querySelector("#bid-offer-title").innerHTML;
+                let offer = App.appendCurrency(App.formatNumber(this.offer));
+
+                let data = {owner, title, offer};
+
+                CreateNotification.send("new-bid", data);
+            },
+            getOwnerId(){
+                let ownerIdTag = document.querySelector("#modal-owner-id");
+
+                if(ownerIdTag!=null){
+                    return document.querySelector("#modal-owner-id").value;
+                }
+
+                return null;
             }
         },
         computed: {
