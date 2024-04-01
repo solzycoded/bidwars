@@ -15,6 +15,7 @@ import App from './App.vue'
 import router from './router'
 
 import store from './assets/js/store/index.js'
+import './registerServiceWorker'
 
 const app = createApp(App);
 
