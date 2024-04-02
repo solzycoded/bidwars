@@ -1,7 +1,6 @@
 <script setup>
 import MyBid from './Card.vue';
-import { ref, onBeforeMount } from 'vue';
-import { RouterLink, useRoute } from "vue-router";
+import { RouterLink } from "vue-router";
 
 defineProps(['userId']);
 </script>

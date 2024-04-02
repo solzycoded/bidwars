@@ -22,7 +22,7 @@
 <template>
     <div class="card">
         <div class="position-relative">
-            <img :src="`${item.image_blob}`" class="card-img-top img-h-150 w-100" alt="auction item picture">
+            <img :src="`/imgs/items/${item.image_blob}`" class="card-img-top img-h-150 w-100" alt="auction item picture">
             <div class="position-absolute end-0 top-0 p-1">
                 <form @submit.prevent="deleteItem">
                     <button type="submit" class="btn btn-danger fw-lighter p-1 fs-6">Delete</button>
@@ -30,9 +30,9 @@
             </div>
         </div>
         <div class="card-body p-2">
-            <h6 class="card-title fw-bold p-0">{{ item.title }}</h6>
-            <p class="card-text mb-1"><a class="text-decoration-none text-dark" href="/categories/vintage-cars">Vintage cars</a></p>
-            <p class="card-text fw-bold">$3000</p>
+            <h6 class="card-title fw-bold p-0 text-capitalize">{{ item.title }}</h6>
+            <p class="card-text mb-1"><a class="text-decoration-none text-dark text-capitalize" href="/categories/vintage-cars">{{ item.category }}</a></p>
+            <p class="card-text fw-bold">{{ App.appendCurrency(App.formatNumber(item.price)) }}</p>
             <p :class="`card-text text-${bidColor} text-start text-small`">{{ bids.bids }} bids placed</p>
             <div class="d-inline" v-show="liveItem">
                 <RouterLink :to="`/items/${item.title}`" class="btn btn-outline-dark fw-bold">Preview</RouterLink>

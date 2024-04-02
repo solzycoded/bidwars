@@ -15,7 +15,7 @@ async function getUserNotifications(req, res) {
 
     // validation
     if(!userId){
-        throw new Error("There are missing fields!");
+        return res.status(406).json({success: false, data: {message: "There are missing values!"}});
     }
 
     const data = [userId];
@@ -29,7 +29,7 @@ async function getUserNotifications(req, res) {
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
@@ -39,7 +39,7 @@ async function createNotification(req, res) {
 
     // validation
     if(!user_id || !message){
-        return res.status(201).json({success: false, data: {message: "There are missing values!"}});
+        return res.status(406).json({success: false, data: {message: "There are missing values!"}});
     }
 
     const data = [user_id, message];
@@ -53,7 +53,7 @@ async function createNotification(req, res) {
                 res.status(200).json({success: true, data: null});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }

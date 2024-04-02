@@ -2,13 +2,7 @@ import { Db } from "./database.mjs"
 import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
-import { ItemImageApi } from "./ItemImage.mjs"
-import { ItemApi } from "./Item.mjs"
-import { RoomApi } from "./Room.mjs"
 import { SearchApi } from "./Search.mjs"
-import { UserApi } from "./User.mjs"
-import { TimeFrameApi } from "./TimeFrame.mjs"
-import { ItemConditionApi } from "./ItemCondition.mjs"
 
 import userController from './controllers/UserController.js';
 import itemController from './controllers/ItemController.js';
@@ -18,6 +12,8 @@ import roomController from './controllers/RoomController.js';
 import auctionRoomController from './controllers/AuctionRoomController.js';
 import notificationController from './controllers/NotificationController.js';
 import categoryController from './controllers/CategoryController.js';
+import itemConditionController from './controllers/ItemConditionController.js';
+import timeFrameController from './controllers/TimeFrameController.js';
 
 class Api{
     constructor(con){
@@ -68,7 +64,7 @@ class Api{
 }
 
 // create DB connection
-const con  = Db.con();
+const con = Db.con();
 
 const app = new Api(con).getApp();
 const prefix = "/api/";
@@ -95,8 +91,10 @@ app.get(`${itemPrefix}all/available`, itemController.availableItems);
 app.delete(`${itemPrefix}:itemId`, itemController.deleteItem);
 app.get(`${itemPrefix}:itemId/bidders`, itemController.getItemBidders);
 app.get(`${itemPrefix}:userId/all-items`, itemController.allUserItems);
+// app.get(`${itemPrefix}:userId/bids`, userController.itemsBidOn);
+app.get(`${itemPrefix}:userId/bids/:itemId`, itemController.userBiddingHistory);
 /* end ITEMS */
-
+ 
 /* ITEMIMAGES */
 itemImageController.injectDB(con);
 
@@ -104,6 +102,7 @@ const itemImagePrefix = `${prefix}item-images/`;
 const upload = itemImageController.upload();
 
 app.post(`${itemImagePrefix}create/:itemId`, upload.single('image'), itemImageController.createItemImage);
+app.get(`${prefix}item/image/:itemId`, itemImageController.getItemImage);
 /* end ITEMIMAGES */
 
 /* BIDS */
@@ -157,30 +156,21 @@ app.get(`${categoryPrefix}:name`, categoryController.getLiveItemsInACategory);
 app.get(`${prefix}categories`, categoryController.getAllCategories);
 /* end CATEGORIES */
 
-/* ITEMS */
-/* item images */
-new ItemImageApi(app, con).initialize();
-/* item images END */
+/* ITEM CONDITIONS */
+itemConditionController.injectDB(con);
 
-new ItemApi(app, con).initialize();
-/* end ITEMS */
+const itemConditionPrefix = `${prefix}item-conditions/`;
+app.get(`${itemConditionPrefix}:type`, itemConditionController.getItemConditions);
+/* end ITEM CONDITIONS */
 
-/* USERS */
-new UserApi(app, con).initialize();
-/* end USERS */
 
-/* ROOMS */
-new RoomApi(app, con).initialize();
-/* end ROOMS */
+/* TIME FRAMES */
+timeFrameController.injectDB(con);
+
+const timeFramePrefix = `${prefix}time-frames/`;
+app.get(`${timeFramePrefix}`, timeFrameController.getTimeFrameList);
+/* end TIME FRAMES */
 
 /* SEARCH API */
 new SearchApi(app, con).initialize();
 /* end SEARCH API */
-
-/* TIME FRAME API */
-new TimeFrameApi(app, con).initialize();
-/* end TIME FRAME API */
-
-/* ITEM CONDITION API */
-new ItemConditionApi(app, con).initialize();
-/* end ITEM CONDITION API */

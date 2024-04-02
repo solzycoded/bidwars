@@ -3,10 +3,19 @@ export default class Item {
         this.db = db;
     }
 
+    biddings(data, callback) {
+        const query = "SELECT bidwars101.Bids.id, bidwars101.Bids.created_at, offer " +
+        "FROM bidwars101.Bids " +
+        `WHERE bidder = ? ` +
+        `AND item_id = ? `
+        "ORDER BY id";
+        this.db.query(query, data, callback);
+    }
+
     userItems(data, callback) {
         const query = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_blob " +
             "FROM bidwars101.Items " +
-            "LEFT JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+            // "LEFT JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
             "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
             "INNER JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
             `WHERE user_id = ? ` +

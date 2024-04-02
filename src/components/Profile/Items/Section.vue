@@ -1,7 +1,6 @@
 <script setup>
 import MyItem from './Card.vue';
 import { RouterLink } from "vue-router";
-// import { App } from "../assets/js/util/app.js";
 
 defineProps(['userId']);
 </script>

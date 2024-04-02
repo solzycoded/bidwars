@@ -16,7 +16,6 @@ const changePos = (increase = false) => {
         toggleBtns("next", false);
         togglelSubmitItemSection(true, "submit-item-section");
         togglelSubmitItemSection(false, "next-item-section");
-
     }
     else if(pos <= 0){
         pos = 0;

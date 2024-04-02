@@ -1,6 +1,7 @@
+
 const createItem = () => {
     const proceed = confirmAction();
-
+ 
     if(proceed){
         const item = {
             title: getElementValue("#item-name"),
@@ -22,11 +23,29 @@ const createItemSuccess = (data) => {
     if(uploadedImages.length > 0){
         ItemImage.upload(uploadedImages, data.id);
         document.querySelector("#profile-link").click();
+        setError(false);
+    }
+    else{
+        setError(true, "Kindly upload an image for your item");
     }
 }
 
 const createItemFailure = (data) => {
-    console.log(data);
+    setError(true, data.message);
+}
+
+const setError = (show, message = "") => {
+    const errorTag = document.querySelector(".create-item-error");
+
+    const classList = errorTag.classList;
+
+    if(show){
+        errorTag.innerHTML = message;
+        classList.remove('d-none');
+    }
+    else{
+        classList.add('d-none');
+    }
 }
 
 const confirmAction = () => {

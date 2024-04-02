@@ -12,6 +12,7 @@ import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.vue"
     <main id="main-section">
         <div class="mb-3">
             <h4 class="link-offset-3">Sell your Item (<span id="sell-an-item-position" class="sell-an-item-position fw-lighter">1</span>/6)</h4>
+            <p class="text-danger d-none create-item-error"></p>
         </div>
 
         <Category></Category>
@@ -56,6 +57,9 @@ import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.vue"
             if(this.userIsLoggedIn && this.userIsAdmin){
                 this.$router.push("");
             }
+
+            // change the position of the current body to 0
+            pos = 0;
         }
     }
 </script>

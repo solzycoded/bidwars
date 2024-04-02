@@ -26,18 +26,24 @@ class FetchRequest {
     }
 
     async send(successFn = () => {}, failureFn = () => {}) {
-        await fetch(this.url, this.options)
-            .then(response => response.json())
-            .then(response => {
-                if(response.success){
-                    successFn(response.data);
-                }
-                else{
-                    failureFn(response.data);
-                }
-            })
-            .catch(err => {
-                failureFn({message: "Something went wrong!"});
-            });
+        try{
+            await fetch(this.url, this.options)
+                .then(response => response.json())
+                .then(response => {
+                    if(response.success){
+                        successFn(response.data);
+                    }
+                    else{
+                        failureFn(response.data);
+                    }
+                })
+                .catch(err => {
+                    const error = err.error!=undefined ? err.error : "";
+                    failureFn({message: "Something went wrong!", error});
+                });
+        } catch(err) {
+            const error = err.error!=undefined ? err.error : "";
+            failureFn({message: "Something went wrong!", error});
+        }
     }
 }

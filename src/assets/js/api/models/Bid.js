@@ -11,7 +11,7 @@ export default class Bid {
     create(data, callback){
         this.db.query('INSERT INTO bidwars101.Bids (bidder, item_id, offer) VALUES (?, ?, ?)', data, callback);
     }
-
+  
     bidderItems(data, callback){
         const query = "SELECT bidwars101.Items.id, title " +
             "FROM bidwars101.Bids " + 

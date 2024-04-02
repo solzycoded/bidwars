@@ -14,6 +14,10 @@ function injectDB(database) {
 async function checkTitle(req, res) {
     const { title } = req.params;
 
+    if(!title){
+        return res.status(406).json({success: false, data: {message: "Kindly provide title"}});
+    }
+
     const data  = [title];
 
     item.checkTitle(data, (err, result) => {
@@ -22,10 +26,10 @@ async function checkTitle(req, res) {
                 res.status(201).json({ success: false, data: { message: "This title already exists. Kindly select something else." } });
             }
             else{
-                res.status(201).json({ success: true, data: {message: ""} });
+                res.status(201).json({ success: true, data: { message: "" } });
             }
         } catch(err) {
-            res.status(201).json({ success: false, data: { message: "Something went wrong!" } });
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
@@ -33,6 +37,10 @@ async function checkTitle(req, res) {
 async function createItem(req, res) {
     const { title, category_id, item_condition, price, selling_time, purchase_duration, time_frame_id, item_pre_condition } = req.body;
     const { userId } = req.params;
+
+    if(!title || !category_id || !item_condition || !price || !selling_time || !purchase_duration || !time_frame_id || !item_pre_condition || !userId){
+        return res.status(406).json({success: false, data: {message: "Kindly fill out all the missing fields!"}});
+    }
 
     const data  = [title, category_id, item_condition, price, selling_time, purchase_duration, time_frame_id, userId, item_pre_condition];
 
@@ -45,7 +53,7 @@ async function createItem(req, res) {
                 res.status(201).json({ success: true, data: { id: result.insertId } });
             }
         } catch(err) {
-            res.status(201).json({ success: false, data: { message: "Title already exists! Please type something else." } });
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
@@ -54,7 +62,7 @@ async function findByName(req, res) {
     const { title } = req.params;
 
     if(!title){
-        return res.status(200).json({success: false, data: {message: "Title wasn't provided"}});
+        return res.status(406).json({success: false, data: {message: "Title wasn't provided"}});
     }
 
     // building query
@@ -69,7 +77,7 @@ async function findByName(req, res) {
                 res.status(200).json({success: false, data: null});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
@@ -78,7 +86,7 @@ async function findById(req, res) {
     const { id } = req.params;
 
     if(!id){
-        return res.status(200).json({success: false, data: {message: "Id wasn't provided"}});
+        return res.status(406).json({success: false, data: {message: "Id wasn't provided"}});
     }
 
     // building query
@@ -93,17 +101,13 @@ async function findById(req, res) {
                 res.status(200).json({success: false, data: {message: "Item does not exist"}});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
 
 async function liveAuctionItems(req, res){
-    const app = new App();
-
-    const data = [app.getTodaysDate(), app.getStartTime(), app.getEndTime()];
-
-    item.live(data, (err, result) => {
+    item.live(null, (err, result) => {
         try{
             if(result.length > 0){
                 res.status(200).json({success: true, data: result});
@@ -112,7 +116,7 @@ async function liveAuctionItems(req, res){
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
@@ -127,7 +131,7 @@ async function availableItems(req, res){
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
@@ -137,7 +141,7 @@ async function deleteItem(req, res){
     const { user_id, token } = req.body;
 
     if(!itemId || !user_id || !token){
-        return res.status(201).json({success: false, data: {message: "Some fields are missing!"}});
+        return res.status(406).json({success: false, data: {message: "Some fields are missing!"}});
     }
 
     const data = [itemId, user_id];
@@ -151,7 +155,7 @@ async function deleteItem(req, res){
                 res.status(201).json({success: false, data: {message: "You're not authorized to perform this action"}});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
@@ -160,7 +164,7 @@ async function getItemBidders(req, res) {
     const { itemId } = req.params;
 
     if(!itemId){
-        return res.status(200).json({success: false, data: {message: "Item Id wasn't provided"}});
+        return res.status(406).json({success: false, data: {message: "Item Id wasn't provided"}});
     }
 
     // building query
@@ -175,16 +179,16 @@ async function getItemBidders(req, res) {
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
-
+ 
 async function allUserItems(req, res) {
     const { userId } = req.params;
 
     if(!userId){
-        return res.status(200).json({success: false, data: {message: "Item Id wasn't provided"}});
+        return res.status(406).json({success: false, data: {message: "User Id wasn't provided"}});
     }
 
     // building query
@@ -199,7 +203,31 @@ async function allUserItems(req, res) {
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+        }
+    });
+}
+
+async function userBiddingHistory(req, res) {
+    const { userId, itemId } = req.params;
+
+    if(!userId || !itemId){
+        return res.status(406).json({success: false, data: {message: "Some fields are missing."}});
+    }
+
+    // building query
+    const data = [userId, itemId];
+
+    item.biddings(data, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(200).json({success: false, data: []});
+            }
+        } catch(err) {
+            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
         }
     });
 }
@@ -214,7 +242,8 @@ const ItemController = {
     findById,
     availableItems,
     deleteItem,
-    getItemBidders
+    getItemBidders,
+    userBiddingHistory,
 };
 
 export default ItemController;

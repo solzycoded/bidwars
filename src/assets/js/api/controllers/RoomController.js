@@ -1,6 +1,5 @@
 // controllers/roomController.js
 import Room from '../models/Room.js';
-import { App } from "../util.js";
 
 let db;
 let room;
@@ -21,7 +20,7 @@ async function allRooms(req, res) {
                 res.status(200).json({success: false, data: null});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({ success: false, data: {message: "Something went wrong!", error: err }});
         }
     });
 }
@@ -44,7 +43,7 @@ async function itemsInARoom(req, res) {
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({ success: false, data: {message: "Something went wrong!", error: err }});
         }
     });
 }
@@ -59,7 +58,7 @@ async function getLiveRooms(req, res) {
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({ success: false, data: {message: "Something went wrong!", error: err }});
         }
     });
 }
@@ -82,7 +81,7 @@ async function getImagesInARoom(req, res) {
                 res.status(201).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({ success: false, data: {message: "Something went wrong!", error: err }});
         }
     });
 }
@@ -91,7 +90,7 @@ async function totalBidsInARoom(req, res) {
     const {roomId} = req.params;
 
     if(!roomId){
-        return res.status(200).json({success: false, data: {message: "Room id is missing!"}});
+        return res.status(406).json({success: false, data: {message: "Room id is missing!"}});
     }
 
     let data  = [roomId];
@@ -105,7 +104,7 @@ async function totalBidsInARoom(req, res) {
                 res.status(201).json({success: false, data: { bids: 0}});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({ success: false, data: {message: "Something went wrong!", error: err }});
         }
     });
 }
@@ -114,7 +113,7 @@ async function categoriesInARoom(req, res) {
     const {roomId} = req.params;
 
     if(!roomId){
-        return res.status(200).json({success: false, data: {message: "Room id is missing!"}});
+        return res.status(406).json({success: false, data: {message: "Room id is missing!"}});
     }
 
     let data  = [roomId];
@@ -128,7 +127,7 @@ async function categoriesInARoom(req, res) {
                 res.status(201).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({ success: false, data: {message: "Something went wrong!", error: err }});
         }
     });
 }
@@ -137,7 +136,7 @@ async function allItemsInARoom(req, res) {
     const {roomId} = req.params;
 
     if(!roomId){
-        return res.status(200).json({success: false, data: {message: "Room id is missing!"}});
+        return res.status(406).json({success: false, data: {message: "Room id is missing!"}});
     }
 
     let data = [roomId];
@@ -151,7 +150,7 @@ async function allItemsInARoom(req, res) {
                 res.status(201).json({success: false, data: []});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({ success: false, data: {message: "Something went wrong!", error: err }});
         }
     });
 }
@@ -160,7 +159,7 @@ async function findRoom(req, res) {
     const {roomName} = req.params;
 
     if(!roomName){
-        return res.status(200).json({success: false, data: {message: "Room name is missing!"}});
+        return res.status(406).json({success: false, data: {message: "Room name is missing!"}});
     }
 
     let data = [roomName];
@@ -174,7 +173,7 @@ async function findRoom(req, res) {
                 res.status(201).json({success: false, data: null});
             }
         } catch(err) {
-            console.error(err);
+            return res.status(500).json({ success: false, data: {message: "Something went wrong!", error: err }});
         }
     });
 }
