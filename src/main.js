@@ -17,6 +17,19 @@ import router from './router'
 import store from './assets/js/store/index.js'
 import './registerServiceWorker'
 
+// Register service worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          console.log('Service Worker registered: ', registration)
+        })
+        .catch(error => {
+          console.error('Service Worker registration failed: ', error)
+        })
+    })
+}
+
 const app = createApp(App);
 
 app.use(router);

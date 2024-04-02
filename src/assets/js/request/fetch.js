@@ -37,7 +37,7 @@ class FetchRequest {
                 }
             })
             .catch(err => {
-                console.error(err);
+                failureFn({message: "Something went wrong!"});
             });
     }
 }
