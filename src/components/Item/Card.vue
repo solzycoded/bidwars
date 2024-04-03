@@ -20,7 +20,7 @@
 
 <template>
     <div class="card">
-        <img :src="`${item.image_blob}`" class="card-img-top img-h-150 w-100" alt="auction item image">
+        <img :src="`/imgs/items/${item.image_blob}`" class="card-img-top img-h-150 w-100" alt="auction item image">
         <div class="card-body">
             <h5 class="card-title limit-text fw-bolder p-0 text-capitalize">{{ item.title }}</h5>
             <p class="card-text mb-1">

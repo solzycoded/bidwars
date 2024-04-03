@@ -77,15 +77,15 @@ export default class Room {
     }
 
     find(data, callback){
-        const query = "SELECT DISTINCT bidwars101.Rooms.id, COUNT(bidwars101.Bids.bidder) AS bidders, auction_end " +
+        const query = "SELECT bidwars101.Rooms.id, COUNT(bidwars101.Bids.bidder) AS bidders, auction_end " +
             "FROM bidwars101.Auction_Rooms " +
             "INNER JOIN bidwars101.Rooms ON bidwars101.Rooms.id=bidwars101.Auction_Rooms.room_id " +
-            "INNER JOIN bidwars101.Bids ON bidwars101.Bids.item_id=bidwars101.Auction_Rooms.item_id " +
+            "LEFT JOIN bidwars101.Bids ON bidwars101.Bids.item_id=bidwars101.Auction_Rooms.item_id " +
             "WHERE auction_date = CURDATE() " +
             "AND auction_end BETWEEN CURTIME() AND CURTIME() + INTERVAL 2 HOUR " +
             `AND bidwars101.Rooms.room_tag = ? ` +
-            "GROUP BY bidwars101.Rooms.id ";
-            "ORDER BY auction_end ASC";
+            "GROUP BY bidwars101.Rooms.id";
+            // "ORDER BY auction_end ASC";
         this.db.query(query, data, callback);
     }
 }

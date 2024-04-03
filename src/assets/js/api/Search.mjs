@@ -7,7 +7,7 @@ export class SearchApi {
     }
 
     initialize(){
-        this.search();
+        // this.search();
     }
 
     search(){

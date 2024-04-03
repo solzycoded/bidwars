@@ -55,7 +55,7 @@ const filterSearchResults = () => {
 
     const data = {search, categories: getFilters()};
 
-    new FetchRequest("POST", "api/search", data).send(searchResults, searchResults);
+    new FetchRequest("POST", "api/items/search", data).send(searchResults, searchResults);
 
     showSearchResultsDropdown();
 }

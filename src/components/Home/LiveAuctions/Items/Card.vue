@@ -1,6 +1,5 @@
 <script setup>
     import { ref, onBeforeMount } from 'vue'
-    import ItemCard from "./Card.vue"
     import { RouterLink } from "vue-router"
 
     const props = defineProps(['item']);
@@ -19,7 +18,7 @@
 <template>
     <div class="position-relative">
         <div>
-            <img :src="item.image" class="img-thumbnail w-100 h-100 live-auction-item-image" alt="live auction image">
+            <img :src="`/imgs/items/${item.image}`" class="img-thumbnail w-100 h-100 live-auction-item-image" alt="live auction image">
         </div>
         <div class="">
             <p class="fw-bold m-0 live-auction-item-name text-capitalize">{{ item.title }}</p>

@@ -14,7 +14,7 @@ import notificationController from './controllers/NotificationController.js';
 import categoryController from './controllers/CategoryController.js';
 import itemConditionController from './controllers/ItemConditionController.js';
 import timeFrameController from './controllers/TimeFrameController.js';
-
+ 
 class Api{
     constructor(con){
         // create database, it's tables and do a few inserts
@@ -91,7 +91,7 @@ app.get(`${itemPrefix}all/available`, itemController.availableItems);
 app.delete(`${itemPrefix}:itemId`, itemController.deleteItem);
 app.get(`${itemPrefix}:itemId/bidders`, itemController.getItemBidders);
 app.get(`${itemPrefix}:userId/all-items`, itemController.allUserItems);
-// app.get(`${itemPrefix}:userId/bids`, userController.itemsBidOn);
+app.post(`${itemPrefix}search`, itemController.searchForItems);
 app.get(`${itemPrefix}:userId/bids/:itemId`, itemController.userBiddingHistory);
 /* end ITEMS */
  

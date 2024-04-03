@@ -29,7 +29,7 @@ async function checkTitle(req, res) {
                 res.status(201).json({ success: true, data: { message: "" } });
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
@@ -53,7 +53,7 @@ async function createItem(req, res) {
                 res.status(201).json({ success: true, data: { id: result.insertId } });
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
@@ -77,7 +77,7 @@ async function findByName(req, res) {
                 res.status(200).json({success: false, data: null});
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
@@ -101,7 +101,7 @@ async function findById(req, res) {
                 res.status(200).json({success: false, data: {message: "Item does not exist"}});
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
@@ -116,7 +116,7 @@ async function liveAuctionItems(req, res){
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
@@ -131,7 +131,7 @@ async function availableItems(req, res){
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
@@ -155,7 +155,7 @@ async function deleteItem(req, res){
                 res.status(201).json({success: false, data: {message: "You're not authorized to perform this action"}});
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
@@ -179,7 +179,7 @@ async function getItemBidders(req, res) {
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
@@ -203,7 +203,7 @@ async function allUserItems(req, res) {
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
@@ -227,12 +227,52 @@ async function userBiddingHistory(req, res) {
                 res.status(200).json({success: false, data: []});
             }
         } catch(err) {
-            return res.status(500).json({success: false, data: {message: "Someting went wrong", error: err}});
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
         }
     });
 }
 
+async function searchForItems(req, res) {
+    const { search, categories } = req.body;
+
+    // building query
+    let filterConditions = categoryFilter(categories);
+    const data           = {filter: filterConditions, data: categories.concat(["%" + search + "%"])};
+
+    item.search(data, (err, result) => {
+        try{
+            if(result!=undefined && result.length > 0){
+                res.status(200).json({success: true, data: result});
+            }
+            else{
+                res.status(200).json({success: false, data: "No records found!"});
+            }
+        } catch(err) {
+            return res.status(500).json({success: false, data: {message: "Something went wrong", error: err}});
+        }
+    });
+}
+
+
+const categoryFilter = (categories) => {
+    let conditions = "";
+
+    for (let i = 0; i < categories.length; i++) {
+        conditions += "name = ? ";
+
+        if(i < categories.length - 2){
+            conditions += "OR ";
+        }
+        else if(i < categories.length - 1){
+            conditions += "AND";
+        }
+    }
+
+    return conditions;
+}
+
 const ItemController = {
+    searchForItems,
     allUserItems,
     createItem,
     injectDB,

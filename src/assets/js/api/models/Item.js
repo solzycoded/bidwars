@@ -3,6 +3,14 @@ export default class Item {
         this.db = db;
     }
 
+    search(data, callback) {
+        const query = "SELECT title " +
+            "FROM bidwars101.Items " +
+            "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " + 
+            `WHERE ${data.filter} title LIKE ?`;
+        this.db.query(query, data.data, callback);
+    }
+
     biddings(data, callback) {
         const query = "SELECT bidwars101.Bids.id, bidwars101.Bids.created_at, offer " +
         "FROM bidwars101.Bids " +
@@ -11,11 +19,10 @@ export default class Item {
         "ORDER BY id";
         this.db.query(query, data, callback);
     }
-
+ 
     userItems(data, callback) {
         const query = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_blob " +
             "FROM bidwars101.Items " +
-            // "LEFT JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
             "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
             "INNER JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
             `WHERE user_id = ? ` +
@@ -82,8 +89,8 @@ export default class Item {
         const query = "SELECT bidwars101.Items.id, bidwars101.Items.user_id, title, price, auction_end, COUNT(bidwars101.Bids.item_id) as total_bids " +
             "FROM bidwars101.Items " +
             "INNER JOIN bidwars101.Auction_Rooms on bidwars101.Auction_Rooms.item_id=bidwars101.Items.id " +
-            "INNER JOIN bidwars101.Bids on bidwars101.Bids.item_id=bidwars101.Items.id " +
-            `WHERE bidwars101.Bids.item_id = ? ` +
+            "LEFT JOIN bidwars101.Bids on bidwars101.Bids.item_id=bidwars101.Items.id " +
+            `WHERE bidwars101.Auction_Rooms.item_id = ? ` +
             `GROUP BY bidwars101.Items.id`;
         this.db.query(query, data, callback);
     }

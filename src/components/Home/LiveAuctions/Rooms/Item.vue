@@ -35,13 +35,10 @@
 
 <template>
     <div class="shadow mb-2 bg-body rounded">
-        <!-- container-fluid p-0 -->
         <div class="d-flex justify-content-start">
-            <!-- <div class="row bg-secondary"> class="col-4 col-sm-4" -->
-                <div v-for="picture in pictures" :key="picture.id" class="w-100-p">
-                    <img :src="`${picture.image_blob}`" class="img-fluid w-100 img-h-120 w-inherit" alt="auction room image">
-                </div>
-            <!-- </div> -->
+            <div v-for="picture in pictures" :key="picture.id" class="w-100-p">
+                <img :src="`/imgs/items/${picture.image_blob}`" class="img-fluid w-100 img-h-120 w-inherit" alt="auction room image">
+            </div>
         </div>
 
         <div class="p-3">
@@ -63,9 +60,6 @@
                 <div class="d-inline">
                     <RouterLink class="btn btn-outline-dark fw-bold" :to="`/live-auction/rooms/live/${room.room}`">Preview</RouterLink>
                 </div>
-                <!-- <div class="d-inline float-end">
-                    <button class="btn btn-dark fw-bold">Join Room</button>
-                </div> -->
             </div>
         </div>
     </div>

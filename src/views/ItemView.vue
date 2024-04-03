@@ -53,11 +53,11 @@ onBeforeMount(() => {
                 <div class="row">
 
                     <div class="col-12 col-md-4 col-lg-5">
-                        <div v-for="image in itemImages" :key="image.id"><img :src="`/imgs/items/${image.image_blob}`" class="img-fluid w-100 item-details-img" alt="item picture"></div>
+                        <div v-for="image in itemImages" :key="image.id"><img :src="`/imgs/items/${image.image_blob}`" class="img-fluid w-100 item-details-img h-100" alt="item picture"></div>
                     </div>
                     <!-- item details -->
                     <div class="col-12 col-md-8 col-lg-4">
-                        <div class="p-4">
+                        <div class="p-2">
                             <h5 class="fw-bolder fs-4 item-name text-capitalize">{{ item.title }}</h5>
                             <p class=""><RouterLink :to="`/live-auction/category/${item.category}`" class="link-offset-3 text-capitalize">{{ item.category }}</RouterLink></p>
                             <p>Item was acquired <small class="fw-lighter">{{ item.purchase_duration + " " + item.time_frame + "(s)"}} ago</small></p>
@@ -92,7 +92,7 @@ onBeforeMount(() => {
                     <!-- bidding details -->
                     
                     <div class="col-12 col-md-12 col-lg-3" v-if="(item!=null && (loggedInUserId==item.owner || isAdmin))">
-                        <div class="bidding-info p-3">
+                        <div class="bidding-info p-2">
                             <Bids :itemId="item.id"></Bids>
                         </div>
                     </div>
