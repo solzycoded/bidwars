@@ -7,5 +7,9 @@ module.exports = {
 	ignoreURLParametersMatching: [
 		/^utm_/,
 		/^fbclid$/
-	]
+	],
+	runtimeCaching: [{
+	  urlPattern: /\.(?:png|jpg|jpeg|svg|json)$/,
+	  handler: 'StaleWhileRevalidate'
+	}]
 };
