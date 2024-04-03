@@ -1,6 +1,6 @@
 // controllers/itemController.js
-import Item from '../models/Item.js';
-import { App } from "../util.js";
+import Item from '../models/Item.mjs';
+import { App } from "../util.mjs";
 
 let db;
 let item;

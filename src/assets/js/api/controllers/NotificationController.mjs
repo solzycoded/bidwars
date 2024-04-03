@@ -1,5 +1,5 @@
 // controllers/notificationController.js
-import Notification from '../models/Notification.js';
+import Notification from '../models/Notification.mjs';
 
 let db;
 let notification;

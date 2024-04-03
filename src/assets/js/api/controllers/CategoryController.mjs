@@ -1,5 +1,5 @@
 // controllers/categoryController.js
-import Category from '../models/Category.js';
+import Category from '../models/Category.mjs';
 
 let db;
 let category;

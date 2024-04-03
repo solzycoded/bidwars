@@ -4,16 +4,16 @@ import bodyParser from "body-parser"
 import cors from "cors"
 import { SearchApi } from "./Search.mjs"
 
-import userController from './controllers/UserController.js';
-import itemController from './controllers/ItemController.js';
-import itemImageController from './controllers/ItemImageController.js';
-import bidController from './controllers/BidController.js';
-import roomController from './controllers/RoomController.js';
-import auctionRoomController from './controllers/AuctionRoomController.js';
-import notificationController from './controllers/NotificationController.js';
-import categoryController from './controllers/CategoryController.js';
-import itemConditionController from './controllers/ItemConditionController.js';
-import timeFrameController from './controllers/TimeFrameController.js';
+import userController from './controllers/UserController.mjs';
+import itemController from './controllers/ItemController.mjs';
+import itemImageController from './controllers/ItemImageController.mjs';
+import bidController from './controllers/BidController.mjs';
+import roomController from './controllers/RoomController.mjs';
+import auctionRoomController from './controllers/AuctionRoomController.mjs';
+import notificationController from './controllers/NotificationController.mjs';
+import categoryController from './controllers/CategoryController.mjs';
+import itemConditionController from './controllers/ItemConditionController.mjs';
+import timeFrameController from './controllers/TimeFrameController.mjs';
  
 class Api{
     constructor(con){

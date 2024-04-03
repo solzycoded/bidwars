@@ -1,6 +1,6 @@
 // controllers/userController.js
-import User from '../models/User.js';
-import { App } from '../util.js';
+import User from '../models/User.mjs';
+import { App } from '../util.mjs';
 import bcrypt from 'bcrypt';
 
 let db;

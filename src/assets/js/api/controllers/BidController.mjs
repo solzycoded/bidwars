@@ -1,5 +1,5 @@
 // controllers/bidController.js
-import Bid from '../models/Bid.js';
+import Bid from '../models/Bid.mjs';
 
 let db;
 let bid;

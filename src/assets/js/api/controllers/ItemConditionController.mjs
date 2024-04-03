@@ -1,5 +1,5 @@
 // controllers/itemconditionController.js
-import ItemCondition from '../models/ItemCondition.js';
+import ItemCondition from '../models/ItemCondition.mjs';
 
 let db;
 let itemcondition;

@@ -1,6 +1,6 @@
 // controllers/auctionRoomController.js
-import AuctionRoom from '../models/AuctionRoom.js';
-import { App } from "../util.js";
+import AuctionRoom from '../models/AuctionRoom.mjs';
+import { App } from "../util.mjs";
 
 let db;
 let auctionRoom;

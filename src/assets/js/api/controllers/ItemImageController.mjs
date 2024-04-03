@@ -1,5 +1,5 @@
 // controllers/itemController.js
-import ItemImage from '../models/ItemImage.js';
+import ItemImage from '../models/ItemImage.mjs';
 import multer from 'multer';
 
 let db;

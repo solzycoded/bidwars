@@ -1,5 +1,5 @@
 // controllers/timeFrameController.js
-import TimeFrame from '../models/TimeFrame.js';
+import TimeFrame from '../models/TimeFrame.mjs';
 
 let db;
 let timeFrame;
