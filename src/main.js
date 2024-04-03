@@ -15,24 +15,30 @@ import App from './App.vue'
 import router from './router'
 
 import store from './assets/js/store/index.js'
-import './registerServiceWorker'
+// import './registerServiceWorker'
 
 // Register service worker
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-          console.log('Service Worker registered: ', registration)
-        })
-        .catch(error => {
-          console.error('Service Worker registration failed: ', error)
-        })
-    })
-}
+// if ('serviceWorker' in navigator) {
+//     window.addEventListener('load', () => {
+//       navigator.serviceWorker.register('/service-worker.js')
+//         .then(registration => {
+//           console.log('Service Worker registered: ', registration)
+//         })
+//         .catch(error => {
+//           console.error('Service Worker registration failed: ', error)
+//         })
+//     })
+// }
 
 const app = createApp(App);
 
 app.use(router);
 app.use(store);
+
+// app.use('/static', express.static(path.join(__dirname,"../public/dist/static/")));
+
+// app.get('/', function(req, res) {
+//     res.sendFile('index.html', { root: path.join(__dirname, '../public/dist/') });
+// });
 
 app.mount('#app');

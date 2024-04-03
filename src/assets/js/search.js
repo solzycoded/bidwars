@@ -1,3 +1,5 @@
+let searchFilters = [];
+
 // search and filter feature
 const toggleSearchResultsDropdown = () => {
     getElementById("search-results-dropdown").classList.toggle("active");
@@ -5,6 +7,10 @@ const toggleSearchResultsDropdown = () => {
 
 const showSearchResultsDropdown = () => {
     getElementById("search-results-dropdown").classList.add("active");
+}
+
+const hideSearchResultsDropdown = () => {
+    getElementById("search-results-dropdown").classList.remove("active");
 }
 
 const includeFilter = (target) => {
@@ -15,8 +21,6 @@ const includeFilter = (target) => {
     toggleSelectedFilter(target.value, true);
 
     displayFilter(target.value);
-
-    filterSearchResults();
 }
 
 const displayFilter = (selectedFilter) => {
@@ -26,52 +30,34 @@ const displayFilter = (selectedFilter) => {
         let filter = categoryFilters[index];
 
         if(filter.innerHTML==selectedFilter){
+            searchFilters.push(filter.innerHTML);
             filter.classList.add("include");
         }
     }
+}
+
+function shuffleFilter(value) {
+    return value.toLowerCase()!=this;
 }
 
 const hideFilter = (target) => {
     target.classList.remove("include");
 
     // enable the selected filter
-    toggleSelectedFilter(target.innerHTML, false);
+    const filter = target.innerHTML.toLowerCase();
 
-    filterSearchResults();
+    toggleSelectedFilter(filter, false);
+    searchFilters = searchFilters.filter(shuffleFilter, filter);
 }
 
 const toggleSelectedFilter = (targetValue, disable) => {
     let categoryFilterOptions = document.querySelectorAll("#category-filter option");
 
     categoryFilterOptions.forEach(opt => {
-        if (opt.value.toLowerCase()==targetValue.toLowerCase()) {
+        if (opt.value.toLowerCase()==targetValue) {
             opt.disabled = disable;
         }
     });
-}
-
-const filterSearchResults = () => {
-    let search = getElementById("search-for-item").value;
-
-    const data = {search, categories: getFilters()};
-
-    new FetchRequest("POST", "api/items/search", data).send(searchResults, searchResults);
-
-    showSearchResultsDropdown();
-}
-
-const searchResults = (items) => {
-    let dropdown       = getByClassNames('search-results-dropdown-section')[0];
-    dropdown.innerHTML = '';
-
-    if(Array.isArray(items) && items.length > 0){
-        for (const item of items) {
-            dropdown.innerHTML += `<RouterLink to="/live-auction/items/live/${item.title}" class="list-group-item list-group-item-action">${item.title}</RouterLink>`;
-        }
-    }
-    else{
-        dropdown.innerHTML += `<a class="list-group-item disabled">${items}</a>`;
-    }
 }
 
 const getFilters = () => {

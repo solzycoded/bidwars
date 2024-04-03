@@ -1,5 +1,6 @@
 <script setup>
     import { RouterLink } from "vue-router";
+    import SearchResults from "./Search/Section.vue";
 
 </script>
 
@@ -59,36 +60,7 @@
                 </ul>
 
                 <div v-show="!onDashboard && !onProfile">
-                    <div class="input-group w-100">
-                        <div class="position-relative search-container">
-                            <div class="input-group mb-1">
-                                <div>
-                                <select class="form-select rounded-start rounded-0 category-filter" id="category-filter" aria-label="Category Filter" onchange="includeFilter(this)">
-                                    <option selected disabled>Category</option>
-                                    <option value="antiques">Antiques</option>
-                                    <option value="vintage cars">Vintage Cars</option>
-                                    <option value="electronics">Electronics</option>
-                                    <option value="furniture">Furniture</option>
-                                    <option value="art">Art</option>
-                                </select>
-                                </div>
-                                <input class="form-control rounded-0" type="search" placeholder="Find something" aria-label="Search" id="search-for-item" onclick="toggleSearchResultsDropdown()" onkeyup="filterSearchResults()" autocomplete="off">
-                            </div>
-
-                            <div class="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
-                                <div class="mb-2 d-flex justify-content-start search-filter-items" style="overflow-x: auto;">
-                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">antiques</button>
-                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">art</button>
-                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">electronics</button>
-                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">furniture</button>
-                                <button class="btn btn-dark rounded search-filter-item text-capitalize ms-1" onclick="hideFilter(this)">vintage cars</button>
-                                </div>
-                                <div class="list-group search-results-dropdown-section">
-                                
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <SearchResults></SearchResults>
                 </div>
             </div>
         </div>
@@ -125,4 +97,4 @@
             }
         }
     };
-</script>
+</script>./Search/SearchResults.vue

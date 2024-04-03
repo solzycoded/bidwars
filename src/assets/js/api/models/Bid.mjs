@@ -3,7 +3,6 @@ export default class Bid {
         this.db = db;
     }
 
-    // get the total number of bids for a specific item
     totalBids(data, callback){
         this.db.query('SELECT COUNT(bidwars101.Bids.item_id) as bids FROM bidwars101.Bids WHERE item_id = ?', data, callback);
     }

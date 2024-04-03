@@ -2,7 +2,6 @@ import { Db } from "./database.mjs"
 import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
-import { SearchApi } from "./Search.mjs"
 
 import userController from './controllers/UserController.mjs';
 import itemController from './controllers/ItemController.mjs';
@@ -14,7 +13,7 @@ import notificationController from './controllers/NotificationController.mjs';
 import categoryController from './controllers/CategoryController.mjs';
 import itemConditionController from './controllers/ItemConditionController.mjs';
 import timeFrameController from './controllers/TimeFrameController.mjs';
- 
+
 class Api{
     constructor(con){
         // create database, it's tables and do a few inserts
@@ -170,7 +169,3 @@ timeFrameController.injectDB(con);
 const timeFramePrefix = `${prefix}time-frames/`;
 app.get(`${timeFramePrefix}`, timeFrameController.getTimeFrameList);
 /* end TIME FRAMES */
-
-/* SEARCH API */
-new SearchApi(app, con).initialize();
-/* end SEARCH API */

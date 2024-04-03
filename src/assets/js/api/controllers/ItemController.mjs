@@ -1,6 +1,5 @@
 // controllers/itemController.js
 import Item from '../models/Item.mjs';
-import { App } from "../util.mjs";
 
 let db;
 let item;
@@ -236,7 +235,7 @@ async function searchForItems(req, res) {
     const { search, categories } = req.body;
 
     // building query
-    let filterConditions = categoryFilter(categories);
+    let filterConditions = categoryFilter(categories, search);
     const data           = {filter: filterConditions, data: categories.concat(["%" + search + "%"])};
 
     item.search(data, (err, result) => {
@@ -253,18 +252,17 @@ async function searchForItems(req, res) {
     });
 }
 
-
-const categoryFilter = (categories) => {
+const categoryFilter = (categories, search) => {
     let conditions = "";
 
     for (let i = 0; i < categories.length; i++) {
         conditions += "name = ? ";
 
-        if(i < categories.length - 2){
-            conditions += "OR ";
+        if(i == categories.length - 1){
+            conditions += "AND ";
         }
         else if(i < categories.length - 1){
-            conditions += "AND";
+            conditions += "OR ";
         }
     }
 

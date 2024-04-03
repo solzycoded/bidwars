@@ -4,7 +4,7 @@ export default class Item {
     }
 
     search(data, callback) {
-        const query = "SELECT title " +
+        const query = "SELECT bidwars101.Items.id, title " +
             "FROM bidwars101.Items " +
             "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " + 
             `WHERE ${data.filter} title LIKE ?`;

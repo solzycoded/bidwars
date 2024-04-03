@@ -25,23 +25,10 @@ export class Db {
             if (err) throw err;
             console.log("Connected!");
 
-            Db.sendQuery("DROP DATABASE IF EXISTS bidwars101", con);
+            // Db.sendQuery("DROP DATABASE IF EXISTS bidwars101", con);
             Db.sendQuery("CREATE DATABASE IF NOT EXISTS bidwars101", con);
             Db.createTables(con);
             Db.insertDefaultData(con);
-        });
-    }
-
-    static queryPromise(con, SQL, values = []) {
-        return new Promise((resolve, reject) => {
-            con.query(SQL, values, (error, results) => {
-                if(error) {
-                    reject(error);
-                }
-                else {
-                    resolve(results);
-                }
-            });
         });
     }
 
