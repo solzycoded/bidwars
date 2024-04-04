@@ -1,18 +1,18 @@
-import { Db } from "./database.mjs"
+import { Db } from "./src/assets/js/api/database.mjs"
 import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
 
-import userController from './controllers/UserController.mjs';
-import itemController from './controllers/ItemController.mjs';
-import itemImageController from './controllers/ItemImageController.mjs';
-import bidController from './controllers/BidController.mjs';
-import roomController from './controllers/RoomController.mjs';
-import auctionRoomController from './controllers/AuctionRoomController.mjs';
-import notificationController from './controllers/NotificationController.mjs';
-import categoryController from './controllers/CategoryController.mjs';
-import itemConditionController from './controllers/ItemConditionController.mjs';
-import timeFrameController from './controllers/TimeFrameController.mjs';
+import userController from './src/assets/js/api/controllers/UserController.mjs';
+import itemController from './src/assets/js/api/controllers/ItemController.mjs';
+import itemImageController from './src/assets/js/api/controllers/ItemImageController.mjs';
+import bidController from './src/assets/js/api/controllers/BidController.mjs';
+import roomController from './src/assets/js/api/controllers/RoomController.mjs';
+import auctionRoomController from './src/assets/js/api/controllers/AuctionRoomController.mjs';
+import notificationController from './src/assets/js/api/controllers/NotificationController.mjs';
+import categoryController from './src/assets/js/api/controllers/CategoryController.mjs';
+import itemConditionController from './src/assets/js/api/controllers/ItemConditionController.mjs';
+import timeFrameController from './src/assets/js/api/controllers/TimeFrameController.mjs';
 
 class Api{
     constructor(con){

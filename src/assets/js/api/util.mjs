@@ -44,7 +44,6 @@ const env = {
         password: 'anadmintobidwars101ishere',
         name: 'bidwars101'
     },
-
 }
 
 export default env;
