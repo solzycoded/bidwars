@@ -14,6 +14,7 @@
 .item-details-img {
     min-height: 200px;
     height: 100% !important;
+    max-height: 400px;
 }
 
 @media (max-width: 900px) {

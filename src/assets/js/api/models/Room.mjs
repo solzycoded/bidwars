@@ -4,13 +4,13 @@ export default class Room {
     }
 
     all(data, callback) {
-        this.db.query('SELECT * FROM bidwars101.Rooms', data, callback);
+        this.db.query('SELECT * FROM Rooms', data, callback);
     }
 
     items(data, callback) {
-        const query = "SELECT bidwars101.Items.id, title " +
-            "FROM bidwars101.Auction_Rooms " +
-            "INNER JOIN bidwars101.Items ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+        const query = "SELECT Items.id, title " +
+            "FROM Auction_Rooms " +
+            "INNER JOIN Items ON Items.id=Auction_Rooms.item_id " +
             "WHERE auction_date = CURDATE() " +
             "AND auction_end BETWEEN CURTIME() AND CURTIME() + INTERVAL 2 HOUR " +
             "AND room_id = ? " +
@@ -20,9 +20,9 @@ export default class Room {
     }
 
     live(data, callback) {
-        const query = "SELECT bidwars101.Rooms.id, bidwars101.Rooms.room_tag AS room " +
-            "FROM bidwars101.Rooms " + 
-            "INNER JOIN bidwars101.Auction_Rooms ar ON ar.room_id=bidwars101.Rooms.id " +
+        const query = "SELECT Rooms.id, Rooms.room_tag AS room " +
+            "FROM Rooms " + 
+            "INNER JOIN Auction_Rooms ar ON ar.room_id=Rooms.id " +
             "WHERE auction_date = CURDATE() " +
             "AND auction_end BETWEEN CURTIME() AND CURTIME() + INTERVAL 2 HOUR " +
             "GROUP BY room_tag";
@@ -30,21 +30,21 @@ export default class Room {
     }
 
     images(data, callback){
-        const query = "SELECT DISTINCT bidwars101.Auction_Rooms.item_id, image_blob " +
-            "FROM bidwars101.Auction_Rooms " +
-            "INNER JOIN bidwars101.Item_Images ON bidwars101.Item_Images.item_id=bidwars101.Auction_Rooms.item_id " +
-            `WHERE bidwars101.Auction_Rooms.room_id = ? ` +
+        const query = "SELECT DISTINCT Auction_Rooms.item_id, image_blob " +
+            "FROM Auction_Rooms " +
+            "INNER JOIN Item_Images ON Item_Images.item_id=Auction_Rooms.item_id " +
+            `WHERE Auction_Rooms.room_id = ? ` +
             "AND auction_date = CURDATE() " +
             "AND auction_end BETWEEN CURTIME() AND CURTIME() + INTERVAL 2 HOUR " +
-            "GROUP BY bidwars101.Auction_Rooms.item_id " +
+            "GROUP BY Auction_Rooms.item_id " +
             "LIMIT 3";
         this.db.query(query, data, callback);
     }
 
     bids(data, callback){
-        const query = "SELECT DISTINCT COUNT(bidwars101.Bids.item_id) as bids " +
-            "FROM bidwars101.Auction_Rooms " +
-            "INNER JOIN bidwars101.Bids ON bidwars101.Bids.item_id=bidwars101.Auction_Rooms.item_id " +
+        const query = "SELECT DISTINCT COUNT(Bids.item_id) as bids " +
+            "FROM Auction_Rooms " +
+            "INNER JOIN Bids ON Bids.item_id=Auction_Rooms.item_id " +
             "WHERE auction_date = CURDATE() " +
             "AND auction_end BETWEEN CURTIME() AND CURTIME() + INTERVAL 2 HOUR " +
             `AND room_id = ? `;
@@ -52,23 +52,23 @@ export default class Room {
     }
 
     categories(data, callback){
-        const query = "SELECT bidwars101.Categories.id, name " +
-            "FROM bidwars101.Categories " +
-            "INNER JOIN bidwars101.Items ON bidwars101.Items.category_id=bidwars101.Categories.id " +
-            "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
+        const query = "SELECT Categories.id, name " +
+            "FROM Categories " +
+            "INNER JOIN Items ON Items.category_id=Categories.id " +
+            "INNER JOIN Auction_Rooms ON Items.id=Auction_Rooms.item_id " +
             "WHERE auction_date = CURDATE() " +
             "AND auction_end BETWEEN CURTIME() AND CURTIME() + INTERVAL 2 HOUR " +
             `AND room_id = ? ` +
-            "GROUP BY bidwars101.Categories.id";
+            "GROUP BY Categories.id";
         this.db.query(query, data, callback);
     }
 
     allItems(data, callback){
-        const query = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_blob " +
-            "FROM bidwars101.Items " +
-            "LEFT JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
-            "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
-            "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
+        const query = "SELECT Items.id, title, price, Categories.name AS category, image_blob " +
+            "FROM Items " +
+            "LEFT JOIN Auction_Rooms ON Items.id=Auction_Rooms.item_id " +
+            "INNER JOIN Categories ON Categories.id=Items.category_id " +
+            "LEFT JOIN Item_Images ON Items.id=Item_Images.item_id " +
             "WHERE auction_date = CURDATE() " +
             "AND auction_end BETWEEN CURTIME() AND CURTIME() + INTERVAL 2 HOUR " +
             `AND room_id = ? ` +
@@ -77,14 +77,14 @@ export default class Room {
     }
 
     find(data, callback){
-        const query = "SELECT bidwars101.Rooms.id, COUNT(bidwars101.Bids.bidder) AS bidders, auction_end " +
-            "FROM bidwars101.Auction_Rooms " +
-            "INNER JOIN bidwars101.Rooms ON bidwars101.Rooms.id=bidwars101.Auction_Rooms.room_id " +
-            "LEFT JOIN bidwars101.Bids ON bidwars101.Bids.item_id=bidwars101.Auction_Rooms.item_id " +
+        const query = "SELECT Rooms.id, COUNT(Bids.bidder) AS bidders, auction_end " +
+            "FROM Auction_Rooms " +
+            "INNER JOIN Rooms ON Rooms.id=Auction_Rooms.room_id " +
+            "LEFT JOIN Bids ON Bids.item_id=Auction_Rooms.item_id " +
             "WHERE auction_date = CURDATE() " +
             "AND auction_end BETWEEN CURTIME() AND CURTIME() + INTERVAL 2 HOUR " +
-            `AND bidwars101.Rooms.room_tag = ? ` +
-            "GROUP BY bidwars101.Rooms.id";
+            `AND Rooms.room_tag = ? ` +
+            "GROUP BY Rooms.id";
             // "ORDER BY auction_end ASC";
         this.db.query(query, data, callback);
     }

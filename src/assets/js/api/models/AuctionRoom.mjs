@@ -4,16 +4,16 @@ export default class AuctionRoom {
     }
 
     delete(data, callback) {
-        this.db.query(`DELETE FROM bidwars101.Auction_Rooms WHERE id = ?;`, data, callback);
+        this.db.query(`DELETE FROM Auction_Rooms WHERE id = ?;`, data, callback);
     }
 
     create(data, callback) {
-        this.db.query(`INSERT IGNORE INTO bidwars101.Auction_Rooms (room_id, item_id, auction_date, auction_start, auction_end) VALUES ${data.columns}`, data.data, callback);
+        this.db.query(`INSERT IGNORE INTO Auction_Rooms (room_id, item_id, auction_date, auction_start, auction_end) VALUES ${data.columns}`, data.data, callback);
     }
 
     allDates(data, callback) {
         const query = "SELECT DISTINCT DATE_FORMAT(auction_date, '%Y-%m-%d') AS auction_date " +
-            "FROM bidwars101.Auction_Rooms " +
+            "FROM Auction_Rooms " +
             "WHERE auction_date >= ? "
             "GROUP BY auction_date " +
             "ORDER BY MONTH(auction_date), DAY(auction_date) ASC";
@@ -23,7 +23,7 @@ export default class AuctionRoom {
 
     allStartTimes(data, callback) {
         const query = "SELECT DISTINCT auction_start " +
-            "FROM bidwars101.Auction_Rooms " +
+            "FROM Auction_Rooms " +
             "WHERE auction_date >= ? "
             "GROUP BY auction_start " +
             "ORDER BY auction_start ASC";
@@ -42,10 +42,10 @@ export default class AuctionRoom {
     }
 
     itemsQuery(data = null){
-        const query = "SELECT bidwars101.Auction_Rooms.id as auction_room_id, title, bidwars101.Categories.name as category, DATE_FORMAT(auction_date, '%Y-%m-%d') AS auction_date, TIME_FORMAT(auction_start, '%h:%i %p') AS auction_start, TIME_FORMAT(auction_end, '%h:%i %p') AS auction_end " +
-            "FROM bidwars101.Auction_Rooms " +
-            "INNER JOIN bidwars101.Items ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
-            "INNER JOIN bidwars101.Categories ON bidwars101.Items.category_id=bidwars101.Categories.id " +
+        const query = "SELECT Auction_Rooms.id as auction_room_id, title, Categories.name as category, DATE_FORMAT(auction_date, '%Y-%m-%d') AS auction_date, TIME_FORMAT(auction_start, '%h:%i %p') AS auction_start, TIME_FORMAT(auction_end, '%h:%i %p') AS auction_end " +
+            "FROM Auction_Rooms " +
+            "INNER JOIN Items ON Items.id=Auction_Rooms.item_id " +
+            "INNER JOIN Categories ON Items.category_id=Categories.id " +
             (data!==null ? this.filterConditions(data) : "") +
             "GROUP BY title " +
             "ORDER BY title ASC";

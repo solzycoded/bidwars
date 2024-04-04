@@ -7,7 +7,7 @@ export class App {
     }
 
     getStartTime(){
-        return `${this.hour}:${this.minutes}:00`; 
+        return `${this.hour}:${this.minutes}:00`;
     }
 
     getEndTime(hourIncrement = 2){
@@ -19,9 +19,9 @@ export class App {
     }
 
     getTodaysDate(){
-        let year        = this.today.getFullYear();
-        let month       = this.today.getMonth() + 1;
-        let day         = this.today.getDate();
+        let year  = this.today.getFullYear();
+        let month = this.today.getMonth() + 1;
+        let day   = this.today.getDate();
 
         let date = `${year}-${month}-${day}`;
 
@@ -36,3 +36,15 @@ export class App {
         return App.rand() + App.rand();
     };
 }
+
+const env = {
+    db: {
+        host: 'localhost',
+        user: 'bidwars_admin',
+        password: 'anadmintobidwars101ishere',
+        name: 'bidwars101'
+    },
+
+}
+
+export default env;

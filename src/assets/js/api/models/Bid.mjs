@@ -4,19 +4,19 @@ export default class Bid {
     }
 
     totalBids(data, callback){
-        this.db.query('SELECT COUNT(bidwars101.Bids.item_id) as bids FROM bidwars101.Bids WHERE item_id = ?', data, callback);
+        this.db.query('SELECT COUNT(Bids.item_id) as bids FROM Bids WHERE item_id = ?', data, callback);
     }
 
     create(data, callback){
-        this.db.query('INSERT INTO bidwars101.Bids (bidder, item_id, offer) VALUES (?, ?, ?)', data, callback);
+        this.db.query('INSERT INTO Bids (bidder, item_id, offer) VALUES (?, ?, ?)', data, callback);
     }
   
     bidderItems(data, callback){
-        const query = "SELECT bidwars101.Items.id, title " +
-            "FROM bidwars101.Bids " + 
-            "INNER JOIN bidwars101.Items ON bidwars101.Bids.item_id=bidwars101.Items.id " +
+        const query = "SELECT Items.id, title " +
+            "FROM Bids " + 
+            "INNER JOIN Items ON Bids.item_id=Items.id " +
             "WHERE bidder = ? " +
-            "GROUP BY bidwars101.Items.id;";
+            "GROUP BY Items.id;";
 
         this.db.query(query, data, callback);
     }

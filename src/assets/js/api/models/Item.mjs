@@ -4,16 +4,16 @@ export default class Item {
     }
 
     search(data, callback) {
-        const query = "SELECT bidwars101.Items.id, title " +
-            "FROM bidwars101.Items " +
-            "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " + 
+        const query = "SELECT Items.id, title " +
+            "FROM Items " +
+            "INNER JOIN Categories ON Categories.id=Items.category_id " + 
             `WHERE ${data.filter} title LIKE ?`;
         this.db.query(query, data.data, callback);
     }
 
     biddings(data, callback) {
-        const query = "SELECT bidwars101.Bids.id, bidwars101.Bids.created_at, offer " +
-        "FROM bidwars101.Bids " +
+        const query = "SELECT Bids.id, Bids.created_at, offer " +
+        "FROM Bids " +
         `WHERE bidder = ? ` +
         `AND item_id = ? `
         "ORDER BY id";
@@ -21,10 +21,10 @@ export default class Item {
     }
  
     userItems(data, callback) {
-        const query = "SELECT bidwars101.Items.id, title, price, bidwars101.Categories.name AS category, image_blob " +
-            "FROM bidwars101.Items " +
-            "INNER JOIN bidwars101.Categories ON bidwars101.Categories.id=bidwars101.Items.category_id " +
-            "INNER JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
+        const query = "SELECT Items.id, title, price, Categories.name AS category, image_blob " +
+            "FROM Items " +
+            "INNER JOIN Categories ON Categories.id=Items.category_id " +
+            "INNER JOIN Item_Images ON Items.id=Item_Images.item_id " +
             `WHERE user_id = ? ` +
             "GROUP BY title ";
             "ORDER BY auction_date DESC";
@@ -32,31 +32,31 @@ export default class Item {
     }
 
     bidders(data, callback) {
-        const query = "SELECT bidwars101.Bids.id AS id, bidwars101.Users.name, offer, bidwars101.Bids.created_at " +
-            "FROM bidwars101.Items " +
-            "INNER JOIN bidwars101.Bids ON bidwars101.Bids.item_id=bidwars101.Items.id " +
-            "INNER JOIN bidwars101.Users ON bidwars101.Users.id=bidwars101.Items.user_id " +
+        const query = "SELECT Bids.id AS id, Users.name, offer, Bids.created_at " +
+            "FROM Items " +
+            "INNER JOIN Bids ON Bids.item_id=Items.id " +
+            "INNER JOIN Users ON Users.id=Items.user_id " +
             "WHERE item_id = ? " +
-            "GROUP BY bidwars101.Bids.id " +
-            "ORDER BY bidwars101.Bids.created_at";
+            "GROUP BY Bids.id " +
+            "ORDER BY Bids.created_at";
         this.db.query(query, data, callback);
     }
 
     available(data, callback) {
-        const query = "SELECT bidwars101.Items.id, title " +
-            "FROM bidwars101.Items " +
-            "LEFT JOIN bidwars101.Auction_Rooms ON bidwars101.Auction_Rooms.item_id=bidwars101.Items.id " +
+        const query = "SELECT Items.id, title " +
+            "FROM Items " +
+            "LEFT JOIN Auction_Rooms ON Auction_Rooms.item_id=Items.id " +
             "WHERE Auction_Rooms.item_id IS NULL " +
-            "GROUP BY bidwars101.Items.id";
+            "GROUP BY Items.id";
         this.db.query(query, data, callback);
     }
 
     live(data, callback) {
-        const query = "SELECT bidwars101.Items.id as id, title, image_blob as image, auction_date, auction_start, auction_end, COUNT(bidwars101.Bids.item_id) as bid_number " +
-            "FROM bidwars101.Items " + 
-            "LEFT JOIN bidwars101.Item_Images ON bidwars101.Items.id=bidwars101.Item_Images.item_id " +
-            "INNER JOIN bidwars101.Auction_Rooms ON bidwars101.Items.id=bidwars101.Auction_Rooms.item_id " +
-            "LEFT JOIN bidwars101.Bids ON bidwars101.Bids.item_id=bidwars101.Auction_Rooms.item_id " +
+        const query = "SELECT Items.id as id, title, image_blob as image, auction_date, auction_start, auction_end, COUNT(Bids.item_id) as bid_number " +
+            "FROM Items " + 
+            "LEFT JOIN Item_Images ON Items.id=Item_Images.item_id " +
+            "INNER JOIN Auction_Rooms ON Items.id=Auction_Rooms.item_id " +
+            "LEFT JOIN Bids ON Bids.item_id=Auction_Rooms.item_id " +
             "WHERE auction_date = CURDATE() " +
             "AND auction_end BETWEEN CURTIME() AND CURTIME() + INTERVAL 2 HOUR " +
             "GROUP BY title " +
@@ -66,18 +66,18 @@ export default class Item {
     }
 
     create(data, callback) {
-        this.db.query('INSERT INTO bidwars101.Items (title, category_id, current_condition_id, price, selling_time, purchase_duration, time_frame_id, user_id, pre_condition_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', data, callback);
+        this.db.query('INSERT INTO Items (title, category_id, current_condition_id, price, selling_time, purchase_duration, time_frame_id, user_id, pre_condition_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', data, callback);
     }
 
     delete(data, callback) {
-        const query = "DELETE FROM bidwars101.Items " + 
-            "WHERE bidwars101.Items.id = ? " + 
+        const query = "DELETE FROM Items " + 
+            "WHERE Items.id = ? " + 
             "AND user_id = ?";
         this.db.query(query, data, callback);
     }
 
     checkTitle(data, callback) {
-        this.db.query('SELECT * FROM bidwars101.Items WHERE title = ?', data, callback);
+        this.db.query('SELECT * FROM Items WHERE title = ?', data, callback);
     }
 
     findByName(data, callback){
@@ -86,23 +86,23 @@ export default class Item {
     }
 
     findById(data, callback){
-        const query = "SELECT bidwars101.Items.id, bidwars101.Items.user_id, title, price, auction_end, COUNT(bidwars101.Bids.item_id) as total_bids " +
-            "FROM bidwars101.Items " +
-            "INNER JOIN bidwars101.Auction_Rooms on bidwars101.Auction_Rooms.item_id=bidwars101.Items.id " +
-            "LEFT JOIN bidwars101.Bids on bidwars101.Bids.item_id=bidwars101.Items.id " +
-            `WHERE bidwars101.Auction_Rooms.item_id = ? ` +
-            `GROUP BY bidwars101.Items.id`;
+        const query = "SELECT Items.id, Items.user_id, title, price, auction_end, COUNT(Bids.item_id) as total_bids " +
+            "FROM Items " +
+            "INNER JOIN Auction_Rooms on Auction_Rooms.item_id=Items.id " +
+            "LEFT JOIN Bids on Bids.item_id=Items.id " +
+            `WHERE Auction_Rooms.item_id = ? ` +
+            `GROUP BY Items.id`;
         this.db.query(query, data, callback);
     }
 
     findByQuery(column){
-        return "SELECT bidwars101.Items.id AS id, bidwars101.Items.user_id as owner, title, price, bidwars101.Categories.name as category, purchase_duration, bidwars101.Time_Frames.name as time_frame, bidwars101.Item_Conditions.item_condition, bidwars101.Rooms.room_tag AS room, auction_end " +
-            "FROM bidwars101.Items " +
-            "INNER JOIN bidwars101.Categories on bidwars101.Categories.id=bidwars101.Items.category_id " +
-            "INNER JOIN bidwars101.Time_Frames on bidwars101.Time_Frames.id=bidwars101.Items.time_frame_id " +
-            "INNER JOIN bidwars101.Item_Conditions on bidwars101.Item_Conditions.id=bidwars101.Items.current_condition_id " +
-            "INNER JOIN bidwars101.Auction_Rooms on bidwars101.Auction_Rooms.item_id=bidwars101.Items.id " +
-            "INNER JOIN bidwars101.Rooms on bidwars101.Rooms.id=bidwars101.Auction_Rooms.room_id " +
-            `WHERE bidwars101.Items.${column} = ?`;
+        return "SELECT Items.id AS id, Items.user_id as owner, title, price, Categories.name as category, purchase_duration, Time_Frames.name as time_frame, Item_Conditions.item_condition, Rooms.room_tag AS room, auction_end " +
+            "FROM Items " +
+            "INNER JOIN Categories on Categories.id=Items.category_id " +
+            "INNER JOIN Time_Frames on Time_Frames.id=Items.time_frame_id " +
+            "INNER JOIN Item_Conditions on Item_Conditions.id=Items.current_condition_id " +
+            "INNER JOIN Auction_Rooms on Auction_Rooms.item_id=Items.id " +
+            "INNER JOIN Rooms on Rooms.id=Auction_Rooms.room_id " +
+            `WHERE Items.${column} = ?`;
     }
 }

@@ -4,7 +4,7 @@ export default class Bid {
     }
 
     read(data, callback){
-        const query = "SELECT * FROM bidwars101.Time_Frames";
+        const query = "SELECT * FROM Time_Frames";
         this.db.query(query, data, callback);
     }
 }
