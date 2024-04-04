@@ -1,5 +1,6 @@
 # bidwars
 
+## Front-end set up
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
@@ -27,3 +28,16 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Back-end and Database set up
+
+# Setup
+
+To run the back-end you'll also need npm installed on your device
+
+To start the node api, simply run
+
+```sh
+node server.mjs 
+```
+in your terminal.
