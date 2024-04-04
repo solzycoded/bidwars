@@ -39,10 +39,14 @@ export class App {
 
 const env = {
     db: {
-        host: 'bidwars-server.mysql.database.azure.com',
-        user: 'mxjtgzoxhp',
-        password: 'Q4344RSURGT8ICE1$',
-        name: 'bidwars-database'
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        name: 'bidwars101'
+        // host: 'bidwars-server.mysql.database.azure.com',
+        // user: 'mxjtgzoxhp',
+        // password: 'Q4344RSURGT8ICE1$',
+        // name: 'bidwars-database'
     },
     admin: {
         email: 'admin@bidwars.com',
