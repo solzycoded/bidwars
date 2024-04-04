@@ -44,6 +44,16 @@ const env = {
         password: 'anadmintobidwars101ishere',
         name: 'bidwars101'
     },
+    admin: {
+        email: 'admin@bidwars.com',
+        name: 'admin',
+        password: 'coveredinpassworded3421'
+    },
+    default_customer: {
+        email: 'solzycoded@gmail.com',
+        name: 'solzy1',
+        password: 'passworded'
+    }
 }
 
 export default env;

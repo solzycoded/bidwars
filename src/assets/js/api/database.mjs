@@ -151,22 +151,22 @@ export class Db {
     }
 
     static async createAdminUser(con){
-        bcrypt.hash('coveredinpassworded3421', 10, (err, hash) => {
+        bcrypt.hash(env.admin.password, 10, (err, hash) => {
             if (err) {
                 return;
             }
 
-            Db.sendQuery(`INSERT IGNORE INTO users (name, email, password, role) VALUES ('admin', 'admin@bidwars.com', '${hash}', 'admin');`, con);
+            Db.sendQuery(`INSERT IGNORE INTO users (name, email, password, role) VALUES ('${env.admin.name}', '${env.admin.email}', '${hash}', 'admin');`, con);
         });
     }
 
     static async createCustomerUser1(con){
-        bcrypt.hash('passworded', 10, (err, hash) => {
+        bcrypt.hash(env.default_customer.password, 10, (err, hash) => {
             if (err) {
                 return;
             }
 
-            Db.sendQuery(`INSERT IGNORE INTO users (name, email, password, role) VALUES ('solzy1', 'solzycoded@gmail.com', '${hash}', 'user');`, con);
+            Db.sendQuery(`INSERT IGNORE INTO users (name, email, password, role) VALUES ('${env.default_customer.name}', '${env.default_customer.email}', '${hash}', 'user');`, con);
         });
     }
 }
