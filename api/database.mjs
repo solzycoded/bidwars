@@ -26,7 +26,7 @@ export class Db {
             if (err) throw err;
             console.log("Connected!");
 
-            // Db.sendQuery(`DROP DATABASE IF EXISTS ${env.db.name}`, con);
+            Db.sendQuery(`DROP DATABASE IF EXISTS ${env.db.name}`, con);
             Db.sendQuery(`CREATE DATABASE IF NOT EXISTS ${env.db.name}`, con);
             Db.sendQuery(`USE ${env.db.name}`, con);
             Db.createTables(con);

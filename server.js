@@ -23,7 +23,7 @@ class Api{
         this.startServer();
     }
 
-    initializeApp(){
+    initializeApp(){ 
         // initialize express
         const app = express();
 

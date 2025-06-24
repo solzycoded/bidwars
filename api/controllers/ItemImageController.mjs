@@ -14,13 +14,13 @@ function injectDB(database) {
 //Setting storage engine
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/imgs/items/'); // Use path.join to get the correct path
+    cb(null, 'public/imgs/items/');
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   }
 });
-
+ 
 // Define limits for uploaded files
 const limits = {
   fileSize: 10 * 1024 * 1024, // 10 MB (adjust this value according to your needs)
