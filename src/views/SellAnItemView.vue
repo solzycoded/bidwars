@@ -25,10 +25,10 @@ import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.vue"
         <div class="mt-4">
             <input type="hidden" id="user-id" :value="`${userId}`">
             <div class="d-inline">
-                <button type="button" role="button" id="prev-section" class="btn btn-dark disabled fs-4" onclick="prevSection()">Prev</button>
+                <button type="button" id="prev-section" class="btn btn-dark disabled fs-4" onclick="prevSection()">Prev</button>
             </div>
             <div class="d-inline float-end" id="next-item-section">
-                <button type="button" role="button" id="next-section" class="btn btn-dark fs-4" onclick="nextSection()">Next</button>
+                <button type="button" id="next-section" class="btn btn-dark fs-4" onclick="nextSection()">Next</button>
             </div>
             <div class="d-inline float-end d-none" id="submit-item-section">
                 <button type="submit" role="submit" id="submit-item" class="btn btn-dark fs-4" onclick="createItem()">Finish</button>
