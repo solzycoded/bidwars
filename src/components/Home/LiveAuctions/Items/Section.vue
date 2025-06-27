@@ -1,7 +1,6 @@
 <script setup>
   import { ref, onBeforeMount } from 'vue'
   import ItemCard from "./Card.vue"
-  import { RouterLink } from "vue-router"
 
   const liveAuctionItems = ref(null);
   const hasLiveItems     = ref(false);

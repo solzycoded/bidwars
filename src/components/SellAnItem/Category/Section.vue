@@ -1,9 +1,6 @@
 <script setup>
-import { def } from "@vue/shared";
 import CategoryItem from "./Item.vue";
-import { ref, onBeforeMount, onMounted } from 'vue';
-import { RouterLink, useRoute } from "vue-router";
-// import { App } from "../assets/js/util/app.js";
+import { ref, onBeforeMount } from 'vue';
 
 const categories = ref(null);
 
