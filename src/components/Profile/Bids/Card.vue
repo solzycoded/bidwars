@@ -1,6 +1,6 @@
 <script setup>
     import { ref, onBeforeMount } from 'vue';
-    import { RouterLink, useRoute } from "vue-router";
+    import { RouterLink } from "vue-router";
     import BidItem from "./Item.vue";
 
     const props = defineProps(['item', 'userId']);
