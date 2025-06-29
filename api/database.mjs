@@ -36,7 +36,7 @@ export class Db {
 
     static createTables(con) {
         // table queries
-        let table = {
+        const table = {
             categories: "CREATE TABLE IF NOT EXISTS Categories (" +
                         "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                         "name VARCHAR(20) NOT NULL UNIQUE" +

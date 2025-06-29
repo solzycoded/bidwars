@@ -182,7 +182,7 @@ async function getItemBidders(req, res) {
         }
     });
 }
- 
+
 async function allUserItems(req, res) {
     const { userId } = req.params;
 
