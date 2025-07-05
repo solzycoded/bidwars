@@ -1,7 +1,9 @@
-import { Db } from "./api/database.mjs"
-import express from "express"
-import bodyParser from "body-parser"
-import cors from "cors"
+// Converted back to ES Modules (ES6 import/export syntax)
+
+import { Db } from "./api/database.mjs";
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
 
 import userController from './api/controllers/UserController.mjs';
 import itemController from './api/controllers/ItemController.mjs';

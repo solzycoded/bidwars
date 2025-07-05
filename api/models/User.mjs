@@ -2,7 +2,7 @@ export default class User {
     constructor(db) {
       this.db = db;
     }
- 
+
     all(callback) {
         this.db.query('SELECT * FROM Users', callback);
     }
@@ -18,7 +18,7 @@ export default class User {
     createToken(data, callback){
         this.db.query('UPDATE Users SET token = ? WHERE id = ?', data, callback);
     }
- 
+
     bidItems(data, callback){
         const query = "SELECT Items.id, title " +
             "FROM Bids " +
