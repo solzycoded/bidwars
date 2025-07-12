@@ -1,23 +1,10 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 const Nav = function() {
-    const [ count, setCount ] = useState(0);
-    const [ notcount, setNotCount ] = useState(0);
-
-    // useEffect(function, dependencies);
-    useEffect(() => {
-        let timer = setTimeout(() => {
-            setCount(c => c + 1);
-        }, 1000);
-
-        return () => clearTimeout(timer);
-    }, []);
 
     return (
         <nav className="navbar navbar-expand-lg bg-light">
 
-        {count}
             <div className="container-fluid">
                 <Link active-class="active" className="navbar-brand fw-bolder" to="/">
                     <img src="/imgs/bidwars-logo-sm.png" alt="bidwars logo" className="img-fluid" id="app-logo" />
