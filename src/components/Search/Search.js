@@ -26,7 +26,7 @@ const Search = () => {
                 </div>
 
                 <div className="position-absolute top-75 w-100 search-results-dropdown" id="search-results-dropdown">
-                    <div className="mb-2 d-flex justify-content-start search-filter-items" style="overflow-x: auto;">
+                    <div className="mb-2 d-flex justify-content-start search-filter-items" style={{"overflow-x": "auto"}}>
                         <button className="btn btn-dark rounded search-filter-item text-capitalize ms-1" onClick="hideThisFilter">antiques</button>
                         <button className="btn btn-dark rounded search-filter-item text-capitalize ms-1" onClick="hideThisFilter">art</button>
                         <button className="btn btn-dark rounded search-filter-item text-capitalize ms-1" onClick="hideThisFilter">electronics</button>

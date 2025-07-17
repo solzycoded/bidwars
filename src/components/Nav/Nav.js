@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import NavItem from "./NavItem.js";
 import LinkItem from "./LinkItem.js";
+import Search from "../Search/Search.js";
 
 const Nav = function() {
     return (
@@ -43,6 +44,9 @@ const Nav = function() {
 
                     </ul>
 
+                    <div v-show="!onDashboard && !onProfile">
+                        <Search />
+                    </div>
                 </div>
             </div>
         </nav>
