@@ -1,0 +1,19 @@
+{
+  "name": "bidwars",
+  "version": "1.0.0",
+  "description": "the REST API for bidwars (typescript, node.js, express.js and mongodb)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/solzycoded/bidwars.git"
+  },
+  "author": "solomon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/solzycoded/bidwars/issues"
+  },
+  "homepage": "https://github.com/solzycoded/bidwars#readme"
+}
