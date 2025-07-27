@@ -1,11 +1,13 @@
 import express from "express";
-import { MongoClient } from "mongodb";
+import connectDB from "./db.js";
 
 const app = express();
 
-const url = "";
-MongoClient.connect()
-const port = 3000;
-app.listen(port, () => {
-    console.log("App started on port: ", port);
-});
+const startServer = () => {
+    const port = 3000;
+    app.listen(port, () => {
+        console.log("App started on port: ", port);
+    });
+}
+
+connectDB(startServer); // connect to mongodb and start the nodejs server
