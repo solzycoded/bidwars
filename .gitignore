@@ -1,2 +1,9 @@
-node_modules
+/node_modules
 .env
+package-lock.json
+
+# testing
+/coverage
+/__tests__
+jest.config.js
+babel.config.json
