@@ -1,9 +1,12 @@
+/* RESP: ONLY DEFINES ROUTES AND MIDDLEWARS */
 import express from "express";
 
-const app = express();
+/* routes*/
+import authRoute from "./routes/auth.js";
 
-const port = 3000;
+const app = express(); 
 
-app.listen(port, () => {
-    console.log("App started on port: ", port);
-});
+/* app routes (router level middlewares)*/
+app.use('/auth', authRoute); // authentication routes
+
+export default app;
