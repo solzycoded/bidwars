@@ -1,9 +1,12 @@
-node_modules
+/node_modules
 .env
 
 # testing
 /coverage
 /src/__tests__
+/__tests__
+babel.config.json
+jest.config.js
 
 # production
 /build
