@@ -9,6 +9,7 @@
 # testing
 /coverage
 /src/__tests__
+/__tests__
 babel.config.json
 jest.config.js
 
