@@ -1,9 +1,11 @@
-// create and initialize database
+/* RESP: CREATE AND INITIALIZE DATABASE */
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
-async function connectDB(startServer) {
+const connectDB = async () => {
+    if (process.env.NODE_ENV === 'test') return;
+
     try {
         const { MONGO_DB_PASSWORD, MONGO_USERNAME, MONGO_APP_NAME } = process.env; // mongod db connection variables
 
@@ -11,8 +13,6 @@ async function connectDB(startServer) {
 
         await mongoose.connect(url); // connect to mongodb
         console.log("Database Created");
-
-        startServer(); // start the nodejs server
     } catch (err) {
         console.error("MongoDB connection error:", err);
     }
