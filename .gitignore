@@ -10,6 +10,7 @@
 /coverage
 /src/__tests__
 /__tests__
+/__tests__/models
 babel.config.json
 jest.config.js
 
