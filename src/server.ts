@@ -1,6 +1,6 @@
 /* RESP: ACTUALLY STARTS THE SERVER AND DB CONNECTION. */
-import app from "./app.js";
-import connectDB from "./db.js";
+import app from "./app";
+import connectDB from "./db";
 
 /* start server and connect db */
 if (process.env.NODE_ENV !== 'test') {
