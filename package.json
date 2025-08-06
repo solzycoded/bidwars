@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "start": "npx tsc && nodemon dist/server.js"
+    "start": "tsc && nodemon dist/server.js"
   },
   "repository": {
     "type": "git",
