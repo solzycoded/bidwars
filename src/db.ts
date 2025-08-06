@@ -1,9 +1,9 @@
 /* RESP: CREATE AND INITIALIZE DATABASE */
 import mongoose from "mongoose";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 dotenv.config();
 
-const connectDB = async () => {
+const connectDB = async (): Promise<void> => {
     if (process.env.NODE_ENV === 'test') return;
 
     try {
