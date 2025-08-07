@@ -12,8 +12,10 @@ const signup = (req: Request, res: Response): void | Response => {
     const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result
 
     if (!resultOfValidation.isEmpty()) {
-        const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
-        throw error;
+        console.log(resultOfValidation.array());
+        
+        // const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
+        // throw error;
     }
 
     // Your signup logic here...

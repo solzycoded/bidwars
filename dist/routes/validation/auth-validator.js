@@ -2,7 +2,7 @@ import { checkSchema } from "express-validator";
 const signup = () => {
     return checkSchema({
         username: {
-            isEmpty: {
+            notEmpty: {
                 errorMessage: "Username cannot be empty",
             },
             isLength: {
@@ -14,7 +14,7 @@ const signup = () => {
             }
         },
         email: {
-            isEmpty: {
+            notEmpty: {
                 errorMessage: "Email cannot be empty",
             },
             isEmail: {
@@ -23,6 +23,9 @@ const signup = () => {
             }
         },
         password: {
+            notEmpty: {
+                errorMessage: "Password cannot be empty",
+            },
             isLength: {
                 options: {
                     min: 8

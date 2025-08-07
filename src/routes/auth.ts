@@ -9,6 +9,6 @@ router.post("/login", (req, res) => {
     });
 }); // login
 
-router.post("/signup", authValidator.signup, authController.signup); // signup
+router.post("/signup", authValidator.signup(), authController.signup); // signup
 
 export default router;

@@ -7,5 +7,5 @@ router.post("/login", (req, res) => {
         message: "success"
     });
 }); // login
-router.post("/signup", authValidator.signup, authController.signup); // signup
+router.post("/signup", authValidator.signup(), authController.signup); // signup
 export default router;
