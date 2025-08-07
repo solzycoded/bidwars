@@ -1,4 +1,4 @@
-import authController from "./controllers/AuthController.js";
+import authController from "../controllers/AuthController.js";
 import router from "./expressRouter.js";
 router.post("/login", (req, res) => {
     // console.log("something");
