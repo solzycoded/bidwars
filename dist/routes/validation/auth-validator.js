@@ -1,5 +1,15 @@
 import { checkSchema } from "express-validator";
+import User from "../../models/user.js";
 const signup = () => {
+    const emailExists = (value) => {
+        return User.findOne({ email: value })
+            .then((userDoc) => {
+            if (userDoc) {
+                const error = new Error('E-Mail address already exists!');
+                return Promise.reject(error);
+            }
+        });
+    };
     return checkSchema({
         username: {
             notEmpty: {
@@ -14,13 +24,17 @@ const signup = () => {
             }
         },
         email: {
+            custom: {
+                options: emailExists,
+                bail: true,
+            },
             notEmpty: {
                 errorMessage: "Email cannot be empty",
             },
             isEmail: {
                 bail: true,
                 errorMessage: "Email is invalid. Please provide a valid email address"
-            }
+            },
         },
         password: {
             notEmpty: {

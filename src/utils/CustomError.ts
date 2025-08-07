@@ -1,4 +1,4 @@
-import { ValidationData } from "./Types.ts";
+import { ValidationData } from "./Types.js";
 
 class CustomError extends Error {
     statusCode?: number;
