@@ -1,8 +1,16 @@
+type ValidationData = {
+    type: string
+    value: string
+    msg: string
+    path: string
+    location: string
+}
+
 class CustomError extends Error {
     statusCode?: number;
-    data?: any;
+    data?: Partial<ValidationData>[];
 
-    constructor(message: string, statusCode?: number, data?: any) {
+    constructor(message: string, statusCode?: number, data?: Partial<ValidationData>[]) {
         super(message); // Call the parent class constructor
         this.statusCode = statusCode;
         this.data = data;

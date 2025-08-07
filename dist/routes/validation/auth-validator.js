@@ -10,7 +10,7 @@ const signup = () => {
                     min: 3,
                     max: 20,
                 },
-                errorMessage: "Username lenght cannot be less than 3 or more than 20"
+                errorMessage: "Username length cannot be less than 3 or more than 20"
             }
         },
         email: {
