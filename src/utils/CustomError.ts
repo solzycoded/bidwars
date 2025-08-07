@@ -1,10 +1,4 @@
-type ValidationData = {
-    type: string
-    value: string
-    msg: string
-    path: string
-    location: string
-}
+import { ValidationData } from "./Types.ts";
 
 class CustomError extends Error {
     statusCode?: number;
