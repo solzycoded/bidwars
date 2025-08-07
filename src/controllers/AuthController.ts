@@ -13,8 +13,6 @@ const signup = (req: Request, res: Response): void | Response => {
         return res.status(406).json({ success: false, data: { message: "Some Fields are missing" } });
     }
 
-    console.log({ email, username, password });
-    
     // const token = App.token();
     // const role  = "user";
     // const data  = [email, username, password, role, token];
