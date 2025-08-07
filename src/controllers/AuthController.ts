@@ -1,44 +1,24 @@
 import { Request, Response } from "express";
+import { validationResult, Result, ValidationError } from "express-validator";
+import CustomError from "../utils/CustomError"; // Adjust the path as needed
 
 type UserType = {
-    email: string
-    username: string
-    password: string
-}
+    email: string;
+    username: string;
+    password: string;
+};
 
 const signup = (req: Request, res: Response): void | Response => {
-    const { email, username, password }: UserType = req.body;
+    const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result
 
-    if(!email || !username || !password){
-        return res.status(406).json({ success: false, data: { message: "Some Fields are missing" } });
+    if (!resultOfValidation.isEmpty()) {
+        const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
+        throw error;
     }
 
-    // const token = App.token();
-    // const role  = "user";
-    // const data  = [email, username, password, role, token];
-
-    // bcrypt.hash(password, 10, (err, hash) => {
-    //     if (err) {
-    //         return res.status(500).json({ success: false, data: { message: err } });
-    //     }
-
-    //     data[2] = hash;
-
-    //     user.create(data, (err, result) => {
-    //         try{
-    //             if(result.insertId==undefined){
-    //                 res.status(201).json({ success: false, data: { message: "Username or Email already exists" } });
-    //             }
-    //             else{
-    //                 res.status(201).json({ success: true, data: { token: token, username, role: role, id: result.insertId } });
-    //             }
-    //         } catch(err) {
-    //             return res.status(201).json({ success: false, data: { message: "Username or Email already exists", error: err} });
-    //         }
-    //     });
-    // });
-}
+    // Your signup logic here...
+};
 
 export default {
-    signup
-}
+    signup,
+};
