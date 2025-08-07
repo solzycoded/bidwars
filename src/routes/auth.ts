@@ -1,13 +1,13 @@
 import router from "./expressRouter.js";
 
-router.get("/login", (req, res) => {
+router.post("/login", (req, res) => {
     // console.log("something");
     res.status(200).json({
         message: "success"
     });
 });
 
-router.get("/signup", (req, res) => {
+router.oost("/signup", (req, res) => {
     // console.log("something");
     res.status(200).json({
         message: "success"
