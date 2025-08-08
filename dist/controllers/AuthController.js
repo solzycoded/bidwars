@@ -35,8 +35,7 @@ const signup = (req, res) => {
                 .json({
                 success: true,
                 data: {
-                    username,
-                    id: newUser._id
+                    username
                 }
             });
         }

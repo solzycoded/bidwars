@@ -2,16 +2,28 @@ import { checkSchema } from "express-validator";
 import User from "../../models/user.js";
 const signup = () => {
     const emailExists = (value) => {
-        return User.findOne({ email: value })
+        return fieldExists("email", value, 'E-Mail address');
+    };
+    const usernameExists = (value) => {
+        return fieldExists("name", value, 'Username');
+    };
+    const fieldExists = (field, value, errorMsg) => {
+        const query = field === "email" ? { email: value } : { name: value };
+        return User.findOne(query)
             .then((userDoc) => {
             if (userDoc) {
-                const error = new Error('E-Mail address already exists!');
+                const error = new Error(`${errorMsg} already exists!`);
                 return Promise.reject(error);
             }
         });
     };
+    // CREATE THE LOGIC TO CHECK USERNAME DUPLICATION, HERE
     return checkSchema({
         username: {
+            custom: {
+                options: usernameExists,
+                bail: true,
+            },
             notEmpty: {
                 errorMessage: "Username cannot be empty",
             },
