@@ -15,13 +15,3 @@ export type UserInputType = {
     username: string
     password: string
 }; // purpose: signup input fields
-
-export type UserModelType = {
-    email: string
-    username: string
-    password: string
-    role: string
-    _id?: ObjectId
-    createdAt?: Date
-    __v?: number
-}; // purpose: signup input fields

@@ -4,7 +4,7 @@ import { validationResult, Result, ValidationError, matchedData } from "express-
 import bcrypt from "bcrypt";
 
 import CustomError from "../utils/CustomError.js"; // Adjust the path as needed
-import { UserInputType, UserModelType } from "../utils/Types.js";
+import { UserInputType } from "../utils/Types.js";
 import User from "../models/user.js";
 import { Document } from "mongoose";
 
