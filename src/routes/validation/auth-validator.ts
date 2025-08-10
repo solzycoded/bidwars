@@ -71,6 +71,52 @@ const signup = () => {
     })
 }
 
+
+const login = () => {
+    const userExists = (value: string): Promise<PromiseRejectedResult | undefined> => {
+        return User.findOne({
+            $or: [
+                { name: value },
+                { email: value }
+            ]
+        })
+            .then((userDoc: Document | null) => {
+                if (!userDoc) {
+                    const error: Error = new Error(`Invalid Login Credentials`);
+
+                    return Promise.reject(error);
+                }
+            });
+    }
+
+    // CREATE THE LOGIC TO CHECK USERNAME DUPLICATION, HERE
+
+    return checkSchema({
+        usernameOrEmail: {
+            custom: {
+                options: userExists,
+                bail: true,
+            },
+            notEmpty: {
+                errorMessage: "Username or Email Field cannot be empty",
+            },
+            isLength: {
+                options: {
+                    min: 3,
+                    max: 20,
+                },
+                errorMessage: "Username or Email Field length cannot be less than 3 or more than 20"
+            }
+        },
+        password: {
+            notEmpty: {
+                errorMessage: "Password cannot be empty",
+            },
+        }
+    })
+}
+
 export default {
     signup,
+    login,
 }

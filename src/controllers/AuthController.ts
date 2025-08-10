@@ -8,6 +8,35 @@ import { UserInputType } from "../utils/Types.js";
 import User from "../models/user.js";
 import { Document } from "mongoose";
 
+const login = (req: Request, res: Response): void | Response => {
+    const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result
+
+    if (!resultOfValidation.isEmpty()) { // if user input isn't valild, throw an error
+        const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
+
+        throw error;
+    }
+
+    const { usernameOrEmail, password }: UserInputType = matchedData(req);
+
+    // user.login(data, (err, results) => {
+    //     if(err || results.length == 0){
+    //         return res.status(201).json({ success: false, data: { message: "The Credentials you provided are invalid!" } });
+    //     }
+
+    //     const user = results[0];
+
+    //     bcrypt.compare(password, user.password, (err, result) => {
+    //         if (result) {
+    //             const token = App.token();
+    //             res.status(200).json({ success: true, data: { token: token, username: user.name, role: user.role, id: user.id }});
+    //         } else {
+    //             res.status(201).json({ success: false, data: { message: "The Credentials you provided are invalid!" } });
+    //         }
+    //     });
+    // });
+}
+
 const signup = (req: Request, res: Response): void | Response => {
     const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result
 
@@ -56,4 +85,5 @@ const signup = (req: Request, res: Response): void | Response => {
 
 export default {
     signup,
+    login,
 };
