@@ -13,7 +13,7 @@ const signup = () => {
     }
 
     const fieldExists = (field: string, value: string, errorMsg: string): Promise<PromiseRejectedResult | undefined> => {
-        const query = field==="email" ? { email: value } : { name: value };
+        const query: {email: string} | {name: string} = field==="email" ? { email: value } : { name: value };
 
         return User.findOne(query)
             .then((userDoc: Document | null) => {
