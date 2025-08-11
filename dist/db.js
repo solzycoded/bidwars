@@ -16,7 +16,7 @@ const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
         return;
     try {
         const { MONGO_DB_PASSWORD, MONGO_USERNAME, MONGO_APP_NAME } = process.env; // mongod db connection variables
-        const url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_DB_PASSWORD}@${MONGO_APP_NAME}.1w4ft.mongodb.net/?retryWrites=true&w=majority&appName=${MONGO_APP_NAME}`; // connection url
+        const url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_DB_PASSWORD}@${MONGO_APP_NAME}.1w4ft.mongodb.net/bidwars?retryWrites=true&w=majority&appName=${MONGO_APP_NAME}`; // connection url
         yield mongoose.connect(url); // connect to mongodb
         console.log("Database Created");
     }

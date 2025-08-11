@@ -9,7 +9,7 @@ const connectDB = async (): Promise<void> => {
     try {
         const { MONGO_DB_PASSWORD, MONGO_USERNAME, MONGO_APP_NAME } = process.env; // mongod db connection variables
 
-        const url: string = `mongodb+srv://${MONGO_USERNAME}:${MONGO_DB_PASSWORD}@${MONGO_APP_NAME}.1w4ft.mongodb.net/?retryWrites=true&w=majority&appName=${MONGO_APP_NAME}`; // connection url
+        const url: string = `mongodb+srv://${MONGO_USERNAME}:${MONGO_DB_PASSWORD}@${MONGO_APP_NAME}.1w4ft.mongodb.net/bidwars?retryWrites=true&w=majority&appName=${MONGO_APP_NAME}`; // connection url
 
         await mongoose.connect(url); // connect to mongodb
         console.log("Database Created");

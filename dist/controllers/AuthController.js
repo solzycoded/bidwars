@@ -11,6 +11,33 @@ import { validationResult, matchedData } from "express-validator";
 import bcrypt from "bcrypt";
 import CustomError from "../utils/CustomError.js"; // Adjust the path as needed
 import User from "../models/user.js";
+const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const resultOfValidation = validationResult(req); // Get validation result
+    if (!resultOfValidation.isEmpty()) { // if user input isn't valild, throw an error
+        const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
+        throw error;
+    }
+    const { usernameOrEmail, password } = matchedData(req);
+    const user = yield User.findOne({
+        $or: [
+            { "name": usernameOrEmail },
+            { "email": usernameOrEmail },
+        ]
+    });
+    const invalidCredentialsResponse = () => {
+        return res.status(201).json({ success: false, data: { message: "Invalid Login Credentials." } });
+    };
+    if (!user) {
+        return invalidCredentialsResponse();
+    }
+    const userPassword = user.password;
+    bcrypt.compare(password, userPassword, (err) => {
+        if (err) {
+            return invalidCredentialsResponse();
+        }
+        res.status(200).json({ success: true, data: { username: user.name, role: user.role } });
+    });
+});
 const signup = (req, res) => {
     const resultOfValidation = validationResult(req); // Get validation result
     if (!resultOfValidation.isEmpty()) { // if user input isn't valild, throw an error
@@ -49,4 +76,5 @@ const signup = (req, res) => {
 };
 export default {
     signup,
+    login,
 };

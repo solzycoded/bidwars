@@ -25,8 +25,6 @@ const signup = () => {
             });
     }
 
-    // CREATE THE LOGIC TO CHECK USERNAME DUPLICATION, HERE
-
     return checkSchema({
         username: {
             custom: {
@@ -89,8 +87,6 @@ const login = () => {
             });
     }
 
-    // CREATE THE LOGIC TO CHECK USERNAME DUPLICATION, HERE
-
     return checkSchema({
         usernameOrEmail: {
             custom: {
@@ -103,7 +99,7 @@ const login = () => {
             isLength: {
                 options: {
                     min: 3,
-                    max: 20,
+                    max: 100,
                 },
                 errorMessage: "Username or Email Field length cannot be less than 3 or more than 20"
             }

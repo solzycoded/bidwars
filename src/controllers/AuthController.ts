@@ -4,11 +4,11 @@ import { validationResult, Result, ValidationError, matchedData } from "express-
 import bcrypt from "bcrypt";
 
 import CustomError from "../utils/CustomError.js"; // Adjust the path as needed
-import { UserInputType } from "../utils/Types.js";
+import { SignupInputType, LoginInputType, UserType } from "../utils/Types.js";
 import User from "../models/user.js";
 import { Document } from "mongoose";
 
-const login = (req: Request, res: Response): void | Response => {
+const login = async (req: Request, res: Response): Promise<void | Response> => {
     const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result
 
     if (!resultOfValidation.isEmpty()) { // if user input isn't valild, throw an error
@@ -17,24 +17,32 @@ const login = (req: Request, res: Response): void | Response => {
         throw error;
     }
 
-    const { usernameOrEmail, password }: UserInputType = matchedData(req);
+    const { usernameOrEmail, password }: LoginInputType = matchedData(req);
 
-    // user.login(data, (err, results) => {
-    //     if(err || results.length == 0){
-    //         return res.status(201).json({ success: false, data: { message: "The Credentials you provided are invalid!" } });
-    //     }
+    const user: UserType | null = await User.findOne({
+        $or: [
+            { "name": usernameOrEmail },
+            { "email": usernameOrEmail },
+        ]
+    });
 
-    //     const user = results[0];
+    const invalidCredentialsResponse = (): Response => { // return a failed response
+        return res.status(201).json({ success: false, data: { message: "Invalid Login Credentials." } });
+    }
 
-    //     bcrypt.compare(password, user.password, (err, result) => {
-    //         if (result) {
-    //             const token = App.token();
-    //             res.status(200).json({ success: true, data: { token: token, username: user.name, role: user.role, id: user.id }});
-    //         } else {
-    //             res.status(201).json({ success: false, data: { message: "The Credentials you provided are invalid!" } });
-    //         }
-    //     });
-    // });
+    if(!user) {
+        return invalidCredentialsResponse();
+    }
+
+    const userPassword: string = user.password;
+
+    bcrypt.compare(password, userPassword, (err: Error | undefined) => {
+        if (err) {
+            return invalidCredentialsResponse();
+        }
+
+        res.status(200).json({ success: true, data: { username: user.name, role: user.role }});
+    });
 }
 
 const signup = (req: Request, res: Response): void | Response => {
@@ -46,7 +54,7 @@ const signup = (req: Request, res: Response): void | Response => {
         throw error;
     }
 
-    const { username, email, password }: UserInputType = matchedData(req);
+    const { username, email, password }: SignupInputType = matchedData(req);
 
     // encrypt user's password and create a new user
     bcrypt.hash(password, 10, async (err: Error | undefined, hash: string): Promise<void | Response> => {
