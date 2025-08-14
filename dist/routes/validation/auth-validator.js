@@ -99,7 +99,3 @@ export const login = () => {
         }
     });
 };
-// export default {
-//     signup,
-//     login,
-// }

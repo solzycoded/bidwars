@@ -24,7 +24,7 @@ export const signup = () => {
                 }
             });
     }
-console.log("Signup validator called");
+
     return checkSchema({
         username: {
             custom: {
