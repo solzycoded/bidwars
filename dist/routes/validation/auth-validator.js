@@ -1,6 +1,6 @@
 import { checkSchema } from "express-validator";
 import User from "../../models/user.js";
-const signup = () => {
+export const signup = () => {
     const emailExists = (value) => {
         return fieldExists("email", value, 'E-Mail address');
     };
@@ -60,7 +60,7 @@ const signup = () => {
         }
     });
 };
-const login = () => {
+export const login = () => {
     const userExists = (value) => {
         return User.findOne({
             $or: [
@@ -99,7 +99,7 @@ const login = () => {
         }
     });
 };
-export default {
-    signup,
-    login,
-};
+// export default {
+//     signup,
+//     login,
+// }

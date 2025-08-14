@@ -1,7 +1,7 @@
 // user.test.mjs
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import User from '../../models/user.js'; // adjust path if different
+import User from '../../dist/models/user.js'; // adjust path if different
 
 let mongoServer;
 

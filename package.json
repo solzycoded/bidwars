@@ -5,8 +5,9 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "jest",
-    "start": "npx tsc && nodemon dist/server.js"
+    "test": "jest __tests__",
+    "start": "npx tsc && nodemon dist/server.js",
+    "test:validation": "jest __tests__/routes/validation"
   },
   "repository": {
     "type": "git",

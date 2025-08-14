@@ -2,11 +2,11 @@
 import { Request, Response } from "express";
 import { validationResult, Result, ValidationError, matchedData } from "express-validator";
 import bcrypt from "bcrypt";
+import { Document } from "mongoose";
 
 import CustomError from "../utils/CustomError.js"; // Adjust the path as needed
 import { SignupInputType, LoginInputType, UserType } from "../utils/Types.js";
 import User from "../models/user.js";
-import { Document } from "mongoose";
 
 const login = async (req: Request, res: Response): Promise<void | Response> => {
     const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result

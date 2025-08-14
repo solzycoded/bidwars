@@ -3,7 +3,7 @@ import { checkSchema } from "express-validator";
 import User from "../../models/user.js";
 import { Document } from "mongoose";
 
-const signup = () => {
+export const signup = () => {
     const emailExists = (value: string): Promise<PromiseRejectedResult | undefined> => {
         return fieldExists("email", value, 'E-Mail address');
     }
@@ -24,7 +24,7 @@ const signup = () => {
                 }
             });
     }
-
+console.log("Signup validator called");
     return checkSchema({
         username: {
             custom: {
@@ -70,7 +70,7 @@ const signup = () => {
 }
 
 
-const login = () => {
+export const login = () => {
     const userExists = (value: string): Promise<PromiseRejectedResult | undefined> => {
         return User.findOne({
             $or: [
@@ -110,9 +110,4 @@ const login = () => {
             },
         }
     })
-}
-
-export default {
-    signup,
-    login,
 }
