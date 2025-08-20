@@ -1,10 +1,10 @@
-import { ValidationData } from "./Types.js";
+import { ValidationError } from "express-validator";
 
 class CustomError extends Error {
     statusCode?: number;
-    data?: Partial<ValidationData>[];
+    data?: ValidationError[];
 
-    constructor(message: string, statusCode?: number, data?: Partial<ValidationData>[]) {
+    constructor(message: string, statusCode?: number, data?: ValidationError[]) {
         super(message); // Call the parent class constructor
         this.statusCode = statusCode;
         this.data = data;
