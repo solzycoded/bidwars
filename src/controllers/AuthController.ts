@@ -8,15 +8,11 @@ import CustomError from "../utils/CustomError.js"; // Adjust the path as needed
 import { SignupInputType, LoginInputType, UserType } from "../utils/Types.js";
 import User from "../models/user.js";
 
+
+/* _____________________________________________________________________________ PUBLIC FUNCTIONS */
 const login = async (req: Request, res: Response, next: NextFunction): Promise<void | Response> => {
     try{
-        const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result
-
-        if (!resultOfValidation.isEmpty()) { // if user input isn't valild, throw an error
-            const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
-
-            throw error;
-        }
+        inputValidation(req);
 
         const { usernameOrEmail, password }: LoginInputType = matchedData(req);
 
@@ -45,32 +41,13 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<v
 
         return invalidCredentialsResponse();
     } catch (error: unknown) { // Use 'unknown' for the error type
-        if (error instanceof CustomError) {
-            // Handle CustomError
-            if (!error.statusCode) {
-                error.statusCode = 500;
-            }
-            
-            next(error);
-        } else if (error instanceof Error) {
-            // Handle generic Error
-            next(new CustomError(error.message, 500, []));
-        } else {
-            // Handle unknown errors
-            next(new CustomError("An unknown error occurred", 500, []));
-        }
+        errorHandler(error, next);
     }
 }
 
 const signup = async (req: Request, res: Response, next: NextFunction): Promise<void | Response> => {
     try {
-        const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result
-
-        if (!resultOfValidation.isEmpty()) { // if user input isn't valild, throw an error 
-            const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
-
-            throw error;
-        }
+        inputValidation(req);
 
         const { username, email, password }: SignupInputType = matchedData(req);
 
@@ -101,22 +78,38 @@ const signup = async (req: Request, res: Response, next: NextFunction): Promise<
             },
         });
     } catch (error: unknown) { // Use 'unknown' for the error type
-        if (error instanceof CustomError) {
-            // Handle CustomError
-            if (!error.statusCode) {
-                error.statusCode = 500;
-            }
-        
-            next(error);
-        } else if (error instanceof Error) {
-            // Handle generic Error
-            next(new CustomError(error.message, 500, []));
-        } else {
-            // Handle unknown errors
-            next(new CustomError("An unknown error occurred", 500, []));
-        }
+        errorHandler(error, next);
     }
 };
+
+/* _____________________________________________________________________________ PRIVATE FUNCTIONS */
+
+const errorHandler = (error: unknown, next: NextFunction) => {
+    if (error instanceof CustomError) {
+        // Handle CustomError
+        if (!error.statusCode) {
+            error.statusCode = 500;
+        }
+
+        next(error);
+    } else if (error instanceof Error) {
+        // Handle generic Error
+        next(new CustomError(error.message, 500, []));
+    } else {
+        // Handle unknown errors
+        next(new CustomError("An unknown error occurred", 500, []));
+    }
+}
+
+const inputValidation = (req: Request) => {
+    const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result
+
+    if (!resultOfValidation.isEmpty()) { // if user input isn't valild, throw an error
+        const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
+
+        throw error;
+    }
+}
 
 export default {
     signup,
