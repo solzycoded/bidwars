@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { validationResult, Result, ValidationError, matchedData } from "express-validator";
 import * as bcrypt from "bcrypt";
 import { Document } from "mongoose";
+import jwt from "jsonwebtoken";
 
 import CustomError from "../utils/CustomError.js"; // Adjust the path as needed
 import { SignupInputType, LoginInputType, UserType } from "../utils/Types.js";
@@ -36,7 +37,15 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<v
         const isValid = await bcrypt.compare(password, userPassword);
 
         if(isValid){
-            return res.status(200).json({ success: true, data: { username: user.name, role: user.role }});
+            const JWT_SECRET: string = process.env.JWT_SECRET || "ajwtsecret";
+
+            const token = jwt.sign(
+                { sub: user._id }, 
+                JWT_SECRET, 
+                { expiresIn: "15m" }
+            ); // create web token
+
+            return res.status(200).json({ success: true, data: { username: user.name, role: user.role, token }});
         }
 
         return invalidCredentialsResponse();
