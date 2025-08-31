@@ -33,7 +33,12 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const isValid = yield bcrypt.compare(password, userPassword);
         if (isValid) {
             const JWT_SECRET = process.env.JWT_SECRET || "ajwtsecret";
-            const token = jwt.sign({ sub: user._id }, JWT_SECRET, { expiresIn: "15m" }); // create web token
+            const token = jwt.sign({
+                username: user.name,
+                role: user.role,
+                id: user._id
+            }, JWT_SECRET, { expiresIn: "15m" }); // create web token
+            console.log(token);
             return res.status(200).json({ success: true, data: { username: user.name, role: user.role, token } });
         }
         return invalidCredentialsResponse();

@@ -1,10 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { ObjectId } from "mongoose";
 
 const JWT_SECRET: string = process.env.JWT_SECRET || "ajwtsecret";
-const user: object = {};
+type User = {
+    username: string
+    role: string
+    id: ObjectId
+};
 
-const authenticateJWT = (req: Request & { user?: object }, res: Response, next: NextFunction) => {
+const authenticateJWT = (req: Request & { user?: User }, res: Response, next: NextFunction) => {
     const authHeader = req.headers?.authorization;
 
     if(!authHeader) {
@@ -23,7 +28,7 @@ const authenticateJWT = (req: Request & { user?: object }, res: Response, next: 
 
     try {
         // verify token
-        const decoded = jwt.verify(token, JWT_SECRET) as { sub: string };
+        const decoded = jwt.verify(token, JWT_SECRET) as { username: string, id: ObjectId, role: string };
 
         // attach user to request
         req.user = decoded;
