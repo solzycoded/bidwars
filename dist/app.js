@@ -10,6 +10,13 @@ app.use(bodyParser.urlencoded({ extended: true })); // x-www-form-urlencoded <fo
 app.use(bodyParser.json()); // allows body as json to be parsed to req parameter
 /* app routes (router level middlewares)*/
 app.use('/auth', authRoute); // authentication routes
+// allow API to be accessed by any client "*"
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 // error handler: used to handle errors, which occur during request processing (app level middleware)
 app.use((err, req, res, next) => {
     if (err instanceof CustomError) {

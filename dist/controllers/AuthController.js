@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { validationResult, matchedData } from "express-validator";
 import * as bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import CustomError from "../utils/CustomError.js"; // Adjust the path as needed
 import User from "../models/user.js";
 /* _____________________________________________________________________________ PUBLIC FUNCTIONS */
@@ -31,7 +32,14 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const userPassword = user.password;
         const isValid = yield bcrypt.compare(password, userPassword);
         if (isValid) {
-            return res.status(200).json({ success: true, data: { username: user.name, role: user.role } });
+            const JWT_SECRET = process.env.JWT_SECRET || "ajwtsecret";
+            const token = jwt.sign({
+                username: user.name,
+                role: user.role,
+                id: user._id
+            }, JWT_SECRET, { expiresIn: "15m" }); // create web token
+            console.log(token);
+            return res.status(200).json({ success: true, data: { username: user.name, role: user.role, token } });
         }
         return invalidCredentialsResponse();
     }
