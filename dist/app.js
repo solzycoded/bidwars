@@ -1,6 +1,7 @@
 /* RESP: ONLY DEFINES ROUTES AND MIDDLEWARS */
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 /* routes*/
 import authRoute from "./routes/auth.js";
 import CustomError from "./utils/CustomError.js";
@@ -8,6 +9,10 @@ const app = express();
 /* app level middleware */
 app.use(bodyParser.urlencoded({ extended: true })); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // allows body as json to be parsed to req parameter
+/* cors */
+app.use(cors({
+    origin: "http://localhost:3000",
+}));
 /* app routes (router level middlewares)*/
 app.use('/auth', authRoute); // authentication routes
 // allow API to be accessed by any client "*"
