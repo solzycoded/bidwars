@@ -3,7 +3,8 @@ import { useState } from "react";
 
 const Login = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassword]               = useState("");
+    const [error, setError]                     = useState("");
 
     const submitLogin = async (e) => {
         e.preventDefault();
@@ -14,14 +15,18 @@ const Login = () => {
             body: JSON.stringify({ usernameOrEmail, password }),
         });
 
-        console.log(res);
-        // if (!res.ok) {
-        //     alert("Login failed");
-        //     return;
-        // }
+        if (!res.ok) {
+            setError("Invalid Login Credentials.")
+            return;
+        }
+        else {
+            setError("");
+        }
 
-        // const data = await res.json();
-        // localStorage.setItem("token", data.token); // ✅ store JWT
+        const { data } = await res.json();
+
+        const auth     = JSON.stringify({ token: data.token, username: data.username, role: data.role });
+        localStorage.setItem("auth", auth); // ✅ store JWT
     }
 
     return (
@@ -34,7 +39,7 @@ const Login = () => {
                     </div>
 
                     <div>
-                        {/* <div className="text-danger mb-2 text-center" v-show="error!==''">{{ error }}</div> */}
+                        <div className="text-danger mb-2 text-center">{ error }</div>
                         <div className="mb-3">
                             <label 
                                 className="form-label text-capitalize fw-bold" 
