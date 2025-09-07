@@ -38,7 +38,14 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
                 role: user.role,
                 id: user._id
             }, JWT_SECRET, { expiresIn: "15m" }); // create web token
-            console.log(token);
+            if (!token) {
+                return res.status(500).json({
+                    success: false,
+                    data: {
+                        message: "Unable to complete Login."
+                    }
+                });
+            }
             return res.status(200).json({ success: true, data: { username: user.name, role: user.role, token } });
         }
         return invalidCredentialsResponse();
