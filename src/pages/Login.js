@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { fetchNoAuth } from "../assets/util/FetchRequest.js";
 
 const Login = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -9,24 +10,20 @@ const Login = () => {
     const submitLogin = async (e) => {
         e.preventDefault();
 
-        const res = await fetch("http://localhost:4500/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ usernameOrEmail, password }),
-        });
-
-        if (!res.ok) {
-            setError("Invalid Login Credentials.")
-            return;
+        const failureFn = () => {
+            setError("Invalid Login Credentials.");
         }
-        else {
+
+        const successFn = async (res) => {
             setError("");
+
+            const { data } = await res.json();
+
+            const auth     = JSON.stringify({ token: data.token, username: data.username, role: data.role });
+            localStorage.setItem("auth", auth); // ✅ store JWT
         }
 
-        const { data } = await res.json();
-
-        const auth     = JSON.stringify({ token: data.token, username: data.username, role: data.role });
-        localStorage.setItem("auth", auth); // ✅ store JWT
+        fetchNoAuth("auth/login", { usernameOrEmail, password }, 'POST', failureFn, successFn);
     }
 
     return (
