@@ -17,9 +17,3 @@ export const fetchNoAuth = async (url, body, method, failureFn, successFn) => {
 
     successFn(res);
 }
-
-const FetchRequest = {
-    fetchNoAuth,
-}
-
-export default FetchRequest;
