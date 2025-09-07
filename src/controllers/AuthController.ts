@@ -49,8 +49,6 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<v
                 { expiresIn: "15m" }
             ); // create web token
 
-            console.log(token);
-
             return res.status(200).json({ success: true, data: { username: user.name, role: user.role, token }});
         }
 
