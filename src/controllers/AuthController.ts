@@ -49,6 +49,15 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<v
                 { expiresIn: "15m" }
             ); // create web token
 
+            if(!token) {
+                return res.status(500).json({
+                        success: false, 
+                        data: { 
+                            message: "Unable to complete Login."
+                        }
+                    });
+            }
+
             return res.status(200).json({ success: true, data: { username: user.name, role: user.role, token }});
         }
 
