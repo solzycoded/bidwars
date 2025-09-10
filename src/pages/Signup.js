@@ -115,7 +115,7 @@ const Signup = () => {
                         <div className="mb-3">
                             <label 
                                 className="form-label text-capitalize fw-bold" 
-                                htmlFor="username">
+                                htmlFor="password">
                                 Password
                             </label>
                             <input className="form-control"
@@ -127,7 +127,7 @@ const Signup = () => {
                         <div className="mb-3">
                             <label 
                                 className="form-label text-capitalize fw-bold" 
-                                htmlFor="username">
+                                htmlFor="re-password">
                                 Re-Password
                             </label>
                             <input className="form-control"
