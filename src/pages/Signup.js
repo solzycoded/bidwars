@@ -95,7 +95,8 @@ const Signup = () => {
                             <input className="form-control"
                                 type="email"
                                 name="email"
-                                onKeyUp={(e) => setEmail(e.target.value)}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 id="email" required />
                         </div>
 
@@ -108,7 +109,8 @@ const Signup = () => {
                             <input className="form-control"
                                 type="text"
                                 name="username"
-                                onKeyUp={(e) => setUsername(e.target.value)}
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 id="username" required />
                         </div>
 
@@ -118,22 +120,28 @@ const Signup = () => {
                                 htmlFor="password">
                                 Password
                             </label>
-                            <input className="form-control"
+                            <input
+                                className="form-control"
                                 type="password"
                                 name="password"
-                                onKeyUp={(e) => handlePassword(e, "password")}
+                                aria-label="Password"
+                                value={password}
+                                onChange={(e) => handlePassword(e, "password")}
                                 id="password" required />
                         </div>
                         <div className="mb-3">
                             <label 
                                 className="form-label text-capitalize fw-bold" 
                                 htmlFor="re-password">
-                                Re-Password
+                                Re-enter Password
                             </label>
-                            <input className="form-control"
+                            <input
+                                className="form-control"
                                 type="password"
-                                name="re_password"
-                                onKeyUp={(e) => handlePassword(e, "re-password")}
+                                name="re-password"
+                                aria-label="Re-enter Password"
+                                value={rePassword}
+                                onChange={(e) => handlePassword(e, "re-password")}
                                 id="re-password" required />
                         </div>
                     </div>

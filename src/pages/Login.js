@@ -46,7 +46,8 @@ const Login = () => {
                             <input className="form-control"
                                 type="text"
                                 name="usernameOrEmail"
-                                onKeyUp={(e) => setUsernameOrEmail(e.target.value)}
+                                value={usernameOrEmail}
+                                onChange={(e) => setUsernameOrEmail(e.target.value)}
                                 id="usernameOrEmail" required />
                         </div>
 
@@ -59,7 +60,8 @@ const Login = () => {
                             <input className="form-control"
                                 type="password"
                                 name="password"
-                                onKeyUp={(e) => setPassword(e.target.value)}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 id="password" required />
                         </div>
                     </div>
