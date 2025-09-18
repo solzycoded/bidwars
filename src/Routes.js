@@ -3,7 +3,7 @@ import Layout from "./pages/Layout.js";
 import Login from "./pages/Login.js";
 import NoPage from "./pages/NoPage.js";
 import Signup from "./pages/Signup.js";
-import CreateItem from "./pages/CreateItem.js";
+import SellAnItem from "./pages/SellAnItem.js";
 
 const App = function() {
     return (
@@ -13,7 +13,8 @@ const App = function() {
     
                     <Route path="login" element={<Login />} />
                     <Route path="signup" element={<Signup />} />
-                    <Route path="create-new-item" element={<CreateItem />} />
+                    <Route path="sell-an-item" element={<SellAnItem />} />
+                    
                     <Route path="*" element={<NoPage />} />
 
                 </Route>

@@ -1,5 +1,4 @@
-
-// import Category from "../components/SellAnItem/Category/Section.vue";
+import Category from "../components/SellAnItem/Category/Section.jsx";
 // import ItemName from "../components/SellAnItem/ItemName/Section.vue";
 // import ImageUpload from "../components/SellAnItem/ImageUpload/Section.vue";
 // import ItemCondition from "../components/SellAnItem/ItemCondition/Section.vue";
@@ -7,16 +6,16 @@
 // import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.vue";
 
 
-const CreateItem = () => {
+const SellAnItem = () => {
     return (
         <main id="main-section">
             <div className="mb-3">
-                <h4 className="link-offset-3">Sell your Item (<span id="sell-an-item-position" className="sell-an-item-position fw-lighter">1</span>/6)</h4>
+                <h3 className="link-offset-3">Sell your Item (<span id="sell-an-item-position" className="sell-an-item-position fw-lighter">1</span>/6)</h3>
                 <p className="text-danger d-none create-item-error"></p>
             </div>
 
-            {/* <Category></Category>
-            <ItemName></ItemName>
+            <Category></Category>
+            {/* <ItemName></ItemName>
             <ImageUpload></ImageUpload>
             <ItemCondition></ItemCondition>
             <ItemPrice></ItemPrice>
@@ -38,7 +37,7 @@ const CreateItem = () => {
     )
 }
 
-export default CreateItem;
+export default SellAnItem;
 {/* 
 <script>
     export default {
