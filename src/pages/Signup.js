@@ -66,14 +66,20 @@ const Signup = () => {
             navigate("/login"); // go to the login page, after successful signup
         }
 
-        fetchNoAuth("http://localhost:4500/auth/signup", { username, email, password }, "POST", failureFn, successFn);
+        fetchNoAuth(
+            "http://localhost:4500/auth/signup", 
+            { username, email, password }, 
+            "POST", 
+            failureFn, 
+            successFn
+        );
     }
 
     return (
         <div className="d-flex align-items-center justify-content-center w-100-p">
             <div className="login-section">
                 <form onSubmit={submitSignup} autoComplete="off">
-
+ 
                     <div className="text-center mb-20">
                         <h3>Signup</h3>
                         <div className="text-danger mb-2 text-center">
