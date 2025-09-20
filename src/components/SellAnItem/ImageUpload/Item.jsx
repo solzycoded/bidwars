@@ -1,11 +1,7 @@
 import PropTypes from "prop-types";
 
-{/*
-    const props = defineProps(['tag']);
-
-    const id = "item-image-selector-" + props.tag; */}
-
 const ImageUploadItem = ({ tag }) => {
+    // const id = "item-image-selector-" + tag;
 
     return (
         <div className="col-12 col-sm-12 col-md-4 mb-3">
