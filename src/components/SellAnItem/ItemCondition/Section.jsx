@@ -1,4 +1,4 @@
-// import SelectTime  from './SelectTime.vue';
+import SelectTime  from './SelectTime.jsx';
 import SelectPreCondition from './SelectPreCondition.jsx';
 import SelectPostCondition from './SelectPostCondition.jsx';
 
@@ -11,7 +11,7 @@ const ItemCondition = () => {
                     <h5>Condition of Item</h5>
                 </div>
 
-                {/* <SelectTime></SelectTime> */}
+                <SelectTime />
                 <SelectPreCondition />
                 <SelectPostCondition />
 
