@@ -2,7 +2,7 @@ import Category from "../components/SellAnItem/Category/Section.jsx";
 import ItemName from "../components/SellAnItem/ItemName/Section.jsx";
 import ImageUpload from "../components/SellAnItem/ImageUpload/Section.jsx";
 import ItemCondition from "../components/SellAnItem/ItemCondition/Section.jsx";
-// import ItemPrice from "../components/SellAnItem/ItemPrice/Section.vue";
+import ItemPrice from "../components/SellAnItem/ItemPrice/Section.jsx";
 // import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.vue";
 
 
@@ -18,8 +18,8 @@ const SellAnItem = () => {
             <ItemName />
             <ImageUpload />
             <ItemCondition />
-            {/* <ItemPrice></ItemPrice>
-            <ItemSalePeriod></ItemSalePeriod> */}
+            <ItemPrice></ItemPrice>
+            {/* <ItemSalePeriod></ItemSalePeriod> */}
 
             <div className="mt-4">
                 <input type="hidden" id="user-id" value="$userId}" />
