@@ -18,7 +18,7 @@ const ConditionOption = ({ condition }) => {
 }
 
 ConditionOption.propTypes = {
-    condition: PropTypes.object.isRequired,
+    condition: PropTypes.string.isRequired,
 }
 
 export default ConditionOption;

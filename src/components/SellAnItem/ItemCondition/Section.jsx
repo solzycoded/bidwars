@@ -1,6 +1,6 @@
 // import SelectTime  from './SelectTime.vue';
-// import SelectPreCondition from './SelectPreCondition.vue';
-// import SelectPostCondition from './SelectPostCondition.vue';
+import SelectPreCondition from './SelectPreCondition.jsx';
+import SelectPostCondition from './SelectPostCondition.jsx';
 
 const ItemCondition = () => {
     return (
@@ -11,9 +11,9 @@ const ItemCondition = () => {
                     <h5>Condition of Item</h5>
                 </div>
 
-                {/* <SelectTime></SelectTime>
-                <SelectPreCondition></SelectPreCondition>
-                <SelectPostCondition></SelectPostCondition> */}
+                {/* <SelectTime></SelectTime> */}
+                <SelectPreCondition />
+                <SelectPostCondition />
 
             </div>
         </section>
