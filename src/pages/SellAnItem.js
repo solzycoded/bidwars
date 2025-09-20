@@ -3,8 +3,9 @@ import ItemName from "../components/SellAnItem/ItemName/Section.jsx";
 import ImageUpload from "../components/SellAnItem/ImageUpload/Section.jsx";
 import ItemCondition from "../components/SellAnItem/ItemCondition/Section.jsx";
 import ItemPrice from "../components/SellAnItem/ItemPrice/Section.jsx";
-// import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.vue";
+import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.jsx";
 
+import "../assets/css/sell-an-item.css";
 
 const SellAnItem = () => {
     return (
@@ -18,8 +19,8 @@ const SellAnItem = () => {
             <ItemName />
             <ImageUpload />
             <ItemCondition />
-            <ItemPrice></ItemPrice>
-            {/* <ItemSalePeriod></ItemSalePeriod> */}
+            <ItemPrice />
+            <ItemSalePeriod />
 
             <div className="mt-4">
                 <input type="hidden" id="user-id" value="$userId}" />
