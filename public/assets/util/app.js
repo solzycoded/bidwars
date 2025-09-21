@@ -56,18 +56,22 @@ const getElementById = (name) => {
     return document.getElementById(name);
 }
 
-const createOnClickEvent = (targetName, fn) => {
+const performActionWithCreateTargetList = (targetName, cb) => {
     const targetList = getByClassNames(targetName);
 
     for (const target of targetList) {
-        target.addEventListener("click", fn);
+        cb(target);
     }
 }
 
-const performActionOnClassNames = (targetName, fn) => {
-    let targetList = getByClassNames(targetName);
+const createOnClickEvent = (targetName, fn) => {
+    performActionWithCreateTargetList(targetName, (target) => {
+        target.addEventListener("click", fn);
+    });
+}
 
-    for (const target of targetList) {
+const performActionOnClassNames = (targetName, fn) => {
+    performActionWithCreateTargetList(targetName, (target) => {
         fn(target);
-    }
+    });
 }

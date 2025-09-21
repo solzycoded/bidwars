@@ -1,4 +1,3 @@
-
 const createItem = () => {
     const proceed = confirmAction();
  
@@ -53,7 +52,7 @@ const confirmAction = () => {
 }
 
 const getElementValue = (selector) => {
-    let categoryIdTag = document.querySelector(selector);
+    const categoryIdTag = document.querySelector(selector);
 
     return categoryIdTag===null ? "" : categoryIdTag.value;
 }
