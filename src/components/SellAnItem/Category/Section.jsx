@@ -31,23 +31,17 @@ const Category = () => {
                 <div className="text-start mb-4">
                     <h5>Category</h5>
                         {
-                            categories && categories.map((category) => {
+                            categories?.map((category) => {
                                 return (
-                                    <div
+                                    <button
+                                        type="button"
                                         className="col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item"
                                         key={category._id}
-                                        role="button"
-                                        tabIndex={0}
                                         onClick={() => onCategorySelected(category)}
-                                        onKeyDown={e => {
-                                            if (e.key === "Enter" || e.key === " ") {
-                                                onCategorySelected(category);
-                                            }
-                                        }}
                                     >
                                         <CategoryItem categoryName={category.name} />
                                         <input type="hidden" name="category_id" className="category_id" value={category._id} />
-                                    </div>
+                                    </button>
                                 );
                             })
                         }
