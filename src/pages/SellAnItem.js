@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Category from "../components/SellAnItem/Category/Section.jsx";
 import ItemName from "../components/SellAnItem/ItemName/Section.jsx";
 import ImageUpload from "../components/SellAnItem/ImageUpload/Section.jsx";
@@ -8,6 +9,32 @@ import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.jsx"
 import "../assets/css/sell-an-item.css";
 
 const SellAnItem = () => {
+    const [activeSection, setActiveSection] = useState(0);
+    const [formData, setFormData] = useState({
+        category: null,
+        itemTitle: "",
+        images: [],
+        condition: {
+            pre: "",
+            post: "",
+        },
+        price: "",
+        salePeriod: "",
+    });
+
+    const sections = [
+        <Category key="category" formData={formData} setFormData={setFormData} />,
+        // <ItemName formData={formData} setFormData={setFormData} />,
+        {/* <ImageUpload />
+        <ItemCondition />
+        <ItemPrice />
+        <ItemSalePeriod /> */}
+    ];
+
+    const handleFinish = () => {
+        console.log(formData);
+    }
+
     return (
         <main id="main-section">
             <div className="mb-3">
@@ -15,12 +42,7 @@ const SellAnItem = () => {
                 <p className="text-danger d-none create-item-error"></p>
             </div>
 
-            <Category />
-            <ItemName />
-            <ImageUpload />
-            <ItemCondition />
-            <ItemPrice />
-            <ItemSalePeriod />
+            { sections[activeSection] }
 
             <div className="mt-4">
                 <input type="hidden" id="user-id" value="$userId}" />
@@ -30,8 +52,8 @@ const SellAnItem = () => {
                 <div className="d-inline float-end" id="next-item-section">
                     <button type="button" id="next-section" className="btn btn-dark fs-4" onClick="nextSection()">Next</button>
                 </div>
-                <div className="d-inline float-end d-none" id="submit-item-section">
-                    <button type="submit" id="submit-item" className="btn btn-dark fs-4" onClick="createItem()">Finish</button>
+                <div className="d-inline float-end" id="submit-item-section">
+                    <button type="submit" id="submit-item" className="btn btn-dark fs-4" onClick={() => handleFinish()}>Finish</button>
                 </div>
             </div>
         </main>
