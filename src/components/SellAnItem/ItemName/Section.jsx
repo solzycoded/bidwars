@@ -1,12 +1,13 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-const ItemName = () => {
-    const [title, setTitle] = useState(null);
+const ItemName = ({ formData, setFormData }) => {
+    // const [title, setTitle] = useState(null);
     const [error, setError] = useState(null);
 
     const validateTitle = (itemTitle) => {
-        setTitle(itemTitle); //set item title
-        console.log(itemTitle);
+        setFormData({ ...formData, title: itemTitle }); //set item title
+        
         const success = (data) => {
             setError("");
             // toggleBtns("next", true); // this enables or disables the "next" button, based on the result of validating the title
@@ -17,7 +18,7 @@ const ItemName = () => {
             // toggleBtns("next", false);
         }
 
-        if(title){
+        if(itemTitle){
             // new FetchRequest("GET", `api/items/check-title/${itemTitle}`).send(success, failure);
         }
         else{
@@ -39,7 +40,7 @@ const ItemName = () => {
                         id="item-name" 
                         className="form-control" 
                         placeholder="Enter item name" 
-                        value={title}
+                        value={formData.title}
                         onChange={(e) => validateTitle(e.target.value)} />
                     <small className="m-0 text-danger fw-bolder" id="item-title-error">{error}</small>
                     <p className="m-0 mt-2 fw-lighter"><small>Items that have been in this category have names like: X, Y, Z.</small></p>
@@ -47,6 +48,11 @@ const ItemName = () => {
             </div>
         </section>
     );
+}
+
+ItemName.propTypes = {
+    formData: PropTypes.object.isRequired,
+    setFormData: PropTypes.func.isRequired,
 }
 
 export default ItemName;

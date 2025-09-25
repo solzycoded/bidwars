@@ -12,7 +12,7 @@ const SellAnItem = () => {
     const [activeSection, setActiveSection] = useState(0);
     const [formData, setFormData] = useState({
         category: null,
-        itemTitle: "",
+        title: "",
         images: [],
         condition: {
             pre: "",
@@ -24,7 +24,7 @@ const SellAnItem = () => {
 
     const sections = [
         <Category key="category" formData={formData} setFormData={setFormData} />,
-        // <ItemName formData={formData} setFormData={setFormData} />,
+        <ItemName key="itemName" formData={formData} setFormData={setFormData} />,
         {/* <ImageUpload />
         <ItemCondition />
         <ItemPrice />
@@ -52,7 +52,7 @@ const SellAnItem = () => {
                 <div className="d-inline float-end" id="next-item-section">
                     <button type="button" id="next-section" className="btn btn-dark fs-4" onClick="nextSection()">Next</button>
                 </div>
-                <div className="d-inline float-end" id="submit-item-section">
+                <div className="d-inline float-end d-none" id="submit-item-section">
                     <button type="submit" id="submit-item" className="btn btn-dark fs-4" onClick={() => handleFinish()}>Finish</button>
                 </div>
             </div>
