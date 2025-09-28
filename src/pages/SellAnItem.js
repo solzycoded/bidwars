@@ -9,7 +9,7 @@ import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.jsx"
 import "../assets/css/sell-an-item.css";
 
 const SellAnItem = () => {
-    const [activeSection, setActiveSection] = useState(1);
+    const [activeSection, setActiveSection] = useState(0);
     const [formData, setFormData] = useState({
         category: null,
         title: "",
@@ -24,7 +24,8 @@ const SellAnItem = () => {
 
     const sections = [
         <Category key="category" formData={formData} setFormData={setFormData} />,
-        <ItemName key="itemName" formData={formData} setFormData={setFormData} />
+        <ItemName key="itemName" formData={formData} setFormData={setFormData} />,
+        1,2,3,4
     ];
 
     // ,
@@ -41,35 +42,37 @@ const SellAnItem = () => {
         sectionsCounterControl(activeSection + 1);
     }
 
+    const handlePrev = () => {
+        sectionsCounterControl(activeSection - 1);
+    }
+
     const sectionsCounterControl = (sectionIndex) => {
         // make sure the active section index doesn't go above 6 or below 1
-        if(sectionIndex === 0) {
+        if(sectionIndex <= 0) {
             sectionIndex = 0;
         }
 
-        setActiveSection(sectionIndex === 6 ? 6 : sectionIndex);
+        setActiveSection(sectionIndex === sections.length ? sections.length : sectionIndex);
     }
 
     return (
         <main id="main-section">
             <div className="mb-3">
-                <h3 className="link-offset-3">Sell your Item (<span id="sell-an-item-position" className="sell-an-item-position fw-lighter">1</span>/6)</h3>
+                <h3 className="link-offset-3">Sell your Item (<span id="sell-an-item-position" className="sell-an-item-position fw-lighter">{activeSection + 1}</span>/6)</h3>
                 <p className="text-danger d-none create-item-error"></p>
             </div>
 
-            
-        <ItemName key="itemName" formData={formData} setFormData={setFormData} />
-            { activeSection }
+            { sections[activeSection] }
 
             <div className="mt-4">
                 <input type="hidden" id="user-id" value="$userId}" />
                 <div className="d-inline">
-                    <button type="button" id="prev-section" className="btn btn-dark disabled fs-4" onClick="prevSection()">Prev</button>
+                    <button type="button" id="prev-section" className={`btn btn-dark ${activeSection > 0 ? '' : 'disabled'} fs-4`} onClick={() => handlePrev()}>Prev</button>
                 </div>
-                <div className="d-inline float-end" id="next-item-section">
-                    <button type="button" id="next-section" className="btn btn-dark fs-4" onClick={() => handleNext()}>Next</button>
+                <div className={`d-inline float-end ${activeSection < 5 ? '' : 'd-none'}`} id="next-item-section">
+                    <button type="button" id="next-section" className={`btn btn-dark ${activeSection < 5 ? '' : 'disabled'} fs-4`} onClick={() => handleNext()}>Next</button>
                 </div>
-                <div className="d-inline float-end d-none" id="submit-item-section">
+                <div className={`d-inline float-end ${activeSection === 5 ? '' : 'd-none'}`} id="submit-item-section">
                     <button type="submit" id="submit-item" className="btn btn-dark fs-4" onClick={() => handleFinish()}>Finish</button>
                 </div>
             </div>
