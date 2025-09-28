@@ -21,7 +21,6 @@
 }
 
 .sell-your-item-section {
-    display: none;
     transition: display 0.7s ease-out;
 }
 

@@ -9,7 +9,7 @@ import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.jsx"
 import "../assets/css/sell-an-item.css";
 
 const SellAnItem = () => {
-    const [activeSection, setActiveSection] = useState(0);
+    const [activeSection, setActiveSection] = useState(1);
     const [formData, setFormData] = useState({
         category: null,
         title: "",
@@ -24,15 +24,30 @@ const SellAnItem = () => {
 
     const sections = [
         <Category key="category" formData={formData} setFormData={setFormData} />,
-        <ItemName key="itemName" formData={formData} setFormData={setFormData} />,
+        <ItemName key="itemName" formData={formData} setFormData={setFormData} />
+    ];
+
+    // ,
         {/* <ImageUpload />
         <ItemCondition />
         <ItemPrice />
         <ItemSalePeriod /> */}
-    ];
 
     const handleFinish = () => {
         console.log(formData);
+    }
+
+    const handleNext = () => {
+        sectionsCounterControl(activeSection + 1);
+    }
+
+    const sectionsCounterControl = (sectionIndex) => {
+        // make sure the active section index doesn't go above 6 or below 1
+        if(sectionIndex === 0) {
+            sectionIndex = 0;
+        }
+
+        setActiveSection(sectionIndex === 6 ? 6 : sectionIndex);
     }
 
     return (
@@ -42,7 +57,9 @@ const SellAnItem = () => {
                 <p className="text-danger d-none create-item-error"></p>
             </div>
 
-            { sections[activeSection] }
+            
+        <ItemName key="itemName" formData={formData} setFormData={setFormData} />
+            { activeSection }
 
             <div className="mt-4">
                 <input type="hidden" id="user-id" value="$userId}" />
@@ -50,7 +67,7 @@ const SellAnItem = () => {
                     <button type="button" id="prev-section" className="btn btn-dark disabled fs-4" onClick="prevSection()">Prev</button>
                 </div>
                 <div className="d-inline float-end" id="next-item-section">
-                    <button type="button" id="next-section" className="btn btn-dark fs-4" onClick="nextSection()">Next</button>
+                    <button type="button" id="next-section" className="btn btn-dark fs-4" onClick={() => handleNext()}>Next</button>
                 </div>
                 <div className="d-inline float-end d-none" id="submit-item-section">
                     <button type="submit" id="submit-item" className="btn btn-dark fs-4" onClick={() => handleFinish()}>Finish</button>
