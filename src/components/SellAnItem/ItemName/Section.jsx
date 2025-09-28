@@ -1,8 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-
+ 
 const ItemName = ({ formData, setFormData }) => {
-    // const [title, setTitle] = useState(null);
     const [error, setError] = useState(null);
 
     const validateTitle = (itemTitle) => {

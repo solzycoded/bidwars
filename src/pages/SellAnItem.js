@@ -25,11 +25,12 @@ const SellAnItem = () => {
     const sections = [
         <Category key="category" formData={formData} setFormData={setFormData} />,
         <ItemName key="itemName" formData={formData} setFormData={setFormData} />,
-        1,2,3,4
+        <ImageUpload key="imageUpload" formData={formData} setFormData={setFormData} />,
+        2,3,4
     ];
 
     // ,
-        {/* <ImageUpload />
+        {/* 
         <ItemCondition />
         <ItemPrice />
         <ItemSalePeriod /> */}

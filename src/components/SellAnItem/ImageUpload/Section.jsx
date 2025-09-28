@@ -1,6 +1,7 @@
 import ImageUploadItem from "./Item.jsx";
+import PropTypes from "prop-types";
 
-const ImageUpload = () => {
+const ImageUpload = ({ formData, setFormData }) => {
     return (
         <section className="sell-your-item-section" id="image-upload">
             <div className="container-fluid p-0">
@@ -18,6 +19,11 @@ const ImageUpload = () => {
             </div>
         </section>
     );
+}
+
+ImageUpload.propTypes = {
+    formData: PropTypes.object.isRequired,
+    setFormData: PropTypes.func.isRequired,
 }
 
 export default ImageUpload;
