@@ -10,27 +10,31 @@ import "../assets/css/sell-an-item.css";
 
 const SellAnItem = () => {
     const [activeSection, setActiveSection] = useState(0);
-    const [formData, setFormData] = useState({
-        category: null,
-        title: "",
-        images: [],
-        condition: {
-            pre: "",
-            post: "",
+    const [formData, setFormData] = useState({ 
+        category: { value: null, active: false },
+        title: { value: "", active: false },
+        images: { value: [], active: false},
+        condition: { 
+            value: {
+                pre: "",
+                post: "",
+            }, 
+            active: false
         },
-        price: "",
-        salePeriod: "",
+        price: { value: "", active: false },
+        salePeriod: { value: "", active: false },
+        pause: true,
     });
 
     const sections = [
         <Category key="category" formData={formData} setFormData={setFormData} />,
         <ItemName key="itemName" formData={formData} setFormData={setFormData} />,
-        <ImageUpload key="imageUpload" formData={formData} setFormData={setFormData} />,
+        1,
         2,3,4
     ];
 
-    // ,
         {/* 
+            <ImageUpload key="imageUpload" formData={formData} setFormData={setFormData} />
         <ItemCondition />
         <ItemPrice />
         <ItemSalePeriod /> */}
@@ -39,17 +43,41 @@ const SellAnItem = () => {
         console.log(formData);
     }
 
+    const handleSectionControl = (activeSection) => {
+        switch (activeSection) {
+            case 0:
+                return formData.category.active;
+
+            case 1:
+                return formData.title.active;
+        
+            case 2:
+                return formData.images.active;
+
+            default:
+                return false;
+        }
+    }
+
     const handleNext = () => {
-        sectionsCounterControl(activeSection + 1);
+        const currentActiveSection = activeSection + 1;
+
+        if(handleSectionControl(activeSection)){ // if the current section's field are all filled in, i.e. "active" is true
+            sectionsCounterControl(currentActiveSection);
+            if(!handleSectionControl(currentActiveSection)){ // change the value for "formData.pause" to true if the currrently, now active section's "active" value is true (i.e. valid)
+                setFormData({ ...formData, pause: true });
+            }
+        }
     }
 
     const handlePrev = () => {
         sectionsCounterControl(activeSection - 1);
+        setFormData({ ...formData, pause: false });
     }
 
     const sectionsCounterControl = (sectionIndex) => {
         // make sure the active section index doesn't go above 6 or below 1
-        if(sectionIndex <= 0) {
+        if(sectionIndex < 0) {
             sectionIndex = 0;
         }
 
@@ -71,7 +99,8 @@ const SellAnItem = () => {
                     <button type="button" id="prev-section" className={`btn btn-dark ${activeSection > 0 ? '' : 'disabled'} fs-4`} onClick={() => handlePrev()}>Prev</button>
                 </div>
                 <div className={`d-inline float-end ${activeSection < 5 ? '' : 'd-none'}`} id="next-item-section">
-                    <button type="button" id="next-section" className={`btn btn-dark ${activeSection < 5 ? '' : 'disabled'} fs-4`} onClick={() => handleNext()}>Next</button>
+                    {/* { !formData.pause + " - another thing!" } */}
+                    <button type="button" id="next-section" className={`btn btn-dark ${(formData.pause || activeSection > 5) ? 'disabled' : ''} fs-4`} onClick={() => handleNext()}>Next</button>
                 </div>
                 <div className={`d-inline float-end ${activeSection === 5 ? '' : 'd-none'}`} id="submit-item-section">
                     <button type="submit" id="submit-item" className="btn btn-dark fs-4" onClick={() => handleFinish()}>Finish</button>
@@ -82,30 +111,3 @@ const SellAnItem = () => {
 }
 
 export default SellAnItem;
-{/* 
-<script>
-    export default {
-        computed: {
-            userId(){
-                return this.$store.state.auth.id;
-            },
-            userIsLoggedIn(){
-                return this.$store.getters.isLoggedIn;
-            },
-            userIsAdmin(){
-                return this.$store.state.auth.role=='admin';
-            }
-        },
-        mounted() {
-            if(!this.userIsLoggedIn){
-                this.$router.push("login");
-            }
-            if(this.userIsLoggedIn && this.userIsAdmin){
-                this.$router.push("");
-            }
-
-            // change the position of the current body to 0
-            pos = 0;
-        }
-    }
-</script> */}

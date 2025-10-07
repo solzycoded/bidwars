@@ -10,7 +10,22 @@ const Category = ({ formData, setFormData }) => {
     useEffect(() => {
         const displayCategories = (res) => {
             const listOfCategories = res;
-            setCategories(listOfCategories);
+
+            displayChosenCategoryIndex(listOfCategories); // set the catgory index based on the users selection
+            setCategories(listOfCategories); // get the list of categories to be displayed to the user
+        }
+
+        const displayChosenCategoryIndex = (categories) => {
+            const chosenCategoryId = formData.category.value; // the selected category by the user
+            if(!chosenCategoryId) {
+                return;
+            }
+
+            categories.forEach((category, i) => {
+                if(chosenCategoryId === category._id){
+                    setSelectedCategoryIndex(i);
+                }
+            });
         }
 
         const _categories = [
@@ -21,7 +36,7 @@ const Category = ({ formData, setFormData }) => {
 
         displayCategories(_categories);
         // new FetchRequest("GET", "api/categories").send(displayCategories, displayCategories);
-    }, [setCategories]);
+    }, [setCategories, setSelectedCategoryIndex, formData]);
 
     const setSelectedCategory = (i, categoryId) => {
         setSelectedCategoryIndex(i); // set selected category index
@@ -29,7 +44,11 @@ const Category = ({ formData, setFormData }) => {
 
         setFormData({ 
             ...formData, 
-            category: categoryId
+            category: {
+                value: categoryId,
+                active: true,
+            },
+            pause: false,
         });
     }
 
@@ -37,7 +56,7 @@ const Category = ({ formData, setFormData }) => {
         <section className="sell-your-item-section active-section" id="select-category">
             <div className="container-fluid p-0">
                 <div className="text-start mb-4">
-                    <h5>Category</h5>
+                    <h5>Select a Category</h5>
                         {
                             categories?.map((category, i) => (
                                 <button
@@ -48,7 +67,6 @@ const Category = ({ formData, setFormData }) => {
                                     aria-pressed={selectedCategoryIndex === i}
                                 >
                                     <CategoryItem categoryName={category.name} />
-                                    {/* <input type="hidden" name="category_id" className="category_id" value={category._id} /> */}
                                 </button>
                             ))
                         }

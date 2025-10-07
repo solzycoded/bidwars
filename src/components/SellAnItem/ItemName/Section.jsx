@@ -5,24 +5,27 @@ const ItemName = ({ formData, setFormData }) => {
     const [error, setError] = useState(null);
 
     const validateTitle = (itemTitle) => {
-        setFormData({ ...formData, title: itemTitle }); //set item title
-        
+        const updateTitleFormData = (active) => {
+            setFormData({ ...formData, title: { value: itemTitle, active }, pause: !active }); //set item title
+        }
+
         const success = (data) => {
             setError("");
-            // toggleBtns("next", true); // this enables or disables the "next" button, based on the result of validating the title
+            updateTitleFormData(true);
         }
 
         const failure = (data) => {
             setError(data.message);
-            // toggleBtns("next", false);
+            updateTitleFormData(false);
         }
 
-        if(itemTitle){
+        if(itemTitle!==""){
+            success("something");
             // new FetchRequest("GET", `api/items/check-title/${itemTitle}`).send(success, failure);
+            return;
         }
-        else{
-            success(null);
-        }
+
+        updateTitleFormData(false);
     }
 
     return (
@@ -39,9 +42,9 @@ const ItemName = ({ formData, setFormData }) => {
                         id="item-name" 
                         className="form-control" 
                         placeholder="Enter item name" 
-                        value={formData.title}
+                        value={formData.title.value}
                         onChange={(e) => validateTitle(e.target.value)} />
-                    <small className="m-0 text-danger fw-bolder" id="item-title-error">{error}</small>
+                    <small className="m-0 text-danger fw-bolde r" id="item-title-error">{error}</small>
                     <p className="m-0 mt-2 fw-lighter"><small>Items that have been in this category have names like: X, Y, Z.</small></p>
                 </div>
             </div>

@@ -3,54 +3,54 @@ import PropTypes from "prop-types";
 const ImageUploadItem = ({ tag, formData, setFormData }) => {
     const id = "item-image-selector-" + tag;
 
-    let uploadedImages = [];
+    // let uploadedImages = [];
 
     const onImageSelected = (target) => {
         // convert image to blob / base 64
-        convertImageToBlob(target);
+        // convertImageToBlob(target);
     }
 
-    const convertImageToBlob = (target) => {
-        const file = target.files[0];
+    // const convertImageToBlob = (target) => {
+    //     const file = target.files[0];
 
-        uploadedImages.push(file);
+    //     uploadedImages.push(file);
 
-        if(file!==undefined){
-            const reader = new FileReader();
+    //     if(file!==undefined){
+    //         const reader = new FileReader();
 
-            reader.onload = function(event) {
-                const src = event.target.result;
+    //         reader.onload = function(event) {
+    //             const src = event.target.result;
 
-                setBlobAsImageSrc(target, src);
-            };
+    //             setBlobAsImageSrc(target, src);
+    //         };
 
-            reader.readAsDataURL(file);
-        }
-    }
+    //         reader.readAsDataURL(file);
+    //     }
+    // }
     
-    const setBlobAsImageSrc = (target, src) => {
-        let index = getTagIndex("item-image-selector", target);
+    // const setBlobAsImageSrc = (target, src) => {
+    //     let index = getTagIndex("item-image-selector", target);
 
-        // find and set image tag
-        let targetImageTag = getByClassNames("item-image")[index];
+    //     // find and set image tag
+    //     let targetImageTag = getByClassNames("item-image")[index];
 
-        targetImageTag.src = src;
-        targetImageTag.classList.add("has-image");
-    }
+    //     targetImageTag.src = src;
+    //     targetImageTag.classList.add("has-image");
+    // }
 
-    // get the blob values of uploaded images
-    const getItemImages = () => {
-        let uploadImages = document.querySelectorAll(".has-image");
-        let images = [];
+    // // get the blob values of uploaded images
+    // const getItemImages = () => {
+    //     let uploadImages = document.querySelectorAll(".has-image");
+    //     let images = [];
 
-        uploadImages.forEach((v) => {
-            let src = v.src;
+    //     uploadImages.forEach((v) => {
+    //         let src = v.src;
 
-            images.push(src);
-        });
+    //         images.push(src);
+    //     });
 
-        return images;
-    }
+    //     return images;
+    // }
 
     return (
         <div className="col-12 col-sm-12 col-md-4 mb-3">
