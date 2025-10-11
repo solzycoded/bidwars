@@ -87,7 +87,7 @@ const SellAnItem = () => {
     return (
         <main id="main-section">
             <div className="mb-3">
-                <h3 className="link-offset-3">Sell your Item (<span id="sell-an-item-position" className="sell-an-item-position fw-lighter">{activeSection + 1}</span>/6)</h3>
+                <h3 className="link-offset-3">Sell your Item (<span id="sell-an-item-position" className="sell-an-item-position fw-lighter" data-testid="section-counter">{activeSection + 1}</span>/6)</h3>
                 <p className="text-danger d-none create-item-error"></p>
             </div>
 

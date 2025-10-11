@@ -58,11 +58,12 @@ const Category = ({ formData, setFormData }) => {
                 <div className="text-start mb-4">
                     <h5>Select a Category</h5>
                         {
-                            categories?.map((category, i) => (
+                            categories && categories?.map((category, i) => (
                                 <button
                                     type="button"
                                     className={`col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item ${selectedCategoryIndex===i ? 'selected-category' : ""}`}
                                     key={category._id}
+                                    data-testid={`category-option-${i}`}
                                     onClick={() => setSelectedCategory(i, category._id)}
                                     aria-pressed={selectedCategoryIndex === i}
                                 >
