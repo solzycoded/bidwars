@@ -29,12 +29,13 @@ const SellAnItem = () => {
     const sections = [
         <Category key="category" formData={formData} setFormData={setFormData} />,
         <ItemName key="itemName" formData={formData} setFormData={setFormData} />,
-        1,
-        2,3,4
+        <ImageUpload key="imageUpload" formData={formData} setFormData={setFormData} />,
+        2,
+        3,
+        4
     ];
 
         {/* 
-            <ImageUpload key="imageUpload" formData={formData} setFormData={setFormData} />
         <ItemCondition />
         <ItemPrice />
         <ItemSalePeriod /> */}
@@ -99,7 +100,6 @@ const SellAnItem = () => {
                     <button type="button" id="prev-section" className={`btn btn-dark ${activeSection > 0 ? '' : 'disabled'} fs-4`} onClick={() => handlePrev()}>Prev</button>
                 </div>
                 <div className={`d-inline float-end ${activeSection < 5 ? '' : 'd-none'}`} id="next-item-section">
-                    {/* { !formData.pause + " - another thing!" } */}
                     <button type="button" id="next-section" className={`btn btn-dark ${(formData.pause || activeSection > 5) ? 'disabled' : ''} fs-4`} onClick={() => handleNext()}>Next</button>
                 </div>
                 <div className={`d-inline float-end ${activeSection === 5 ? '' : 'd-none'}`} id="submit-item-section">
