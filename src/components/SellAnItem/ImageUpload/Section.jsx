@@ -12,9 +12,9 @@ const ImageUpload = ({ formData, setFormData }) => {
                     <p className="m-0 text-secondary"><small>It’s important that your item has an appropraite visual representation. Kindly provide <b className="text-dark">1</b> of the most recent image(s) of your item.</small></p>
                 </div>
                 <div className="row">
-                    <ImageUploadItem tag="one"></ImageUploadItem>
-                    {/* <ImageUploadItem tag="two"></ImageUploadItem>
-                    <ImageUploadItem tag="three"></ImageUploadItem> */}
+                    <ImageUploadItem tag="one" formData={formData} setFormData={setFormData}></ImageUploadItem>
+                    <ImageUploadItem tag="two" formData={formData} setFormData={setFormData}></ImageUploadItem>
+                    <ImageUploadItem tag="three" formData={formData} setFormData={setFormData}></ImageUploadItem>
                 </div>
             </div>
         </section>

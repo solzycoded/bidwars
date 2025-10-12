@@ -7,7 +7,7 @@ const onImageSelected = (target) => {
 
 const convertImageToBlob = (target) => {
     let file = target.files[0];
-
+ 
     uploadedImages.push(file);
 
     if(file!==undefined){
