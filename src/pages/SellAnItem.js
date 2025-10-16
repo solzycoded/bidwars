@@ -13,7 +13,7 @@ const SellAnItem = () => {
     const [formData, setFormData] = useState({ 
         category: { value: null, active: false },
         title: { value: "", active: false },
-        images: { value: [], active: false},
+        images: { value: new Array(3), active: false},
         condition: { 
             value: {
                 pre: "",

@@ -22,7 +22,7 @@ const convertImageToBlob = (target) => {
         reader.readAsDataURL(file);
     }
 }
- 
+
 const setBlobAsImageSrc = (target, src) => {
     let index = getTagIndex("item-image-selector", target);
 

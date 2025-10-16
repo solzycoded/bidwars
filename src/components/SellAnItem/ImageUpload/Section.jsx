@@ -1,6 +1,6 @@
 import ImageUploadItem from "./Item.jsx";
 import PropTypes from "prop-types";
-
+ 
 const ImageUpload = ({ formData, setFormData }) => {
     return (
         <section className="sell-your-item-section" id="image-upload">
@@ -12,9 +12,9 @@ const ImageUpload = ({ formData, setFormData }) => {
                     <p className="m-0 text-secondary"><small>It’s important that your item has an appropraite visual representation. Kindly provide <b className="text-dark">1</b> of the most recent image(s) of your item.</small></p>
                 </div>
                 <div className="row">
-                    <ImageUploadItem tag="one" formData={formData} setFormData={setFormData}></ImageUploadItem>
-                    <ImageUploadItem tag="two" formData={formData} setFormData={setFormData}></ImageUploadItem>
-                    <ImageUploadItem tag="three" formData={formData} setFormData={setFormData}></ImageUploadItem>
+                    <ImageUploadItem tag={0} formData={formData} setFormData={setFormData}></ImageUploadItem>
+                    <ImageUploadItem tag={1} formData={formData} setFormData={setFormData}></ImageUploadItem>
+                    <ImageUploadItem tag={3} formData={formData} setFormData={setFormData}></ImageUploadItem>
                 </div>
             </div>
         </section>
