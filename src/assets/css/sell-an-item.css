@@ -38,3 +38,9 @@
     align-items: center;
     justify-content: center;
 }
+
+.item-image {
+    width: 100%;
+    min-height: 60px;
+    max-height: 50%;
+}

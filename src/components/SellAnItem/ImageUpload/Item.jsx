@@ -1,24 +1,34 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const ImageUploadItem = ({ tag, formData, setFormData }) => {
     const [selectedImage, setSelectedImage] = useState("");
 
     const id = "item-image-selector-" + tag;
 
+    useEffect(() => {
+        console.log(formData.images.value[tag]);
+        if(formData.images.value[tag] && formData.images.value[tag].src!=="") {
+            setSelectedImage(formData.images.value[tag].src);
+        }
+    }, [setSelectedImage, formData, tag]);
+
     const onImageSelected = (target) => {
-        const updateFormData = (value, active) => {
+        // before you update the state "formData", 
+        // 1. update the array images, by passing it to a separate variable
+        // 2. create a function to check if any image has been uploaded and return true or false
+        const updateFormData = (value, src, active) => {
             const altImages = formData.images.value;
-            altImages[tag] = value; // tag represents the index/position of the image, which corresponds the position of a value in an array
+            altImages[tag] = { file: value, src }; // tag represents the index/position of the image, which corresponds the position of a value in an array
 
-            const imageHasBeenSelected = (images) => {
-                images.forEach(element => {
-                    if(element!==""){
-                        return true;
+            const imageHasBeenSelected = (images) => { // if any image has been selected by the user, return true
+                for (const element of images) {
+                    if (element.value !== "") {
+                        return false;
                     }
-                });
+                }
 
-                return false;
+                return true;
             }
 
             setFormData({ 
@@ -35,23 +45,25 @@ const ImageUploadItem = ({ tag, formData, setFormData }) => {
             // convert image to blob / base 64
             const file = target.files[0];
 
-            updateFormData(file, true);
-
-            if(file!==undefined){
-                const reader = new FileReader();
-
-                reader.onload = function(event) {
-                    const src = event.target.result;
-
-                    setSelectedImage(src);
-                };
-
-                reader.readAsDataURL(file);
+            if (file === undefined) {
+                updateFormData("", "", false);
+                return;
             }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const src = event.target.result;
+
+                setSelectedImage(src);
+                updateFormData(file, src, true);
+            };
+
+            reader.readAsDataURL(file);
         } catch (e) {
             alert("Something went wrong! Image not uploaded.");
             console.log("image upload error: ", e.message);
-            updateFormData("", false);
+            updateFormData("", "", false);
         }
     }
 
@@ -59,7 +71,10 @@ const ImageUploadItem = ({ tag, formData, setFormData }) => {
         <div className="col-12 col-sm-12 col-md-4 mb-3">
             <div className="position-relative">
                 <div>
-                    <img src={selectedImage!=="" ? selectedImage : "/bidwars-logo-sm.png"} alt="uploaded item" className="img-fluid rounded item-image" />
+                    <img 
+                        src={selectedImage || "/bidwars-logo-sm.png"} 
+                        alt="uploaded item" 
+                        className="img-fluid rounded item-image" />
                 </div>
                 <div className="rounded-bottom position-absolute start-0 end-0 bottom-0 bg-dark opacity-75">
                     <label className="btn bg-dark image-upload-label" htmlFor={id}>
