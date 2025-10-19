@@ -30,15 +30,15 @@ const SellAnItem = () => {
         <Category key="category" formData={formData} setFormData={setFormData} />,
         <ItemName key="itemName" formData={formData} setFormData={setFormData} />,
         <ImageUpload key="imageUpload" formData={formData} setFormData={setFormData} />,
-        2,
+        <ItemSalePeriod key="itemsaleperiod" formData={formData} setFormData={setFormData} />,
         3,
         4
     ];
 
         {/* 
-        <ItemCondition />
+        
         <ItemPrice />
-        <ItemSalePeriod /> */}
+        <ItemCondition /> */}
 
     const handleFinish = () => {
         console.log(formData);
@@ -54,6 +54,15 @@ const SellAnItem = () => {
         
             case 2:
                 return formData.images.active;
+
+            case 3:
+                return formData.salePeriod.active;
+
+            // case 4:
+            //     return formData.condition.active;
+
+            // case 5:
+            //     return formData.price.active;
 
             default:
                 return false;

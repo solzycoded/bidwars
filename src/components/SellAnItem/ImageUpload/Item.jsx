@@ -7,9 +7,9 @@ const ImageUploadItem = ({ tag, formData, setFormData }) => {
     const id = "item-image-selector-" + tag;
 
     useEffect(() => {
-        console.log(formData.images.value[tag]);
-        if(formData.images.value[tag] && formData.images.value[tag].src!=="") {
-            setSelectedImage(formData.images.value[tag].src);
+        const src = formData.images?.value?.[tag]?.src;
+        if (src !== "" && src !== undefined) {
+            setSelectedImage(src);
         }
     }, [setSelectedImage, formData, tag]);
 
@@ -23,7 +23,7 @@ const ImageUploadItem = ({ tag, formData, setFormData }) => {
 
             const imageHasBeenSelected = (images) => { // if any image has been selected by the user, return true
                 for (const element of images) {
-                    if (element.value !== "") {
+                    if (element?.value !== "") {
                         return false;
                     }
                 }
