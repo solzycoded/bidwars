@@ -7,30 +7,21 @@ import ItemPrice from "../components/SellAnItem/ItemPrice/Section.jsx";
 import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.jsx";
 
 import "../assets/css/sell-an-item.css";
+import { useFormDataContext } from "../ContextProviders/SellAnItemProvider.jsx";
 
 const SellAnItem = () => {
     const [activeSection, setActiveSection] = useState(0);
-    const [formData, setFormData] = useState({ 
-        category: { value: null, active: false },
-        title: { value: "", active: false },
-        images: { value: new Array(3), active: false},
-        condition: { 
-            value: {
-                pre: "",
-                post: "",
-            }, 
-            active: false
-        },
-        price: { value: "", active: false },
-        salePeriod: { value: "", active: false },
-        pause: true,
-    });
+
+    const { formData, setFormData } = useFormDataContext();
 
     const sections = [
-        <Category key="category" formData={formData} setFormData={setFormData} />,
-        <ItemName key="itemName" formData={formData} setFormData={setFormData} />,
-        <ImageUpload key="imageUpload" formData={formData} setFormData={setFormData} />,
-        <ItemSalePeriod key="itemsaleperiod" formData={formData} setFormData={setFormData} />,
+        <Category key="category" />,
+        2,
+        3,
+        3,
+        // <ItemName key="itemName" />,
+        // <ImageUpload key="imageUpload" />,
+        // <ItemSalePeriod key="itemsaleperiod" />,
         3,
         4
     ];
@@ -72,6 +63,7 @@ const SellAnItem = () => {
     const handleNext = () => {
         const currentActiveSection = activeSection + 1;
 
+        console.log(formData);
         if(handleSectionControl(activeSection)){ // if the current section's field are all filled in, i.e. "active" is true
             sectionsCounterControl(currentActiveSection);
             if(!handleSectionControl(currentActiveSection)){ // change the value for "formData.pause" to true if the currrently, now active section's "active" value is true (i.e. valid)

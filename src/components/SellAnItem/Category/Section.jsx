@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import CategoryItem from "./Item.jsx";
+import { useFormDataContext } from "../../../ContextProviders/SellAnItemProvider.jsx";
 
-import PropTypes from "prop-types";
-
-const Category = ({ formData, setFormData }) => {
+const Category = () => {
     const [ categories, setCategories ] = useState(null);
     const [ selectedCategoryIndex, setSelectedCategoryIndex ] = useState(null);
+    const { formData, setFormData } = useFormDataContext();
 
     useEffect(() => {
         const displayCategories = (res) => {
@@ -21,11 +21,12 @@ const Category = ({ formData, setFormData }) => {
                 return;
             }
 
-            categories.forEach((category, i) => {
-                if(chosenCategoryId === category._id){
+            for (const [i, category] of categories.entries()) {
+                if (chosenCategoryId === category._id) {
                     setSelectedCategoryIndex(i);
+                    break;
                 }
-            });
+            }
         }
 
         const _categories = [
@@ -58,7 +59,7 @@ const Category = ({ formData, setFormData }) => {
                 <div className="text-start mb-4">
                     <h5>Select a Category</h5>
                         {
-                            categories && categories?.map((category, i) => (
+                            categories?.map((category, i) => (
                                 <button
                                     type="button"
                                     className={`col-12 col-sm-12 col-md-4 mb-3 sell-an-item-category-item ${selectedCategoryIndex===i ? 'selected-category' : ""}`}
@@ -78,9 +79,9 @@ const Category = ({ formData, setFormData }) => {
     );
 }
 
-Category.propTypes = {
-    formData: PropTypes.object.isRequired,
-    setFormData: PropTypes.func.isRequired,
-}
+// Category.propTypes = {
+//     formData: PropTypes.object.isRequired,
+//     setFormData: PropTypes.func.isRequired,
+// }
 
 export default Category;

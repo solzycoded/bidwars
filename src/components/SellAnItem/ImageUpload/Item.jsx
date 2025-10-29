@@ -18,17 +18,13 @@ const ImageUploadItem = ({ tag, formData, setFormData }) => {
         // 1. update the array images, by passing it to a separate variable
         // 2. create a function to check if any image has been uploaded and return true or false
         const updateFormData = (value, src, active) => {
-            const altImages = formData.images.value;
-            altImages[tag] = { file: value, src }; // tag represents the index/position of the image, which corresponds the position of a value in an array
+            const altImages = Array.isArray(formData.images.value)
+                ? [...formData.images.value]
+                : [];
+            altImages[tag]  = { file: value, src }; // tag represents the index/position of the image, which corresponds the position of a value in an array
 
             const imageHasBeenSelected = (images) => { // if any image has been selected by the user, return true
-                for (const element of images) {
-                    if (element?.value !== "") {
-                        return false;
-                    }
-                }
-
-                return true;
+                return images.some((el) => !!(el && (el.file || el.src)));
             }
 
             setFormData({ 
@@ -74,12 +70,20 @@ const ImageUploadItem = ({ tag, formData, setFormData }) => {
                     <img 
                         src={selectedImage || "/bidwars-logo-sm.png"} 
                         alt="uploaded item" 
-                        className="img-fluid rounded item-image" />
+                        className="img-fluid rounded item-image"
+                        data-testid="image-upload-native" />
                 </div>
                 <div className="rounded-bottom position-absolute start-0 end-0 bottom-0 bg-dark opacity-75">
                     <label className="btn bg-dark image-upload-label" htmlFor={id}>
 
-                        <input className="item-image-selector" id={id} name="image_selector" type="file" accept="image/jpeg, image/png, image/jpg" onChange={(e) => onImageSelected(e.target)} />
+                        <input 
+                            className="item-image-selector" 
+                            id={id} 
+                            name="image_selector" 
+                            type="file" 
+                            accept="image/jpeg, image/png, image/jpg" 
+                            onChange={(e) => onImageSelected(e.target)}
+                            data-testid="image-upload-input" />
 
                         <div className="text-white text-center fw-bold">
                             Choose From Library
