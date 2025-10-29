@@ -1,8 +1,9 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
- 
-const ItemName = ({ formData, setFormData }) => {
+import { useFormDataContext } from "../../../ContextProviders/SellAnItemProvider.jsx";
+
+const ItemName = () => {
     const [error, setError] = useState(null);
+    const { formData, setFormData } = useFormDataContext();
 
     const validateTitle = (itemTitle) => {
         const updateTitleFormData = (active) => {
@@ -50,11 +51,6 @@ const ItemName = ({ formData, setFormData }) => {
             </div>
         </section>
     );
-}
-
-ItemName.propTypes = {
-    formData: PropTypes.object.isRequired,
-    setFormData: PropTypes.func.isRequired,
 }
 
 export default ItemName;

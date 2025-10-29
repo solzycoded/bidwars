@@ -1,6 +1,8 @@
-import PropTypes from "prop-types";
+import { useFormDataContext } from "../../../ContextProviders/SellAnItemProvider.jsx";
 
-const ItemSalePeriod = ({ formData, setFormData }) => {
+const ItemSalePeriod = () => {
+    const { formData, setFormData } = useFormDataContext();
+
     const updateItemSalePeriod = (value) => {
         const activateSalePeriod = value!==""; // set the salePeriod to "true", if value is empty else set it to "false"
 
@@ -34,11 +36,6 @@ const ItemSalePeriod = ({ formData, setFormData }) => {
             </div>
         </section>
     )
-}
-
-ItemSalePeriod.propTypes = {
-    formData: PropTypes.object.isRequired,
-    setFormData: PropTypes.func.isRequired,
 }
 
 export default ItemSalePeriod;

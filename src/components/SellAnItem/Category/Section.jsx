@@ -79,9 +79,4 @@ const Category = () => {
     );
 }
 
-// Category.propTypes = {
-//     formData: PropTypes.object.isRequired,
-//     setFormData: PropTypes.func.isRequired,
-// }
-
 export default Category;

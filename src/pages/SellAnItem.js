@@ -16,12 +16,9 @@ const SellAnItem = () => {
 
     const sections = [
         <Category key="category" />,
-        2,
-        3,
-        3,
-        // <ItemName key="itemName" />,
-        // <ImageUpload key="imageUpload" />,
-        // <ItemSalePeriod key="itemsaleperiod" />,
+        <ItemName key="itemName" />,
+        <ImageUpload key="imageUpload" />,
+        <ItemSalePeriod key="itemsaleperiod" />,
         3,
         4
     ];

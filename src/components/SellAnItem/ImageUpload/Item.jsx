@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
+import { useFormDataContext } from "../../../ContextProviders/SellAnItemProvider.jsx";
 
-const ImageUploadItem = ({ tag, formData, setFormData }) => {
+const ImageUploadItem = ({ tag }) => {
     const [selectedImage, setSelectedImage] = useState("");
+    const { formData, setFormData } = useFormDataContext();
 
     const id = "item-image-selector-" + tag;
 
@@ -24,7 +26,13 @@ const ImageUploadItem = ({ tag, formData, setFormData }) => {
             altImages[tag]  = { file: value, src }; // tag represents the index/position of the image, which corresponds the position of a value in an array
 
             const imageHasBeenSelected = (images) => { // if any image has been selected by the user, return true
-                return images.some((el) => !!(el && (el.file || el.src)));
+                for (const image of images) {
+                    if(image?.file!==""){
+                        return true;
+                    }
+                }
+
+                return false;
             }
 
             setFormData({ 
@@ -33,7 +41,7 @@ const ImageUploadItem = ({ tag, formData, setFormData }) => {
                     value: altImages,
                     active,
                 },
-                pause: imageHasBeenSelected(altImages), // if "false", the next button is active and vice versa
+                pause: !imageHasBeenSelected(altImages), // if "false", the next button is active and vice versa
             });
         }
 
@@ -98,8 +106,6 @@ const ImageUploadItem = ({ tag, formData, setFormData }) => {
 
 ImageUploadItem.propTypes = {
     tag: PropTypes.number.isRequired,
-    formData: PropTypes.object.isRequired,
-    setFormData: PropTypes.func.isRequired,
 }
 
 export default ImageUploadItem;
