@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import NavItem from "./NavItem.js";
 import LinkItem from "./LinkItem.js";
 import Search from "../Search/Search.js";
+import AuthData from "../../assets/util/Auth.js";
 
 const Nav = function() {
+    const { loggedIn, isAdmin } = AuthData; // get (destructure) the authentication data from AuthData
+
     return (
         <nav className="navbar navbar-expand-lg bg-light">
            
@@ -23,30 +26,53 @@ const Nav = function() {
                         <LinkItem href="categories" content="Categories" />
                         <LinkItem href="rooms" content="Rooms" />
 
-                        <NavItem to="profile" content="Profile" />
-                        <NavItem to="dashboard" content="Dashboard" />
-                        <NavItem to="dashboard#set-auction" content="Schedule Auction" />
+                        {
+                            loggedIn && 
+                            <>
+                                {
+                                    !isAdmin && <NavItem to="profile" content="Profile" />
+                                }
+                                {
+                                    isAdmin && <NavItem to="dashboard" content="Dashboard" />
+                                }
+                            </>
+                        }
+                        {/* <NavItem to="dashboard#set-auction" content="Schedule Auction" />
                         
-                        <LinkItem href="set-auction" content="Schedule Auction" />
+                        <LinkItem href="set-auction" content="Schedule Auction" /> */}
 
                         <NavItem to="dashboard#auction-list" content="Auction List" />
 
                         {/* this was repeated (I DON'T KNOW WHY YET!) */}
                         {/* <LinkItem href="/dashboard#auction-list" content="Auction List" /> */}
 
-                        <NavItem to="profile/notifications" content="Notifications" />
+                        {
+                            loggedIn && 
+                            <>
+                                <NavItem to="profile/notifications" content="Notifications" />
 
-                        <li className="nav-item">
-                            <button className="nav-link btn bg-secondary text-white" onClick="logout">Log out</button>
-                        </li>
-                        <NavItem to="login" content="Login" />
-                        <NavItem to="signup" content="Signup" className="btn bg-danger text-white" />
+                                <li className="nav-item">
+                                    <button className="nav-link btn bg-secondary text-white" onClick="logout">Log out</button>
+                                </li>
+                            </>
+                        }
+                        
+                        {
+                            !loggedIn && 
+                            <>
+                                <NavItem to="login" content="Login" />
+                                <NavItem to="signup" content="Signup" className="btn bg-danger text-white" />
+                            </>
+                        }
 
                     </ul>
-
-                    <div v-show="!onDashboard && !onProfile">
-                        <Search />
-                    </div>
+                    
+                    {
+                        !isAdmin &&
+                        <div>
+                            <Search />
+                        </div>
+                    }
                 </div>
             </div>
         </nav>

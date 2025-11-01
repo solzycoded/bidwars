@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { fetchNoAuth } from "../assets/util/FetchRequest.js";
+import { getAuthDta, setAuthData } from "../assets/util/Auth.js";
 
 const Login = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
@@ -19,8 +20,11 @@ const Login = () => {
 
             const { data } = await res.json();
 
-            const auth     = JSON.stringify({ token: data.token, username: data.username, role: data.role });
-            localStorage.setItem("auth", auth); // ✅ store JWT
+            setAuthData({ token: data.token, username: data.username, role: data.role });
+            alert("Login was successful!");
+            console.log(getAuthDta());
+            // const auth     = JSON.stringify({ token: data.token, username: data.username, role: data.role });
+            // localStorage.setItem("auth", auth); // ✅ store JWT
         }
 
         fetchNoAuth("auth/login", { usernameOrEmail, password }, 'POST', failureFn, successFn);

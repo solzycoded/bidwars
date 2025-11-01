@@ -60,7 +60,6 @@ const SellAnItem = () => {
     const handleNext = () => {
         const currentActiveSection = activeSection + 1;
 
-        console.log(formData);
         if(handleSectionControl(activeSection)){ // if the current section's field are all filled in, i.e. "active" is true
             sectionsCounterControl(currentActiveSection);
             if(!handleSectionControl(currentActiveSection)){ // change the value for "formData.pause" to true if the currrently, now active section's "active" value is true (i.e. valid)

@@ -67,7 +67,7 @@ const Signup = () => {
         }
 
         fetchNoAuth(
-            "http://localhost:4500/auth/signup", 
+            "auth/signup", 
             { username, email, password }, 
             "POST", 
             failureFn, 
