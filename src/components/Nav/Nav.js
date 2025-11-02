@@ -8,7 +8,7 @@ const Nav = function() {
     const { isLoggedIn, isAdmin } = AuthData; // get (destructure) the authentication data from AuthData
 
     const authUserLinks = () => {// this conditionally renders a group of links, depending on the role of the current user
-        if(isLoggedIn) {
+        if(isLoggedIn) { // when an authenticated user has logged in
             return (
                 <>
                     { !isAdmin && <NavItem to="profile" content="Profile" /> }
@@ -27,7 +27,7 @@ const Nav = function() {
                 </>
             )
         }
-        else {
+        else { // for a guest user
             return (
                 <>
                     <NavItem to="login" content="Login" />
