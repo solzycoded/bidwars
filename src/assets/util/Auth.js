@@ -21,7 +21,7 @@ const isAdmin = () => {
 }
 
 const AuthData = {
-    loggedIn: loggedIn(),
+    isLoggedIn: loggedIn(),
     isAdmin: isAdmin(),
 }
 export default AuthData;

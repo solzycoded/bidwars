@@ -5,7 +5,37 @@ import Search from "../Search/Search.js";
 import AuthData from "../../assets/util/Auth.js";
 
 const Nav = function() {
-    const { loggedIn, isAdmin } = AuthData; // get (destructure) the authentication data from AuthData
+    const { isLoggedIn, isAdmin } = AuthData; // get (destructure) the authentication data from AuthData
+
+    const authUserLinks = () => {// this conditionally renders a group of links, depending on the role of the current user
+        if(isLoggedIn) {
+            return (
+                <>
+                    { !isAdmin && <NavItem to="profile" content="Profile" /> }
+                    { 
+                        isAdmin && 
+                        <>
+                            <NavItem to="dashboard" content="Dashboard" /> 
+                            <NavItem to="dashboard#auction-list" content="Auction List" />
+                        </>
+                    }
+                    <NavItem to="profile/notifications" content="Notifications" />
+
+                    <li className="nav-item">
+                        <button className="nav-link btn bg-secondary text-white" onClick="logout">Log out</button>
+                    </li>
+                </>
+            )
+        }
+        else {
+            return (
+                <>
+                    <NavItem to="login" content="Login" />
+                    <NavItem to="signup" content="Signup" className="btn bg-danger text-white" />
+                </>
+            )
+        }
+    }
 
     return (
         <nav className="navbar navbar-expand-lg bg-light">
@@ -26,44 +56,14 @@ const Nav = function() {
                         <LinkItem href="categories" content="Categories" />
                         <LinkItem href="rooms" content="Rooms" />
 
-                        {
-                            loggedIn && 
-                            <>
-                                {
-                                    !isAdmin && <NavItem to="profile" content="Profile" />
-                                }
-                                {
-                                    isAdmin && <NavItem to="dashboard" content="Dashboard" />
-                                }
-                            </>
-                        }
+                        { authUserLinks() }
+                        
                         {/* <NavItem to="dashboard#set-auction" content="Schedule Auction" />
                         
                         <LinkItem href="set-auction" content="Schedule Auction" /> */}
 
-                        <NavItem to="dashboard#auction-list" content="Auction List" />
-
                         {/* this was repeated (I DON'T KNOW WHY YET!) */}
                         {/* <LinkItem href="/dashboard#auction-list" content="Auction List" /> */}
-
-                        {
-                            loggedIn && 
-                            <>
-                                <NavItem to="profile/notifications" content="Notifications" />
-
-                                <li className="nav-item">
-                                    <button className="nav-link btn bg-secondary text-white" onClick="logout">Log out</button>
-                                </li>
-                            </>
-                        }
-                        
-                        {
-                            !loggedIn && 
-                            <>
-                                <NavItem to="login" content="Login" />
-                                <NavItem to="signup" content="Signup" className="btn bg-danger text-white" />
-                            </>
-                        }
 
                     </ul>
                     
