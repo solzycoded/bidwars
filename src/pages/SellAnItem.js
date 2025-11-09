@@ -19,13 +19,12 @@ const SellAnItem = () => {
         <ItemName key="itemName" />,
         <ImageUpload key="imageUpload" />,
         <ItemSalePeriod key="itemsaleperiod" />,
-        3,
+        <ItemPrice key="itemprice" />,
         4
     ];
 
         {/* 
         
-        <ItemPrice />
         <ItemCondition /> */}
 
     const handleFinish = () => {
@@ -46,8 +45,8 @@ const SellAnItem = () => {
             case 3:
                 return formData.salePeriod.active;
 
-            // case 4:
-            //     return formData.condition.active;
+            case 4:
+                return formData.price.active;
 
             // case 5:
             //     return formData.price.active;
