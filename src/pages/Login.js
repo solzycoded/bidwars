@@ -21,10 +21,7 @@ const Login = () => {
             const { data } = await res.json();
 
             setAuthData({ token: data.token, username: data.username, role: data.role });
-            alert("Login was successful!");
-            console.log(getAuthDta());
-            // const auth     = JSON.stringify({ token: data.token, username: data.username, role: data.role });
-            // localStorage.setItem("auth", auth); // ✅ store JWT
+            // alert("Login was successful!");
         }
 
         fetchNoAuth("auth/login", { usernameOrEmail, password }, 'POST', failureFn, successFn);

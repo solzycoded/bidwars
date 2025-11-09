@@ -16,7 +16,7 @@ const Category = () => {
         }
 
         const displayChosenCategoryIndex = (categories) => {
-            const chosenCategoryId = formData.category.value; // the selected category by the user
+            const chosenCategoryId = formData?.category?.value; // the selected category by the user
             if(!chosenCategoryId) {
                 return;
             }

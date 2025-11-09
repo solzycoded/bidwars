@@ -79,7 +79,7 @@ const ImageUploadItem = ({ tag }) => {
                         src={selectedImage || "/bidwars-logo-sm.png"} 
                         alt="uploaded item" 
                         className="img-fluid rounded item-image"
-                        data-testid="image-upload-native" />
+                        data-testid={`image-preview-${tag}`} />
                 </div>
                 <div className="rounded-bottom position-absolute start-0 end-0 bottom-0 bg-dark opacity-75">
                     <label className="btn bg-dark image-upload-label" htmlFor={id}>
@@ -91,7 +91,7 @@ const ImageUploadItem = ({ tag }) => {
                             type="file" 
                             accept="image/jpeg, image/png, image/jpg" 
                             onChange={(e) => onImageSelected(e.target)}
-                            data-testid="image-upload-input" />
+                            data-testid={`image-upload-native-${tag}`} />
 
                         <div className="text-white text-center fw-bold">
                             Choose From Library
