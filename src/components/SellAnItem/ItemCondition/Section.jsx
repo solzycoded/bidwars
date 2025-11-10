@@ -1,6 +1,6 @@
 import SelectTime  from './SelectTime.jsx';
-import SelectPreCondition from './SelectPreCondition.jsx';
-import SelectPostCondition from './SelectPostCondition.jsx';
+import Condition from './Condition.jsx';
+// import SelectPostCondition from './SelectPostCondition.jsx';
 
 const ItemCondition = () => {
     return (
@@ -12,8 +12,8 @@ const ItemCondition = () => {
                 </div>
 
                 <SelectTime />
-                <SelectPreCondition />
-                <SelectPostCondition />
+                <Condition conditionType="pre" />
+                <Condition conditionType="post" />
 
             </div>
         </section>

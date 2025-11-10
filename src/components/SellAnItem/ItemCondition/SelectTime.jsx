@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import { fetchNoAuth } from "../../../assets/util/FetchRequest.js";
+import { useRef } from "react";
 import { useFormDataContext } from "../../../ContextProviders/SellAnItemProvider.jsx";
+import SelectTimeOption from "./SelectTimeOption.jsx";
 
 const SelectTime = () => {
     const purchaseDuration = useRef(null); // to get the value of puchaseduration input
     const acquisitionPeriod = useRef(null); // to get the value of the selected timeframe
-    const [timeFrames, setTimeFrames] = useState([]); // to get the list of timeframes from the database
     const { formData, setFormData } = useFormDataContext(); // capture the formData and setFormData states, declared via context API, in SellAnItemProvider
 
     const updateItemPurchaseTime = (purchaseDuration, acquisitionPeriod) => {
@@ -27,25 +26,6 @@ const SelectTime = () => {
         });
     }
 
-    useEffect(() => {
-        const displayTimeFrames = async (res) => {
-            // not sure what to do here
-            // const { data } = await res.json();
-            // setTimeFrames(data);
-
-            setTimeFrames([
-                {_id: "soamao9838", name: "hour(s)"},
-                {_id: "soambo2838", name: "day(s)"},
-                {_id: "soamco1138", name: "week(s)"},
-                {_id: "soamdo8838", name: "month(s)"},
-                {_id: "soameo2838", name: "year(s)"},
-            ]);
-        }
-
-        displayTimeFrames(null);
-        // fetchNoAuth("time-frames", {}, "GET", displayTimeFrames, displayTimeFrames);
-    }, [setTimeFrames]);
-
     return (
         <div className="mb-3">
             <div>
@@ -66,14 +46,9 @@ const SelectTime = () => {
                         id="acquisition-period"
                         ref={acquisitionPeriod}
                         onChange={(e) => updateItemPurchaseTime(purchaseDuration.current.value, e.target.value)} >
-                        <option value="N/A">Select Aquisition Period</option>
-                        {
-                            timeFrames.map((timeFrame) => {
-                                return (
-                                    <option key={timeFrame._id} value={timeFrame._id}>{ timeFrame.name }</option>
-                                )
-                            })
-                        }
+                        <option selected disabled value="N/A">Select Aquisition Period</option>
+                        {/* the options for timeframe selection, collected from the database */}
+                        <SelectTimeOption />
                     </select>
                     <p className="ms-2">ago</p>
                 </div>
