@@ -4,9 +4,9 @@ const ItemPrice = () => {
     const { formData, setFormData } = useFormDataContext();
     
     const updateItemPrice = (value) => {
-        const activateItemPrice = value!==""; // set the salePeriod to "true", if value is empty else set it to "false"
+        const activateItemPrice = value!==""; // set the price to "true", if value is empty else set it to "false"
 
-        // update the value of the "salePeriod" key in formData object
+        // update the value of the "price" key in formData object
         setFormData({ 
             ...formData, 
             price: { value, active: activateItemPrice },

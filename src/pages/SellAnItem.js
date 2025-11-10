@@ -20,12 +20,8 @@ const SellAnItem = () => {
         <ImageUpload key="imageUpload" />,
         <ItemSalePeriod key="itemsaleperiod" />,
         <ItemPrice key="itemprice" />,
-        4
+        <ItemCondition key="itemcondition" />
     ];
-
-        {/* 
-        
-        <ItemCondition /> */}
 
     const handleFinish = () => {
         console.log(formData);
@@ -48,8 +44,8 @@ const SellAnItem = () => {
             case 4:
                 return formData.price.active;
 
-            // case 5:
-            //     return formData.price.active;
+            case 5:
+                return formData.condition.active;
 
             default:
                 return false;

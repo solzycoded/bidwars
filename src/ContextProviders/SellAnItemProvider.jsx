@@ -10,6 +10,10 @@ const SellAnItemProvider = ({children}) => {
         images: { value: new Array(3), active: false},
         condition: { 
             value: {
+                time: {
+                    purchaseDuration: "",
+                    acquisitionPeriod: "",
+                },
                 pre: "",
                 post: "",
             }, 
