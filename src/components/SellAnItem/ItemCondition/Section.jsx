@@ -1,6 +1,5 @@
 import SelectTime  from './SelectTime.jsx';
 import Condition from './Condition.jsx';
-// import SelectPostCondition from './SelectPostCondition.jsx';
 
 const ItemCondition = () => {
     return (

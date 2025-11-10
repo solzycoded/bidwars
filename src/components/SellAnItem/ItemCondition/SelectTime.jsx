@@ -12,7 +12,7 @@ const SelectTime = () => {
 
         setFormData({ 
             ...formData, 
-            condition: { 
+            condition: {
                 value: {
                     ...formData.condition.value,
                     time: {

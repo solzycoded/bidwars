@@ -25,6 +25,8 @@ const SellAnItem = () => {
 
     const handleFinish = () => {
         console.log(formData);
+        // implement field validation
+        // if all fields have been provided are and they are valid, enable finish button and vice versa
     }
 
     const handleSectionControl = (activeSection) => {
