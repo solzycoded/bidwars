@@ -8,10 +8,12 @@ import ItemSalePeriod from "../components/SellAnItem/ItemSalePeriod/Section.jsx"
 
 import "../assets/css/sell-an-item.css";
 import { useFormDataContext } from "../ContextProviders/SellAnItemProvider.jsx";
+import { getAuthData } from "../assets/util/Auth.js";
+import { fetchWithAuth } from "../assets/util/FetchRequest.js";
 
 const SellAnItem = () => {
     const [activeSection, setActiveSection] = useState(0);
-
+    const [error, setError] = useState("");
     const { formData, setFormData } = useFormDataContext();
 
     const sections = [
@@ -24,9 +26,24 @@ const SellAnItem = () => {
     ];
 
     const handleFinish = () => {
-        console.log(formData);
-        // implement field validation
-        // if all fields have been provided are and they are valid, enable finish button and vice versa
+        const confirmed = window.confirm("You won't be able to edit your item once you submit it! Do you want to proceed?");
+        if (!confirmed) return;
+
+        // implement field validation (item condition is the only field section that'll need validation)
+        const itemCondition = formData.condition.value;
+
+        // if all fields have been provided and they are valid, enable finish button and vice versa
+        if(itemCondition.pre!=="" && itemCondition.post!=="" && itemCondition.time.purchaseDuration!=="" && itemCondition.time.acquisitionPeriod!=="") {
+            // submit
+            const { token, username } = getAuthData();
+            
+            fetchWithAuth(`items/create/${username}`, formData, "POST", () => {}, () => {})
+            // new FetchRequest('POST', `api/items/create/${userId}`, item).send(createItemSuccess, createItemFailure);
+            setError("");
+            return;
+        }
+
+        setError("All fields must be filled, before clicking Finish!");
     }
 
     const handleSectionControl = (activeSection) => {
@@ -83,7 +100,7 @@ const SellAnItem = () => {
         <main id="main-section">
             <div className="mb-3">
                 <h3 className="link-offset-3">Sell your Item (<span id="sell-an-item-position" className="sell-an-item-position fw-lighter" data-testid="section-counter">{activeSection + 1}</span>/6)</h3>
-                <p className="text-danger d-none create-item-error"></p>
+                <p className="text-danger create-item-error">{error}</p>
             </div>
 
             { sections[activeSection] }
@@ -97,7 +114,7 @@ const SellAnItem = () => {
                     <button type="button" id="next-section" className={`btn btn-dark ${(formData.pause || activeSection > 5) ? 'disabled' : ''} fs-4`} onClick={() => handleNext()}>Next</button>
                 </div>
                 <div className={`d-inline float-end ${activeSection === 5 ? '' : 'd-none'}`} id="submit-item-section">
-                    <button type="submit" id="submit-item" className="btn btn-dark fs-4" onClick={() => handleFinish()}>Finish</button>
+                    <button type="submit" id="submit-item" className={`btn btn-dark fs-4 ${formData.pause ? 'disabled' : ''}`} onClick={() => handleFinish()}>Finish</button>
                 </div>
             </div>
         </main>

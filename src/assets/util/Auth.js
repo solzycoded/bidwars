@@ -3,19 +3,19 @@ export const setAuthData = (authData) => {
     localStorage.setItem("auth", auth); // ✅ store JWT
 }
 
-export const getAuthDta = () => {
+export const getAuthData = () => {
     const auth = localStorage.getItem("auth");
 
     return auth;
 }
 
 const loggedIn = () => {
-    const auth = getAuthDta();
+    const auth = getAuthData();
     return !!(auth && auth?.token!==null);
 }
 
 const isAdmin = () => {
-    const auth = getAuthDta();
+    const auth = getAuthData();
 
     return auth?.role==="admin";
 }
