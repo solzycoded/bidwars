@@ -45,8 +45,9 @@ const SelectTime = () => {
                         aria-label="Select a time" 
                         id="acquisition-period"
                         ref={acquisitionPeriod}
-                        onChange={(e) => updateItemPurchaseTime(purchaseDuration.current.value, e.target.value)} >
-                        <option selected disabled value="N/A">Select Aquisition Period</option>
+                        onChange={(e) => updateItemPurchaseTime(purchaseDuration.current.value, e.target.value)} 
+                        defaultValue="N/A">
+                        <option disabled value="N/A">Select Aquisition Period</option>
                         {/* the options for timeframe selection, collected from the database */}
                         <SelectTimeOption />
                     </select>

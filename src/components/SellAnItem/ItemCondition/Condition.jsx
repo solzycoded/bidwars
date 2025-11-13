@@ -6,13 +6,13 @@ const SelectCondition = ({ conditionType }) => {
     const { formData, setFormData } = useFormDataContext(); // capture the formData and setFormData states, declared via context API, in SellAnItemProvider
 
     const updateItemCondition = (value) => {
-        const activateItemCondition = value!=="";
+        const activateItemCondition = value!=="N/A";
 
         const updatedValue = conditionType==="pre" ? { ...formData.condition.value, pre: value } : { ...formData.condition.value, post: value };
 
         setFormData({ 
-            ...formData, 
-            condition: { 
+            ...formData,
+            condition: {
                 value: updatedValue,
                 active: activateItemCondition
             },
@@ -27,8 +27,9 @@ const SelectCondition = ({ conditionType }) => {
                     className="form-select form-select-md" 
                     id={`acquisition-${conditionType}-condition`} 
                     aria-label="select a condition"
-                    onChange={(e) => updateItemCondition(e.target.value)}>
-                    <option selected disabled value="">select a condition { conditionType==="pre" ? "" : "(e.g. looks new)" }</option>
+                    onChange={(e) => updateItemCondition(e.target.value)}
+                    defaultValue="N/A">
+                    <option disabled value="N/A">select a condition { conditionType==="pre" ? "" : "(e.g. looks new)" }</option>
                     <ConditionOption condition={conditionType}></ConditionOption>
                 </select>
                 <label htmlFor={`acquisition-${conditionType}-condition`}>{ conditionType==="pre" ? "In what condition was the item, when you bought it?" : "In what condition would you say the item currently is?" }</label>
