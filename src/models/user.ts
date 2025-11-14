@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 const userSchema: Schema = new Schema({
     name: {
         type: String,
-        unique: true,
+        unique: [true, "The username already exists!"],
         required: true,
     },
     email: {
@@ -14,7 +14,7 @@ const userSchema: Schema = new Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: [true, "Password is required"],
     },
     role: {
         type: String,
