@@ -15,6 +15,7 @@ const authenticateJWT = (req, res, next) => {
         });
     }
     try {
+        // { username: string, id: ObjectId, role: string }
         // verify token
         const decoded = jwt.verify(token, JWT_SECRET);
         // attach user to request

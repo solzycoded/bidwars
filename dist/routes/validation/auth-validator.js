@@ -13,7 +13,7 @@ export const signup = () => {
             .then((userDoc) => {
             if (userDoc) {
                 const error = new Error(`${errorMsg} already exists!`);
-                return Promise.reject(error);
+                return error;
             }
         });
     };

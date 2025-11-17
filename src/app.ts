@@ -5,6 +5,7 @@ import cors from "cors";
 
 /* routes*/
 import authRoute from "./routes/auth.js";
+import itemRoute from "./routes/item.js";
 import CustomError from "./utils/CustomError.js";
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(cors({
 
 /* app routes (router level middlewares)*/
 app.use('/auth', authRoute); // authentication routes
+app.use('/items', itemRoute); // item routes
 
 // allow API to be accessed by any client "*"
 app.use((req, res, next) => {

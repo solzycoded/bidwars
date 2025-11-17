@@ -27,8 +27,9 @@ const authenticateJWT = (req: Request & { user?: User }, res: Response, next: Ne
     }
 
     try {
+        // { username: string, id: ObjectId, role: string }
         // verify token
-        const decoded = jwt.verify(token, JWT_SECRET) as { username: string, id: ObjectId, role: string };
+        const decoded = jwt.verify(token, JWT_SECRET) as User;
 
         // attach user to request
         req.user = decoded;

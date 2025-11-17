@@ -3,16 +3,18 @@ import { checkSchema } from "express-validator";
 import User from "../../models/user.js";
 import { Document } from "mongoose";
 
+import { CustomValidationType } from "../../utils/Types.js";
+
 export const signup = () => {
-    const emailExists = (value: string): Promise<PromiseRejectedResult | undefined> => {
+    const emailExists = (value: string): Promise<CustomValidationType> => {
         return fieldExists("email", value, 'E-Mail address');
     }
 
-    const usernameExists = (value: string): Promise<PromiseRejectedResult | undefined> => {
+    const usernameExists = (value: string): Promise<CustomValidationType> => {
         return fieldExists("name", value, 'Username');
     }
 
-    const fieldExists = (field: string, value: string, errorMsg: string): Promise<PromiseRejectedResult | undefined> => {
+    const fieldExists = (field: string, value: string, errorMsg: string): Promise<CustomValidationType> => {
         const query: {email: string} | {name: string} = field==="email" ? { email: value } : { name: value };
 
         return User.findOne(query)
@@ -20,7 +22,7 @@ export const signup = () => {
                 if (userDoc) {
                     const error: Error = new Error(`${errorMsg} already exists!`);
 
-                    return Promise.reject(error);
+                    return error;
                 }
             });
     }

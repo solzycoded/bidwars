@@ -21,3 +21,5 @@ export type UserType = {
     createdAt: Date
     __v: number
 }
+
+export type CustomValidationType = PromiseRejectedResult | void | Error | undefined;
