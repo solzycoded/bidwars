@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongoose";
 
-const JWT_SECRET: string = process.env.JWT_SECRET || "ajwtsecret";
 type User = {
     username: string
     role: string
@@ -14,7 +13,7 @@ const authenticateJWT = (req: Request & { user?: User }, res: Response, next: Ne
 
     if(!authHeader) {
         return res.status(401).json({
-            message: "Authorization header missing!",
+            message: "You're not authorized to perform this action!",
         });
     }
 
@@ -22,20 +21,23 @@ const authenticateJWT = (req: Request & { user?: User }, res: Response, next: Ne
 
     if(!token) {
         return res.status(401).json({
-            message: "Token missing!",
+            message: "You're not authorized to perform this action!",
         });
     }
 
     try {
         // { username: string, id: ObjectId, role: string }
         // verify token
+        const JWT_SECRET: string = process.env.JWT_SECRET || "ajwtsecret";
+
         const decoded = jwt.verify(token, JWT_SECRET) as User;
 
         // attach user to request
         req.user = decoded;
 
         next();
-    } catch {
+    } catch(error) {
+        // console.log(error);
         return res.status(403).json({
             message: "Invalid or Expired token",
         });

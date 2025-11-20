@@ -1,17 +1,18 @@
 // RESP: holds user authentication logic
 import { NextFunction, Request, Response } from "express";
-import { validationResult, Result, ValidationError, matchedData } from "express-validator";
+import { matchedData } from "express-validator";
 import * as bcrypt from "bcrypt";
 import { Document } from "mongoose";
 import jwt from "jsonwebtoken";
 
-import CustomError from "../utils/CustomError.js"; // Adjust the path as needed
-import { SignupInputType, LoginInputType, UserType } from "../utils/Types.js";
+import { SignupInputType, LoginInputType, UserType, ControllerResponseType } from "../utils/Types.js";
 import User from "../models/user.js";
+import { inputValidation } from "../utils/Validation.js";
+import { errorHandler } from "../utils/Errorhandler.js";
 
 
 /* _____________________________________________________________________________ PUBLIC FUNCTIONS */
-const login = async (req: Request, res: Response, next: NextFunction): Promise<void | Response> => {
+const login = async (req: Request, res: Response, next: NextFunction): Promise<ControllerResponseType> => {
     try{
         inputValidation(req);
 
@@ -53,7 +54,7 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<v
                 return res.status(500).json({
                         success: false, 
                         data: { 
-                            message: "Unable to complete Login."
+                            message: "Unable to complete Login.",
                         }
                     });
             }
@@ -67,7 +68,7 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<v
     }
 }
 
-const signup = async (req: Request, res: Response, next: NextFunction): Promise<void | Response> => {
+const signup = async (req: Request, res: Response, next: NextFunction): Promise<ControllerResponseType> => {
     try {
         inputValidation(req);
 
@@ -103,35 +104,6 @@ const signup = async (req: Request, res: Response, next: NextFunction): Promise<
         errorHandler(error, next);
     }
 };
-
-/* _____________________________________________________________________________ PRIVATE FUNCTIONS */
-
-const errorHandler = (error: unknown, next: NextFunction) => {
-    if (error instanceof CustomError) {
-        // Handle CustomError
-        if (!error.statusCode) {
-            error.statusCode = 500;
-        }
-
-        next(error);
-    } else if (error instanceof Error) {
-        // Handle generic Error
-        next(new CustomError(error.message, 500, []));
-    } else {
-        // Handle unknown errors
-        next(new CustomError("An unknown error occurred", 500, []));
-    }
-}
-
-const inputValidation = (req: Request) => {
-    const resultOfValidation: Result<ValidationError> = validationResult(req); // Get validation result
-
-    if (!resultOfValidation.isEmpty()) { // if user input isn't valild, throw an error
-        const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
-
-        throw error;
-    }
-}
 
 export default {
     signup,

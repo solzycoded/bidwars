@@ -1,8 +1,8 @@
 import { checkSchema } from "express-validator";
+import { Document } from "mongoose";
 
 import Item from "../../models/item.js";
 import Category from "../../models/category.js";
-import { Document } from "mongoose";
 
 import { CustomValidationType } from "../../utils/Types.js";
 
@@ -11,8 +11,8 @@ export const create = () => {
         const query: {title: string} = { title: value };
 
         return Item.findOne(query)
-            .then((categoryDoc: Document | null) => {
-                if (categoryDoc) {
+            .then((itemDoc: Document | null) => {
+                if (itemDoc) {
                     const error: Error = new Error(`Item name already exists!`);
 
                     throw error;
@@ -57,10 +57,10 @@ export const create = () => {
                 },
                 errorMessage: "Item name's length cannot be less than 3 or more than 30"
             },
-            // custom: {
-            //     options: itemNameExists,
-            //     bail: true,
-            // }
+            custom: {
+                options: itemNameExists,
+                bail: true,
+            }
         },
         price: {
             notEmpty: {
@@ -75,33 +75,14 @@ export const create = () => {
                 errorMessage: "Sale Period isn't valid! It must be a number."
             }
         },
-        // category: {
-        //     notEmpty: {
-        //         errorMessage: "Category cannot be empty."
-        //     },
-        //     custom: {
-        //         options: categoryIsValid,
-        //         bail: true,
-        //     }
-        // }
+        category: {
+            notEmpty: {
+                errorMessage: "Category cannot be empty."
+            },
+            custom: {
+                options: categoryIsValid,
+                bail: true,
+            }
+        }
     })
 }
-
-
-// export const login = () => {
-//     const userExists = (value: string): Promise<PromiseRejectedResult | undefined> => {
-//         return User.findOne({
-//             $or: [
-//                 { name: value },
-//                 { email: value }
-//             ]
-//         })
-//             .then((userDoc: Document | null) => {
-//                 if (!userDoc) {
-//                     const error: Error = new Error(`Invalid Login Credentials`);
-
-//                     return Promise.reject(error);
-//                 }
-//             });
-//     }
-// }

@@ -1,4 +1,5 @@
 import { ObjectId } from "mongoose";
+import { Response } from "express";
 
 /* User */
 export type SignupInputType = {
@@ -23,3 +24,5 @@ export type UserType = {
 }
 
 export type CustomValidationType = PromiseRejectedResult | void | Error | undefined;
+
+export type ControllerResponseType = void | Response;

@@ -7,11 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { validationResult, matchedData } from "express-validator";
+import { matchedData } from "express-validator";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import CustomError from "../utils/CustomError.js"; // Adjust the path as needed
 import User from "../models/user.js";
+import { inputValidation } from "../utils/Validation.js";
+import { errorHandler } from "../utils/Errorhandler.js";
 /* _____________________________________________________________________________ PUBLIC FUNCTIONS */
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -42,7 +43,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
                 return res.status(500).json({
                     success: false,
                     data: {
-                        message: "Unable to complete Login."
+                        message: "Unable to complete Login.",
                     }
                 });
             }
@@ -86,31 +87,6 @@ const signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         errorHandler(error, next);
     }
 });
-/* _____________________________________________________________________________ PRIVATE FUNCTIONS */
-const errorHandler = (error, next) => {
-    if (error instanceof CustomError) {
-        // Handle CustomError
-        if (!error.statusCode) {
-            error.statusCode = 500;
-        }
-        next(error);
-    }
-    else if (error instanceof Error) {
-        // Handle generic Error
-        next(new CustomError(error.message, 500, []));
-    }
-    else {
-        // Handle unknown errors
-        next(new CustomError("An unknown error occurred", 500, []));
-    }
-};
-const inputValidation = (req) => {
-    const resultOfValidation = validationResult(req); // Get validation result
-    if (!resultOfValidation.isEmpty()) { // if user input isn't valild, throw an error
-        const error = new CustomError("Validation failed.", 422, resultOfValidation.array());
-        throw error;
-    }
-};
 export default {
     signup,
     login,

@@ -13,7 +13,7 @@ export const signup = () => {
             .then((userDoc) => {
             if (userDoc) {
                 const error = new Error(`${errorMsg} already exists!`);
-                return error;
+                throw error;
             }
         });
     };
@@ -71,7 +71,7 @@ export const login = () => {
             .then((userDoc) => {
             if (!userDoc) {
                 const error = new Error(`Invalid Login Credentials`);
-                return Promise.reject(error);
+                throw error;
             }
         });
     };

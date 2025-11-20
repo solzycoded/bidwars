@@ -22,7 +22,7 @@ export const signup = () => {
                 if (userDoc) {
                     const error: Error = new Error(`${errorMsg} already exists!`);
 
-                    return error;
+                    throw error;
                 }
             });
     }
@@ -73,7 +73,7 @@ export const signup = () => {
 
 
 export const login = () => {
-    const userExists = (value: string): Promise<PromiseRejectedResult | undefined> => {
+    const userExists = (value: string): Promise<CustomValidationType> => {
         return User.findOne({
             $or: [
                 { name: value },
@@ -84,7 +84,7 @@ export const login = () => {
                 if (!userDoc) {
                     const error: Error = new Error(`Invalid Login Credentials`);
 
-                    return Promise.reject(error);
+                    throw error;
                 }
             });
     }

@@ -6,6 +6,7 @@ import cors from "cors";
 /* routes*/
 import authRoute from "./routes/auth.js";
 import itemRoute from "./routes/item.js";
+import categoryRoute from "./routes/category.js";
 import CustomError from "./utils/CustomError.js";
 
 const app = express();
@@ -15,13 +16,14 @@ app.use(bodyParser.urlencoded({ extended: true })); // x-www-form-urlencoded <fo
 app.use(bodyParser.json()); // allows body as json to be parsed to req parameter
 
 /* cors */
-app.use(cors({ 
+app.use(cors({
   origin: "http://localhost:3000",
 }));
 
 /* app routes (router level middlewares)*/
 app.use('/auth', authRoute); // authentication routes
 app.use('/items', itemRoute); // item routes
+app.use('/categories', categoryRoute); // category routes
 
 // allow API to be accessed by any client "*"
 app.use((req, res, next) => {
