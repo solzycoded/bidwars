@@ -35,9 +35,20 @@ const SellAnItem = () => {
         // if all fields have been provided and they are valid, enable finish button and vice versa
         if(itemCondition.pre!=="" && itemCondition.post!=="" && itemCondition.time.purchaseDuration!=="" && itemCondition.time.acquisitionPeriod!=="") {
             // submit
-            const { token, username } = getAuthData();
+            const { username } = getAuthData();
             
-            fetchWithAuth(`items/create/${username}`, formData, "POST", () => {}, () => {})
+            const data = {
+                title: formData.title.value,
+                category: formData.category.value,
+                price: formData.price.value,
+                salePeriod: formData.salePeriod.value,
+                previousCondition: formData.condition.value.pre,
+                currentCondition: formData.condition.value.post,
+                purchaseDuration: formData.value.time.purchaseDuration,
+                acquisitionPeriod: formData.value.time.acquisitionPeriod,
+            };
+
+            fetchWithAuth(`items/create/${username}`, data, "POST", () => {}, () => {})
             // new FetchRequest('POST', `api/items/create/${userId}`, item).send(createItemSuccess, createItemFailure);
             setError("");
             return;
