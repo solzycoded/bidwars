@@ -100,6 +100,8 @@ const signup = async (req: Request, res: Response, next: NextFunction): Promise<
                 message: "User was not successfully created",
             },
         });
+
+        return;
     } catch (error: unknown) { // Use 'unknown' for the error type
         errorHandler(error, next);
     }

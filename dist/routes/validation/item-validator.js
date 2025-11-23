@@ -5,8 +5,8 @@ export const create = () => {
     const itemNameExists = (value) => {
         const query = { title: value };
         return Item.findOne(query)
-            .then((categoryDoc) => {
-            if (categoryDoc) {
+            .then((itemDoc) => {
+            if (itemDoc) {
                 const error = new Error(`Item name already exists!`);
                 throw error;
             }
@@ -22,17 +22,6 @@ export const create = () => {
             }
         });
     };
-    //         condition: { 
-    //             value: {
-    //                 time: {
-    //                     purchaseDuration: "",
-    //                     acquisitionPeriod: "",
-    //                 },
-    //                 pre: "",
-    //                 post: "",
-    //             }, 
-    //             active: false
-    //         },
     return checkSchema({
         title: {
             notEmpty: {
@@ -45,10 +34,10 @@ export const create = () => {
                 },
                 errorMessage: "Item name's length cannot be less than 3 or more than 30"
             },
-            // custom: {
-            //     options: itemNameExists,
-            //     bail: true,
-            // }
+            custom: {
+                options: itemNameExists,
+                bail: true,
+            }
         },
         price: {
             notEmpty: {
@@ -59,34 +48,56 @@ export const create = () => {
             }
         },
         salePeriod: {
+            notEmpty: {
+                errorMessage: "Item's sale period cannot be empty."
+            },
             isInt: {
                 errorMessage: "Sale Period isn't valid! It must be a number."
             }
         },
-        // category: {
-        //     notEmpty: {
-        //         errorMessage: "Category cannot be empty."
-        //     },
-        //     custom: {
-        //         options: categoryIsValid,
-        //         bail: true,
-        //     }
-        // }
+        category: {
+            notEmpty: {
+                errorMessage: "Category cannot be empty."
+            },
+            custom: {
+                options: categoryIsValid,
+                bail: true,
+            }
+        },
+        previousCondition: {
+            notEmpty: {
+                errorMessage: "Item's previous condition cannot be empty."
+            },
+            // custom: {
+            //     options: itemConditionIsValid,
+            //     bail: true,
+            // }
+        },
+        currentCondition: {
+            notEmpty: {
+                errorMessage: "Item's current condition cannot be empty."
+            },
+            // custom: {
+            //     options: itemConditionIsValid,
+            //     bail: true,
+            // }
+        },
+        purchaseDuration: {
+            notEmpty: {
+                errorMessage: "Item's purchase duration cannot be empty."
+            },
+            isInt: {
+                errorMessage: "Purchase Duration isn't valid! It must be a number."
+            }
+        },
+        acquisitionPeriod: {
+            notEmpty: {
+                errorMessage: "Item's Acquisition Period cannot be empty (e.g. day(s), week(s), etc.)."
+            },
+            // custom: {
+            //     options: itemAquisitionPeriodIsValid,
+            //     bail: true,
+            // }
+        },
     });
 };
-// export const login = () => {
-//     const userExists = (value: string): Promise<PromiseRejectedResult | undefined> => {
-//         return User.findOne({
-//             $or: [
-//                 { name: value },
-//                 { email: value }
-//             ]
-//         })
-//             .then((userDoc: Document | null) => {
-//                 if (!userDoc) {
-//                     const error: Error = new Error(`Invalid Login Credentials`);
-//                     return Promise.reject(error);
-//                 }
-//             });
-//     }
-// }

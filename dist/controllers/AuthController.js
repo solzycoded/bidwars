@@ -82,6 +82,7 @@ const signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
                 message: "User was not successfully created",
             },
         });
+        return;
     }
     catch (error) { // Use 'unknown' for the error type
         errorHandler(error, next);

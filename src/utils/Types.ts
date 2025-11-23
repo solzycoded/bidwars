@@ -26,3 +26,9 @@ export type UserType = {
 export type CustomValidationType = PromiseRejectedResult | void | Error | undefined;
 
 export type ControllerResponseType = void | Response;
+
+export type AuthorizedUserType = {
+    username: string
+    role: string
+    id: ObjectId
+}

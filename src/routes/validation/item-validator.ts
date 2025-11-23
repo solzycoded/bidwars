@@ -33,18 +33,6 @@ export const create = () => {
             });
     }
 
-    //         condition: { 
-    //             value: {
-    //                 time: {
-    //                     purchaseDuration: "",
-    //                     acquisitionPeriod: "",
-    //                 },
-    //                 pre: "",
-    //                 post: "",
-    //             }, 
-    //             active: false
-    //         },
-
     return checkSchema({
         title: {
             notEmpty: {
@@ -71,6 +59,9 @@ export const create = () => {
             }
         },
         salePeriod: {
+            notEmpty: {
+                errorMessage: "Item's sale period cannot be empty."
+            },
             isInt: {
                 errorMessage: "Sale Period isn't valid! It must be a number."
             }
@@ -83,6 +74,41 @@ export const create = () => {
                 options: categoryIsValid,
                 bail: true,
             }
-        }
+        },
+        previousCondition: {
+            notEmpty: {
+                errorMessage: "Item's previous condition cannot be empty."
+            },
+            // custom: {
+            //     options: itemConditionIsValid,
+            //     bail: true,
+            // }
+        },
+        currentCondition: {
+            notEmpty: {
+                errorMessage: "Item's current condition cannot be empty."
+            },
+            // custom: {
+            //     options: itemConditionIsValid,
+            //     bail: true,
+            // }
+        },
+        purchaseDuration: {
+            notEmpty: {
+                errorMessage: "Item's purchase duration cannot be empty."
+            },
+            isInt: {
+                errorMessage: "Purchase Duration isn't valid! It must be a number."
+            }
+        },
+        acquisitionPeriod: {
+            notEmpty: {
+                errorMessage: "Item's Acquisition Period cannot be empty (e.g. day(s), week(s), etc.)."
+            },
+            // custom: {
+            //     options: itemAquisitionPeriodIsValid,
+            //     bail: true,
+            // }
+        },
     })
 }

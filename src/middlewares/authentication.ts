@@ -1,14 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { ObjectId } from "mongoose";
 
-type User = {
-    username: string
-    role: string
-    id: ObjectId
-};
+import { AuthorizedUserType, ControllerResponseType } from "../utils/Types.js";
 
-const authenticateJWT = (req: Request & { user?: User }, res: Response, next: NextFunction) => {
+export const authenticateUser = (req: Request & { user?: AuthorizedUserType }, res: Response, next: NextFunction): ControllerResponseType => {
     const authHeader = req.headers?.authorization;
 
     if(!authHeader) {
@@ -25,19 +20,22 @@ const authenticateJWT = (req: Request & { user?: User }, res: Response, next: Ne
         });
     }
 
+    // { username: string, id: ObjectId, role: string }
+    // verify token
+    const JWT_SECRET: string = process.env.JWT_SECRET || "ajwtsecret";
+
+    const decoded = jwt.verify(token, JWT_SECRET) as AuthorizedUserType;
+
+    // attach user to request
+    req.user = decoded;
+}
+
+const authenticateJWT = (req: Request & { user?: AuthorizedUserType }, res: Response, next: NextFunction): ControllerResponseType => {
     try {
-        // { username: string, id: ObjectId, role: string }
-        // verify token
-        const JWT_SECRET: string = process.env.JWT_SECRET || "ajwtsecret";
-
-        const decoded = jwt.verify(token, JWT_SECRET) as User;
-
-        // attach user to request
-        req.user = decoded;
+        authenticateUser(req, res, next); // authenticate the user
 
         next();
-    } catch(error) {
-        // console.log(error);
+    } catch {
         return res.status(403).json({
             message: "Invalid or Expired token",
         });

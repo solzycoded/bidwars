@@ -7,6 +7,8 @@ import cors from "cors";
 import authRoute from "./routes/auth.js";
 import itemRoute from "./routes/item.js";
 import categoryRoute from "./routes/category.js";
+import conditionRoute from "./routes/condition.js";
+
 import CustomError from "./utils/CustomError.js";
 
 const app = express();
@@ -22,6 +24,7 @@ app.use(cors({
 
 /* app routes (router level middlewares)*/
 app.use('/auth', authRoute); // authentication routes
+app.use('/conditions', conditionRoute); // condition routes
 app.use('/items', itemRoute); // item routes
 app.use('/categories', categoryRoute); // category routes
 
