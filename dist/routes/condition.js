@@ -5,4 +5,5 @@ import { create } from "./validation/condition-validator.js";
 import { admin } from "../middlewares/authorization.js";
 const conditionRouter = express.Router();
 conditionRouter.post(`/create`, admin, create(), conditionController.create);
+conditionRouter.get(`/:preCondition`, admin, search(), conditionController.index);
 export default conditionRouter;

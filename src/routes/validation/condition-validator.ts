@@ -3,7 +3,6 @@ import { Document } from "mongoose";
 
 import Condition from "../../models/condition.js";
 import { CustomValidationType } from "../../utils/Types.js";
-import { Schema } from "node:inspector/promises";
 
 export const create = () => { 
     const conditionTitleExists = (value: string): Promise<CustomValidationType> => {
@@ -35,6 +34,20 @@ export const create = () => {
             },
             isBoolean: {
                 errorMessage: "Condition type's value is incorrect",
+            }
+        },
+    })
+}
+
+export const search = () => { 
+    return checkSchema({
+        conditionType: {
+            custom: {
+                options: conditionTitleExists,
+                bail: true,
+            },
+            notEmpty: {
+                errorMessage: "Condition type parameter is missing.",
             }
         },
     })
