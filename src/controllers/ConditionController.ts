@@ -7,7 +7,7 @@ import { ControllerResponseType } from "../utils/Types.js";
 import { inputValidation } from "../utils/Validation.js";
 import Condition from "../models/condition.js";
 
-const create = async (req: Request, res: Response, next: NextFunction): ControllerResponseType => {
+const create = async (req: Request, res: Response, next: NextFunction): Promise<ControllerResponseType> => {
     try {
         inputValidation(req); // validate user input
 
@@ -30,7 +30,7 @@ const create = async (req: Request, res: Response, next: NextFunction): Controll
     }
 }
 
-const index = async (req: Request, res: Response, next: NextFunction): ControllerResponseType => {
+const index = async (req: Request, res: Response, next: NextFunction): Promise<ControllerResponseType> => {
     try {
         inputValidation(req); // validate user input
 

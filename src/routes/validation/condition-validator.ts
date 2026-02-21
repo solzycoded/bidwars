@@ -39,16 +39,16 @@ export const create = () => {
     })
 }
 
-export const search = () => { 
-    return checkSchema({
-        conditionType: {
-            custom: {
-                options: conditionTitleExists,
-                bail: true,
-            },
-            notEmpty: {
-                errorMessage: "Condition type parameter is missing.",
-            }
-        },
-    })
-}
+// export const search = () => {
+//     return checkSchema({
+//         conditionType: {
+//             custom: {
+//                 options: conditionTitleExists,
+//                 bail: true,
+//             },
+//             notEmpty: {
+//                 errorMessage: "Condition type parameter is missing.",
+//             }
+//         },
+//     })
+// }

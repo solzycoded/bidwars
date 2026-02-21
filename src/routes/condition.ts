@@ -9,6 +9,6 @@ const conditionRouter = express.Router();
 
 conditionRouter.post(`/create`, admin, create(), conditionController.create);
 
-conditionRouter.get(`/:preCondition`, admin, search(), conditionController.index);
+// conditionRouter.get(`/:preCondition`, admin, search(), conditionController.index);
 
 export default conditionRouter;
