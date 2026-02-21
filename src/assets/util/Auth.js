@@ -3,10 +3,18 @@ export const setAuthData = (authData) => {
     localStorage.setItem("auth", auth); // ✅ store JWT
 }
 
+export const deleteAuthData = () => {
+    const auth = getAuthData();
+
+    if(auth && auth?.token!==null){
+        localStorage.removeItem("auth");
+    }
+}
+
 export const getAuthData = () => {
     const auth = localStorage.getItem("auth");
 
-    return auth;
+    return auth ?? null;
 }
 
 const loggedIn = () => {

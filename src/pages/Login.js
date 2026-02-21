@@ -1,12 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { fetchNoAuth } from "../assets/util/FetchRequest.js";
-import { getAuthDta, setAuthData } from "../assets/util/Auth.js";
+import { useAuth } from "../ContextProviders/AuthProvider.jsx";
 
 const Login = () => {
+    const { user, login } = useAuth();
+    const navigate = useNavigate();
+
+    if(user){ // if the user is already logged in, redirect the person back to the route they just came from
+        alert("You're logged in!!");
+        navigate(-1);
+    }
+
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
     const [password, setPassword]               = useState("");
     const [error, setError]                     = useState("");
+
 
     const submitLogin = async (e) => {
         e.preventDefault();
@@ -20,8 +29,10 @@ const Login = () => {
 
             const { data } = await res.json();
 
-            setAuthData({ token: data.token, username: data.username, role: data.role });
-            // alert("Login was successful!");
+            login(data);
+            alert("Login was successful!");
+
+            navigate("/");
         }
 
         fetchNoAuth("auth/login", { usernameOrEmail, password }, 'POST', failureFn, successFn);
