@@ -12,24 +12,7 @@ export const deleteAuthData = () => {
 }
 
 export const getAuthData = () => {
-    const auth = localStorage.getItem("auth");
+    const authData = localStorage.getItem("auth");
 
-    return auth ?? null;
+    return JSON.parse(authData) ?? null;
 }
-
-const loggedIn = () => {
-    const auth = getAuthData();
-    return !!(auth && auth?.token!==null);
-}
-
-const isAdmin = () => {
-    const auth = getAuthData();
-
-    return auth?.role==="admin";
-}
-
-const AuthData = {
-    isLoggedIn: loggedIn(),
-    isAdmin: isAdmin(),
-}
-export default AuthData;

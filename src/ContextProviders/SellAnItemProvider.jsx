@@ -24,7 +24,7 @@ const SellAnItemProvider = ({children}) => {
         pause: true,
     });
 
-    const value = useMemo(() => ({ formData, setFormData }), [formData]);
+    const value = useMemo(() => ({ formData, setFormData }), [formData, setFormData]);
 
     return (
         <FormDataContext.Provider value={value}>

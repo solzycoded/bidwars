@@ -4,22 +4,15 @@ import NavItem from "./NavItem.js";
 import LinkItem from "./LinkItem.js";
 import Search from "../Search/Search.js";
 import AuthData, { deleteAuthData } from "../../assets/util/Auth.js";
+import { useAuth } from "../../ContextProviders/AuthProvider.jsx";
 
 const Nav = function() {
     // get (destructure) the authentication data from AuthData
-    const [ isLoggedIn, setIsLoggedIn ] = useState(AuthData.isLoggedIn);
-    const [ isAdmin, setIsAdmin ] = useState(AuthData.isAdmin);
+    const { user, logout } = useAuth();
 
     const authUserLinks = () => {// this conditionally renders a group of links, depending on the role of the current user
-        const logout = () => {
-            deleteAuthData();
 
-            // make a request to the server to delete token
-            // when it is sucessful, then delete on the client side
-            // reload page
-        }
-
-        if(isLoggedIn) { // when an authenticated user has logged in
+        if(user) { // when an authenticated user has logged in
             return (
                 <>
                     { !isAdmin && <NavItem to="profile" content="Profile" /> }

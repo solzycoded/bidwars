@@ -4,18 +4,16 @@ import { fetchNoAuth } from "../assets/util/FetchRequest.js";
 import { useAuth } from "../ContextProviders/AuthProvider.jsx";
 
 const Login = () => {
-    const { user, login } = useAuth();
-    const navigate = useNavigate();
-
-    if(user){ // if the user is already logged in, redirect the person back to the route they just came from
-        alert("You're logged in!!");
-        navigate(-1);
-    }
-
+    const { isLoggedIn, login } = useAuth();
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
     const [password, setPassword]               = useState("");
     const [error, setError]                     = useState("");
+    const navigate = useNavigate();
 
+    if(isLoggedIn){ // if the user is already logged in, redirect the person back to the route they just came from
+        alert("You're logged in!!");
+        navigate(-1);
+    }
 
     const submitLogin = async (e) => {
         e.preventDefault();
@@ -29,8 +27,8 @@ const Login = () => {
 
             const { data } = await res.json();
 
-            login(data);
-            alert("Login was successful!");
+            login({ token: data.token, username: data.username, role: data.role });
+            alert("Login was successful!"); /* to be removed later */
 
             navigate("/");
         }

@@ -6,28 +6,31 @@ import Signup from "./pages/Signup.js";
 
 import SellAnItem from "./pages/SellAnItem.js";
 import SellAnItemProvider from "./ContextProviders/SellAnItemProvider.jsx";
+import AuthProvider from "./ContextProviders/AuthProvider.jsx";
 
 const App = function() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Layout />}> {/* holds the layout file for the app */}
-    
-                    <Route path="login" element={<Login />} />
-                    <Route path="signup" element={<Signup />} />
-                    <Route 
-                        path="sell-an-item" 
-                        element={
-                            <SellAnItemProvider>
-                                <SellAnItem />
-                            </SellAnItemProvider>
-                        } />
+        <AuthProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Layout />}> {/* holds the layout file for the app */}
                     
-                    <Route path="*" element={<NoPage />} />
+                        <Route path="login" element={<Login />} />
+                        <Route path="signup" element={<Signup />} />
+                        <Route 
+                            path="sell-an-item" 
+                            element={
+                                <SellAnItemProvider>
+                                    <SellAnItem />
+                                </SellAnItemProvider>
+                            } />
+                        
+                        <Route path="*" element={<NoPage />} />
 
-                </Route>
-            </Routes>
-        </BrowserRouter>
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     )
 }
 
