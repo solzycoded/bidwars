@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { fetchNoAuth } from "../assets/util/FetchRequest.js";
+import { useAuth } from "../ContextProviders/AuthProvider.jsx";
 
 const Signup = () => {
     const [email, setEmail]           = useState("");
@@ -11,6 +12,12 @@ const Signup = () => {
     const [errors, setErrors] = useState([]);
 
     const navigate = useNavigate();
+    const { loggedIn } = useAuth();
+
+    if(loggedIn.yes){ // if the user is already logged in, redirect the person back to the route they just came from
+        alert("You're logged in!!");
+        navigate("/");
+    }
 
     const handlePassword = (e, forField) => {
         if(forField==="password") {

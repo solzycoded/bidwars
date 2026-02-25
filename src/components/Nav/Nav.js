@@ -1,23 +1,21 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import NavItem from "./NavItem.js";
 import LinkItem from "./LinkItem.js";
 import Search from "../Search/Search.js";
-import AuthData, { deleteAuthData } from "../../assets/util/Auth.js";
 import { useAuth } from "../../ContextProviders/AuthProvider.jsx";
 
 const Nav = function() {
     // get (destructure) the authentication data from AuthData
-    const { user, logout } = useAuth();
+    const { loggedIn, logout } = useAuth();
 
-    const authUserLinks = () => {// this conditionally renders a group of links, depending on the role of the current user
+    const authUserLinks = () => { // this conditionally renders a group of links, depending on the role of the current user
 
-        if(user) { // when an authenticated user has logged in
+        if(loggedIn.yes) { // when an authenticated user has logged in
             return (
                 <>
-                    { !isAdmin && <NavItem to="profile" content="Profile" /> }
+                    { !loggedIn.isAdmin && <NavItem to="profile" content="Profile" /> }
                     { 
-                        isAdmin &&
+                        loggedIn.isAdmin &&
                         <>
                             <NavItem to="dashboard" content="Dashboard" /> 
                             <NavItem to="dashboard#auction-list" content="Auction List" />
@@ -72,7 +70,7 @@ const Nav = function() {
                     </ul>
                     
                     {
-                        !isAdmin &&
+                        !loggedIn.isAdmin &&
                         <div>
                             <Search />
                         </div>

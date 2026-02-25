@@ -6,7 +6,7 @@ export const setAuthData = (authData) => {
 export const deleteAuthData = () => {
     const auth = getAuthData();
 
-    if(auth && auth?.token!==null){
+    if(auth!==null && auth?.token!==null){
         localStorage.removeItem("auth");
     }
 }
