@@ -55,8 +55,8 @@ const SellAnItem = () => {
                 salePeriod: formData.salePeriod.value,
                 previousCondition: formData.condition.value.pre,
                 currentCondition: formData.condition.value.post,
-                purchaseDuration: formData.value.time.purchaseDuration,
-                acquisitionPeriod: formData.value.time.acquisitionPeriod,
+                purchaseDuration: formData.condition.value.time.purchaseDuration,
+                acquisitionPeriod: formData.condition.value.time.acquisitionPeriod,
             };
 
             fetchWithAuth(`items/create/${username}`, data, "POST", () => {}, () => {})
