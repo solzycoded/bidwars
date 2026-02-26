@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Category from "../components/SellAnItem/Category/Section.jsx";
 import ItemName from "../components/SellAnItem/ItemName/Section.jsx";
 import ImageUpload from "../components/SellAnItem/ImageUpload/Section.jsx";
@@ -10,11 +11,21 @@ import "../assets/css/sell-an-item.css";
 import { useFormDataContext } from "../ContextProviders/SellAnItemProvider.jsx";
 import { getAuthData } from "../assets/util/Auth.js";
 import { fetchWithAuth } from "../assets/util/FetchRequest.js";
+import { useAuth } from "../ContextProviders/AuthProvider.jsx";
 
 const SellAnItem = () => {
     const [activeSection, setActiveSection] = useState(0);
     const [error, setError] = useState("");
     const { formData, setFormData } = useFormDataContext();
+
+    const { loggedIn } = useAuth();
+    const navigate = useNavigate();
+
+    if(!loggedIn.yes){ // prevent the guest from accessing this page
+        navigate("/login");
+
+        return;
+    }
 
     const sections = [
         <Category key="category" />,
