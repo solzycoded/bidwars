@@ -15,5 +15,5 @@ export const errorHandler = (error: unknown, next: NextFunction) => {
     } else {
         // Handle unknown errors
         next(new CustomError("An unknown error occurred", 500, []));
-    }
+    } 
 }
