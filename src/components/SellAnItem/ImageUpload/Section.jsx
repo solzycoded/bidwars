@@ -1,0 +1,24 @@
+import ImageUploadItem from "./Item.jsx";
+ 
+const ImageUpload = () => {
+    
+    return (
+        <section className="sell-your-item-section" id="image-upload">
+            <div className="container-fluid p-0">
+                <div className="text-start mb-4">
+                    <h5>Image of Item
+                        {/* <!-- (<span className="fw-lighter">0</span>/3) --> */}
+                    </h5>
+                    <p className="m-0 text-secondary"><small>It’s important that your item has an appropraite visual representation. Kindly provide <b className="text-dark">at least 1</b> of the most recent image(s) of your item.</small></p>
+                </div>
+                <div className="row">
+                    <ImageUploadItem tag={0}></ImageUploadItem>
+                    <ImageUploadItem tag={1}></ImageUploadItem>
+                    <ImageUploadItem tag={2}></ImageUploadItem>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+export default ImageUpload;
