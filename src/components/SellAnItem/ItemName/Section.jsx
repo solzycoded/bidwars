@@ -5,7 +5,7 @@ const ItemName = () => {
     const [error, setError] = useState(null);
     const { formData, setFormData } = useFormDataContext();
 
-    const validateTitle = (itemTitle) => {
+    const validateTitle = (itemTitle) => { // check if the provided title already exists
         const updateTitleFormData = (active) => {
             setFormData({ ...formData, title: { value: itemTitle, active }, pause: !active }); //set item title
         }

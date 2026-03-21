@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
     const logout = useCallback(() => {
         deleteAuthData(); // delete the user's details from localstorage
         updateUser(); // update the user state
-    }, [updateUser, user]);
+    }, [updateUser]);
 
     // return context provider
     const value = useMemo(() => ({ user, login, logout, loggedIn }), [user, login, logout, loggedIn]);
