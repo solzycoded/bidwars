@@ -1,17 +1,27 @@
 import { checkSchema } from "express-validator";
 import Item from "../../models/item.js";
 import Category from "../../models/category.js";
-export const create = () => {
-    const itemNameExists = (value) => {
-        const query = { title: value };
-        return Item.findOne(query)
-            .then((itemDoc) => {
-            if (itemDoc) {
-                const error = new Error(`Item name already exists!`);
-                throw error;
+const itemNameExists = (value) => {
+    const query = { title: value };
+    return Item.findOne(query)
+        .then((itemDoc) => {
+        if (itemDoc) {
+            const error = new Error(`Item name already exists!`);
+            throw error;
+        }
+    });
+};
+export const itemTitleExists = () => {
+    return checkSchema({
+        title: {
+            custom: {
+                options: itemNameExists,
+                bail: true,
             }
-        });
-    };
+        },
+    });
+};
+export const create = () => {
     const categoryIsValid = (value) => {
         const query = { name: value };
         return Category.findOne(query)

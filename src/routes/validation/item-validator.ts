@@ -6,20 +6,31 @@ import Category from "../../models/category.js";
 
 import { CustomValidationType } from "../../utils/Types.js";
 
+const itemNameExists = (value: string): Promise<CustomValidationType> => {
+    const query: {title: string} = { title: value };
+
+    return Item.findOne(query)
+        .then((itemDoc: Document | null) => {
+            if (itemDoc) {
+                const error: Error = new Error(`Item name already exists!`);
+
+                throw error;
+            }
+        });
+}
+
+export const itemTitleExists = () => { // a middleware to validate the title parameter
+    return checkSchema({
+        title: {
+            custom: {
+                options: itemNameExists,
+                bail: true,
+            }
+        },
+    });
+}
+
 export const create = () => {
-    const itemNameExists = (value: string): Promise<CustomValidationType> => {
-        const query: {title: string} = { title: value };
-
-        return Item.findOne(query)
-            .then((itemDoc: Document | null) => {
-                if (itemDoc) {
-                    const error: Error = new Error(`Item name already exists!`);
-
-                    throw error;
-                }
-            });
-    }
-
     const categoryIsValid = (value: string): Promise<CustomValidationType> => {
         const query: {name: string} = { name: value };
 

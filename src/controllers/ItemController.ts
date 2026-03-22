@@ -12,27 +12,12 @@ type TitleInput = {
     title: string
 }
 
-const validateTitle = async (req: Request, res: Response, next: NextFunction): Promise<ControllerResponseType> => {
+const validateTitle = (req: Request, res: Response, next: NextFunction): ControllerResponseType => {
     try{
-        console.log(req);
-        // const title: string = req.body.query; // retrieve the input from the validated matched data
-
-        // const escapeRegExp = (str: string): string => { // this ensures that the search is case insensitive
-        //     return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        // }
-
-        // // find an item that matches title
-        // const titleQuery = {
-        //     title: new RegExp(`^${escapeRegExp(title)}$`, "i"),
-        // }
-        // const item = await Item.findOne(titleQuery);
-
-        // const itemExists = item?.id!==null;
-
-        // res.status(200).json({ 
-        //     success: itemExists, 
-        //     data: { message: (itemExists ? "Item name already exists!" : "") },
-        // });
+        res.status(200).json({ 
+            success: true, 
+            data: { message: "The chosen item title doesn't exist, you can proceed!" },
+        });
 
         return;
     } catch (error: unknown) { // Use 'unknown' for the error type

@@ -44,7 +44,7 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<C
                 {
                     username: user.name,
                     role: user.role,
-                    id: user._id
+                    // id: user._id
                 }, 
                 JWT_SECRET, 
                 { expiresIn: "15m" }

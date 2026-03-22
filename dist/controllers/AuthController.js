@@ -37,7 +37,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             const token = jwt.sign({
                 username: user.name,
                 role: user.role,
-                id: user._id
+                // id: user._id
             }, JWT_SECRET, { expiresIn: "15m" }); // create web token
             if (!token) {
                 return res.status(500).json({
