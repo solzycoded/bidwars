@@ -3,9 +3,10 @@ import { Document } from "mongoose";
 
 import Item from "../../models/item.js";
 import Category from "../../models/category.js";
+import Condition from "../../models/condition.js";
+import Duration from "../../models/duration.js";
 
 import { CustomValidationType } from "../../utils/Types.js";
-import Condition from "../../models/condition.js";
 
 const itemNameExists = (value: string): Promise<CustomValidationType> => {
     const query: {title: string} = { title: value };
@@ -52,6 +53,19 @@ export const create = () => {
             .then((conditionDoc: Document | null) => {
                 if (!conditionDoc) {
                     const error: Error = new Error(`The selected item condition, does not exist!`);
+
+                    throw error;
+                }
+            });
+    }
+
+    const itemAquisitionPeriodIsValid = (value: string): Promise<CustomValidationType> => {
+        const query: {title: string} = { title: value };
+
+        return Duration.findOne(query)
+            .then((durationDoc: Document | null) => {
+                if (!durationDoc) {
+                    const error: Error = new Error(`The selected item acquisition period, does not exist!`);
 
                     throw error;
                 }
@@ -130,10 +144,10 @@ export const create = () => {
             notEmpty: {
                 errorMessage: "Item's Acquisition Period cannot be empty (e.g. day(s), week(s), etc.)."
             },
-            // custom: {
-            //     options: itemAquisitionPeriodIsValid,
-            //     bail: true,
-            // }
+            custom: {
+                options: itemAquisitionPeriodIsValid,
+                bail: true,
+            }
         },
     })
 }
