@@ -5,6 +5,7 @@ import Item from "../../models/item.js";
 import Category from "../../models/category.js";
 
 import { CustomValidationType } from "../../utils/Types.js";
+import Condition from "../../models/condition.js";
 
 const itemNameExists = (value: string): Promise<CustomValidationType> => {
     const query: {title: string} = { title: value };
@@ -38,6 +39,19 @@ export const create = () => {
             .then((categoryDoc: Document | null) => {
                 if (!categoryDoc) {
                     const error: Error = new Error(`The Category which you provided, does not exist!`);
+
+                    throw error;
+                }
+            });
+    }
+
+    const itemConditionIsValid = (value: string): Promise<CustomValidationType> => {
+        const query: {title: string} = { title: value };
+
+        return Condition.findOne(query)
+            .then((conditionDoc: Document | null) => {
+                if (!conditionDoc) {
+                    const error: Error = new Error(`The selected item condition, does not exist!`);
 
                     throw error;
                 }
@@ -90,19 +104,19 @@ export const create = () => {
             notEmpty: {
                 errorMessage: "Item's previous condition cannot be empty."
             },
-            // custom: {
-            //     options: itemConditionIsValid,
-            //     bail: true,
-            // }
+            custom: {
+                options: itemConditionIsValid,
+                bail: true,
+            }
         },
         currentCondition: {
             notEmpty: {
                 errorMessage: "Item's current condition cannot be empty."
             },
-            // custom: {
-            //     options: itemConditionIsValid,
-            //     bail: true,
-            // }
+            custom: {
+                options: itemConditionIsValid,
+                bail: true,
+            }
         },
         purchaseDuration: {
             notEmpty: {
