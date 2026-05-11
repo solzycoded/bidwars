@@ -1,6 +1,8 @@
 import { checkSchema } from "express-validator";
 import Item from "../../models/item.js";
 import Category from "../../models/category.js";
+import Condition from "../../models/condition.js";
+import Duration from "../../models/duration.js";
 const itemNameExists = (value) => {
     const query = { title: value };
     return Item.findOne(query)
@@ -32,6 +34,26 @@ export const create = () => {
             }
         });
     };
+    const itemConditionIsValid = (value) => {
+        const query = { title: value };
+        return Condition.findOne(query)
+            .then((conditionDoc) => {
+            if (!conditionDoc) {
+                const error = new Error(`The selected item condition, does not exist!`);
+                throw error;
+            }
+        });
+    };
+    const itemAquisitionPeriodIsValid = (value) => {
+        const query = { title: value };
+        return Duration.findOne(query)
+            .then((durationDoc) => {
+            if (!durationDoc) {
+                const error = new Error(`The selected item acquisition period, does not exist!`);
+                throw error;
+            }
+        });
+    };
     return checkSchema({
         title: {
             notEmpty: {
@@ -49,65 +71,65 @@ export const create = () => {
                 bail: true,
             }
         },
-        price: {
-            notEmpty: {
-                errorMessage: "Item must have a price!",
-            },
-            isCurrency: {
-                errorMessage: "Price isn't valid! It must be a number."
-            }
-        },
-        salePeriod: {
-            notEmpty: {
-                errorMessage: "Item's sale period cannot be empty."
-            },
-            isInt: {
-                errorMessage: "Sale Period isn't valid! It must be a number."
-            }
-        },
-        category: {
-            notEmpty: {
-                errorMessage: "Category cannot be empty."
-            },
-            custom: {
-                options: categoryIsValid,
-                bail: true,
-            }
-        },
-        previousCondition: {
-            notEmpty: {
-                errorMessage: "Item's previous condition cannot be empty."
-            },
-            // custom: {
-            //     options: itemConditionIsValid,
-            //     bail: true,
-            // }
-        },
-        currentCondition: {
-            notEmpty: {
-                errorMessage: "Item's current condition cannot be empty."
-            },
-            // custom: {
-            //     options: itemConditionIsValid,
-            //     bail: true,
-            // }
-        },
-        purchaseDuration: {
-            notEmpty: {
-                errorMessage: "Item's purchase duration cannot be empty."
-            },
-            isInt: {
-                errorMessage: "Purchase Duration isn't valid! It must be a number."
-            }
-        },
-        acquisitionPeriod: {
-            notEmpty: {
-                errorMessage: "Item's Acquisition Period cannot be empty (e.g. day(s), week(s), etc.)."
-            },
-            // custom: {
-            //     options: itemAquisitionPeriodIsValid,
-            //     bail: true,
-            // }
-        },
+        // price: {
+        //     notEmpty: {
+        //         errorMessage: "Item must have a price!",
+        //     },
+        //     isCurrency: {
+        //         errorMessage: "Price isn't valid! It must be a number."
+        //     }
+        // },
+        // salePeriod: {
+        //     notEmpty: {
+        //         errorMessage: "Item's sale period cannot be empty."
+        //     },
+        //     isInt: {
+        //         errorMessage: "Sale Period isn't valid! It must be a number."
+        //     }
+        // },
+        // category: {
+        //     notEmpty: {
+        //         errorMessage: "Category cannot be empty."
+        //     },
+        //     custom: {
+        //         options: categoryIsValid,
+        //         bail: true,
+        //     }
+        // },
+        // previousCondition: {
+        //     notEmpty: {
+        //         errorMessage: "Item's previous condition cannot be empty."
+        //     },
+        //     custom: {
+        //         options: itemConditionIsValid,
+        //         bail: true,
+        //     }
+        // },
+        // currentCondition: {
+        //     notEmpty: {
+        //         errorMessage: "Item's current condition cannot be empty."
+        //     },
+        //     custom: {
+        //         options: itemConditionIsValid,
+        //         bail: true,
+        //     }
+        // },
+        // purchaseDuration: {
+        //     notEmpty: {
+        //         errorMessage: "Item's purchase duration cannot be empty."
+        //     },
+        //     isInt: {
+        //         errorMessage: "Purchase Duration isn't valid! It must be a number."
+        //     }
+        // },
+        // acquisitionPeriod: {
+        //     notEmpty: {
+        //         errorMessage: "Item's Acquisition Period cannot be empty (e.g. day(s), week(s), etc.)."
+        //     },
+        //     custom: {
+        //         options: itemAquisitionPeriodIsValid,
+        //         bail: true,
+        //     }
+        // },
     });
 };
