@@ -8,22 +8,25 @@ import Duration from "../../models/duration.js";
 
 import { CustomValidationType } from "../../utils/Types.js";
 
-const itemNameExists = (value: string): Promise<CustomValidationType> => {
+const itemNameExists = async (value: string): Promise<CustomValidationType> => {
     const query: {title: string} = { title: value };
 
-    return Item.findOne(query)
-        .then((itemDoc: Document | null) => {
-            if (itemDoc) {
-                const error: Error = new Error(`Item name already exists!`);
+    try {
+        const itemDoc = await Item.findOne(query);
+        if (itemDoc) {
+            const error: Error = new Error(`Item name already exists!`);
 
-                throw error;
-            }
-        });
+            throw error;
+        }
+    } catch (error) {
+        throw error;
+    }
 }
 
 export const itemTitleExists = () => { // a middleware to validate the title parameter
     return checkSchema({
         title: {
+            in: 'params',
             custom: {
                 options: itemNameExists,
                 bail: true,

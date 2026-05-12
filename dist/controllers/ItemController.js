@@ -12,6 +12,7 @@ import { matchedData } from "express-validator";
 import { inputValidation } from "../utils/Validation.js";
 const validateTitle = (req, res, next) => {
     try {
+        inputValidation(req); // Check for validation errors from the middleware
         res.status(200).json({
             success: true,
             data: { message: "The chosen item title doesn't exist, you can proceed!" },
@@ -25,6 +26,7 @@ const validateTitle = (req, res, next) => {
 const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         inputValidation(req);
+        // , price, salePeriod, category, previousConditioon
         const { title } = matchedData(req); // retrieve the input from the validated matched data
         console.log(title);
         // create new Category
@@ -35,7 +37,7 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         return res.status(200).json({ success: true });
         // }
         // res.status(403).json({ success: false, data: { message: "Category was not created successfully! Try again later." } });
-        return;
+        // return;
     }
     catch (error) { // Use 'unknown' for the error type
         errorHandler(error, next);

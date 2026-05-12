@@ -18,6 +18,8 @@ type ItemInput = {
 
 const validateTitle = (req: Request, res: Response, next: NextFunction): ControllerResponseType => {
     try{
+        inputValidation(req); // Check for validation errors from the middleware
+
         res.status(200).json({ 
             success: true, 
             data: { message: "The chosen item title doesn't exist, you can proceed!" },
@@ -32,8 +34,8 @@ const validateTitle = (req: Request, res: Response, next: NextFunction): Control
 const create = async (req: Request, res: Response, next: NextFunction): Promise<ControllerResponseType> => {
     try{
         inputValidation(req);
-
-        const { title, price, salePeriod, category, previousConditioon }: ItemInput = matchedData(req); // retrieve the input from the validated matched data
+// , price, salePeriod, category, previousConditioon
+        const { title }: ItemInput = matchedData(req); // retrieve the input from the validated matched data
 
         console.log(title);
         
@@ -48,7 +50,7 @@ const create = async (req: Request, res: Response, next: NextFunction): Promise<
 
         // res.status(403).json({ success: false, data: { message: "Category was not created successfully! Try again later." } });
 
-        return;
+        // return;
     } catch (error: unknown) { // Use 'unknown' for the error type
         errorHandler(error, next);
     }
