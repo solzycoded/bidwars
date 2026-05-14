@@ -38,7 +38,7 @@ const create = async (req: Request, res: Response, next: NextFunction): Promise<
         const { title }: ItemInput = matchedData(req); // retrieve the input from the validated matched data
 
         console.log(title);
-        
+
         // create new Category
         // const newCategory: Document = await Category.create({
         //     name: name

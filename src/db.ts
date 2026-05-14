@@ -12,7 +12,7 @@ const connectDB = async (): Promise<void> => {
         const url: string = `mongodb+srv://${MONGO_USERNAME}:${MONGO_DB_PASSWORD}@coded.1w4ft.mongodb.net/?appName=${MONGO_APP_NAME}`; // connection url
 
         await mongoose.connect(url); // connect to mongodb
-        console.log("Database Created");
+        console.log("Database Connected!");
     } catch (err) {
         console.error("MongoDB connection error:", err);
     }

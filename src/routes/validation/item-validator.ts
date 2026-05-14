@@ -36,17 +36,27 @@ export const itemTitleExists = () => { // a middleware to validate the title par
 }
 
 export const create = () => {
-    const categoryIsValid = (value: string): Promise<CustomValidationType> => {
+    const categoryIsValid = async (value: string): Promise<CustomValidationType> => {
         const query: {name: string} = { name: value };
 
-        return Category.findOne(query)
-            .then((categoryDoc: Document | null) => {
-                if (!categoryDoc) {
-                    const error: Error = new Error(`The Category which you provided, does not exist!`);
+        try {
+            const categoryDoc = await Category.findOne(query);
+            if (!categoryDoc) {
+                const error: Error = new Error(`The Category which you provided, does not exist!`);
 
-                    throw error;
-                }
-            });
+                throw error;
+            }
+        } catch (error) {
+            throw error;
+        }
+        // return Category.findOne(query)
+        //     .then((categoryDoc: Document | null) => {
+        //         if (!categoryDoc) {
+        //             const error: Error = new Error(`The Category which you provided, does not exist!`);
+
+        //             throw error;
+        //         }
+        //     });
     }
 
     const itemConditionIsValid = (value: string): Promise<CustomValidationType> => {
