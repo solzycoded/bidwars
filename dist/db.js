@@ -18,7 +18,7 @@ const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
         const { MONGO_DB_PASSWORD, MONGO_USERNAME, MONGO_APP_NAME } = process.env; // mongod db connection variables
         const url = `mongodb+srv://${MONGO_USERNAME}:${MONGO_DB_PASSWORD}@coded.1w4ft.mongodb.net/?appName=${MONGO_APP_NAME}`; // connection url
         yield mongoose.connect(url); // connect to mongodb
-        console.log("Database Created");
+        console.log("Database Connected!");
     }
     catch (err) {
         console.error("MongoDB connection error:", err);

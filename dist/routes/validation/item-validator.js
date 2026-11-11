@@ -37,16 +37,26 @@ export const itemTitleExists = () => {
     });
 };
 export const create = () => {
-    const categoryIsValid = (value) => {
+    const categoryIsValid = (value) => __awaiter(void 0, void 0, void 0, function* () {
         const query = { name: value };
-        return Category.findOne(query)
-            .then((categoryDoc) => {
+        try {
+            const categoryDoc = yield Category.findOne(query);
             if (!categoryDoc) {
                 const error = new Error(`The Category which you provided, does not exist!`);
                 throw error;
             }
-        });
-    };
+        }
+        catch (error) {
+            throw error;
+        }
+        // return Category.findOne(query)
+        //     .then((categoryDoc: Document | null) => {
+        //         if (!categoryDoc) {
+        //             const error: Error = new Error(`The Category which you provided, does not exist!`);
+        //             throw error;
+        //         }
+        //     });
+    });
     const itemConditionIsValid = (value) => {
         const query = { title: value };
         return Condition.findOne(query)
