@@ -9,7 +9,7 @@ const SelectTimeOption = () => {
             // not sure what to do here
             // const { data } = await res.json();
             // setTimeFrames(data);
-
+ 
             setTimeFrames([
                 {_id: "soamao9838", name: "hour(s)"},
                 {_id: "soambo2838", name: "day(s)"},
